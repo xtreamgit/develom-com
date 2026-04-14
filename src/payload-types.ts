@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     'blog-posts': BlogPost;
     'portfolio-projects': PortfolioProject;
+    services: Service;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     'portfolio-projects': PortfolioProjectsSelect<false> | PortfolioProjectsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -251,6 +253,41 @@ export interface PortfolioProject {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  slug: string;
+  serviceGroup: 'architecture' | 'application' | 'automation';
+  complianceAngle?: string | null;
+  tagline: string;
+  description: string;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  ctaLabel?: string | null;
+  ctaUrl?: string | null;
+  featured?: boolean | null;
+  status?: ('published' | 'draft') | null;
+  sortOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -288,6 +325,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'portfolio-projects';
         value: number | PortfolioProject;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -437,6 +478,26 @@ export interface PortfolioProjectsSelect<T extends boolean = true> {
   demoUrl?: T;
   status?: T;
   order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  serviceGroup?: T;
+  complianceAngle?: T;
+  tagline?: T;
+  description?: T;
+  body?: T;
+  ctaLabel?: T;
+  ctaUrl?: T;
+  featured?: T;
+  status?: T;
+  sortOrder?: T;
   updatedAt?: T;
   createdAt?: T;
 }
