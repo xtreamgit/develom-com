@@ -1,0 +1,11 @@
+Model Information:
+* title:	Icosphere Visual Effect Abstarct Geometry Loop
+* source:	https://sketchfab.com/3d-models/icosphere-visual-effect-abstarct-geometry-loop-ba6c8929177549aa98e4dc16fda42a4a
+* author:	SonicVisual (https://sketchfab.com/sonicvisual)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Icosphere Visual Effect Abstarct Geometry Loop" (https://sketchfab.com/3d-models/icosphere-visual-effect-abstarct-geometry-loop-ba6c8929177549aa98e4dc16fda42a4a) by SonicVisual (https://sketchfab.com/sonicvisual) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
