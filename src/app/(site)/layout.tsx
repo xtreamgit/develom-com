@@ -3,6 +3,8 @@ import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import Nav from '@/components/Nav'
+import Footer from '@/components/Footer'
 import VelomChatLoader from '@/components/VelomChatLoader'
 import './globals.css'
 
@@ -26,6 +28,14 @@ const organizationSchema = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://develom.com'),
+  icons: {
+    icon: [
+      {
+        url: '/favicon.svg',
+        type: 'image/svg+xml',
+      },
+    ],
+  },
 }
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
@@ -38,14 +48,15 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
       <body className="font-sans text-text antialiased">
+        <Nav />
         {children}
+        <Footer />
         <VelomChatLoader />
         <Analytics />
         <SpeedInsights />

@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import Nav from '@/components/Nav'
-import Footer from '@/components/Footer'
 import HeroSection from '@/components/home/HeroSection'
 import PillarsStrip from '@/components/home/PillarsStrip'
 import WhatWeDoSection from '@/components/home/WhatWeDoSection'
@@ -68,7 +66,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <Nav />
       <HeroSection />
       <PillarsStrip />
       <WhatWeDoSection />
@@ -76,7 +73,6 @@ export default async function HomePage() {
       <AuthoritySignal />
       <BlogSection posts={posts} />
       <FooterCTA />
-      <Footer />
     </>
   )
 }
