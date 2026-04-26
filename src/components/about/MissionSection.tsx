@@ -15,18 +15,25 @@ const columns = [
 
 export default function MissionSection() {
   return (
-    <section className="bg-bg-alt px-6 py-20">
+    <section className="bg-[#F8FAFC] px-6 py-24 md:py-32">
       <div className="mx-auto max-w-content">
-        <p className="mb-3 text-label uppercase text-blue">WHY WE EXIST</p>
-        <h2 className="text-[36px] font-bold text-navy">
+        <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-blue">
+          Why We Exist
+        </p>
+        <h2
+          className="max-w-[620px] text-navy"
+          style={{ fontSize: 'clamp(1.625rem, 2.5vw + 0.5rem, 2.25rem)', fontWeight: 700, lineHeight: 1.25 }}
+        >
           AI Automation for the Industries That Can&apos;t Cut Corners
         </h2>
 
-        <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10">
           {columns.map((col) => (
             <div key={col.heading}>
-              <h3 className="mb-4 text-[18px] font-bold text-navy">{col.heading}</h3>
-              <p className="text-[15px] leading-[1.7] text-[#374151]">{col.body}</p>
+              <h3 className="mb-4 text-[17px] font-bold text-navy">{col.heading}</h3>
+              <p className="text-[15px] leading-[1.75] text-[#374151]" style={{ maxWidth: '38ch' }}>
+                {col.body}
+              </p>
             </div>
           ))}
         </div>

@@ -1,11 +1,19 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin, isAdminOrSelf, isAdminField } from '../access/roles'
 
 export const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
   admin: {
-    useAsTitle: 'email',
-    defaultColumns: ['name', 'email', 'role'],
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'email', 'role', 'lastLogin'],
+    group: 'System',
+  },
+  access: {
+    create: isAdmin,
+    read: () => true,
+    update: isAdminOrSelf,
+    delete: isAdmin,
   },
   fields: [
     {
@@ -18,12 +26,35 @@ export const Users: CollectionConfig = {
       name: 'role',
       type: 'select',
       required: true,
-      defaultValue: 'admin',
+      defaultValue: 'author',
       options: [
         { label: 'Admin', value: 'admin' },
         { label: 'Editor', value: 'editor' },
+        { label: 'Author', value: 'author' },
+        { label: 'Viewer', value: 'viewer' },
       ],
-      admin: { position: 'sidebar' },
+      admin: {
+        position: 'sidebar',
+        description: 'Determines what this user can do in the CMS',
+      },
+      access: {
+        update: isAdminField,
+      },
+    },
+    {
+      name: 'avatar',
+      type: 'upload',
+      relationTo: 'media',
+      admin: { description: 'Profile photo — uses the avatar image size (200×200)' },
+    },
+    {
+      name: 'lastLogin',
+      type: 'date',
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+        description: 'Auto-updated on login',
+      },
     },
   ],
 }

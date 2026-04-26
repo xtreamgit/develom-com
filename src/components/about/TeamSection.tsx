@@ -13,7 +13,7 @@ const team = [
     name: 'Robert Hughes',
     title: 'VP of Business Development & COO',
     location: 'Los Angeles, California',
-    bio: "Brings over 30 years of enterprise software sales acumen coupled with a decade of international startup business development expertise. His visionary leadership and unparalleled network of industry connections have been instrumental in propelling Develom to the forefront of AI solutions and application development.",
+    bio: 'Brings over 30 years of enterprise software sales acumen coupled with a decade of international startup business development expertise. His visionary leadership and unparalleled network of industry connections have been instrumental in propelling Develom to the forefront of AI solutions and application development.',
   },
   {
     imageSrc: '/team/carla.svg',
@@ -40,36 +40,49 @@ const team = [
 
 export default function TeamSection() {
   return (
-    <section className="bg-white px-6 py-20">
+    <section className="bg-white px-6 py-24 md:py-32">
       <div className="mx-auto max-w-content">
-        <p className="mb-3 text-label uppercase text-blue">THE TEAM</p>
-        <h2 className="mb-10 text-[36px] font-bold text-navy">
+        <p className="mb-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-blue">
+          The Team
+        </p>
+        <h2
+          className="mb-14 text-navy"
+          style={{ fontSize: 'clamp(1.625rem, 2.5vw + 0.5rem, 2.25rem)', fontWeight: 700, lineHeight: 1.25 }}
+        >
           Meet the People Behind the Builds
         </h2>
 
-        {/* Mobile: horizontal scroll carousel */}
-        <div className="flex snap-x snap-mandatory gap-6 overflow-x-auto pb-4 md:hidden">
+        {/* Mobile: horizontal scroll carousel with snap */}
+        <div className="-mx-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-4 md:hidden">
           {team.map((member) => (
             <div
               key={member.name}
-              className="w-72 flex-shrink-0 snap-start rounded-xl border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
+              className="w-[280px] flex-shrink-0 snap-start"
             >
               <TeamCard member={member} />
             </div>
           ))}
+          {/* Spacer for right padding in scroll */}
+          <div className="w-2 flex-shrink-0" />
         </div>
 
-        {/* Desktop: 3-column grid */}
-        <div className="hidden grid-cols-3 gap-6 md:grid">
-          {team.map((member) => (
-            <div
-              key={member.name}
-              className="rounded-xl border border-gray-200 bg-white p-6 transition-shadow hover:shadow-md"
-            >
+        {/* Desktop: grid — 3 top, 2 bottom centered */}
+        <div className="hidden md:grid md:grid-cols-3 md:gap-6">
+          {team.slice(0, 3).map((member) => (
+            <div key={member.name}>
               <TeamCard member={member} />
             </div>
           ))}
         </div>
+        {team.length > 3 && (
+          <div className="mt-6 hidden justify-center gap-6 md:flex">
+            {team.slice(3).map((member) => (
+              <div key={member.name} className="w-full max-w-[calc((100%-1.5rem)/3)]">
+                <TeamCard member={member} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )
@@ -77,17 +90,16 @@ export default function TeamSection() {
 
 function TeamCard({ member }: { member: (typeof team)[0] }) {
   return (
-    <>
+    <div className="group flex h-full flex-col rounded-lg bg-[#F8FAFC] p-6 transition-all duration-200 hover:bg-white hover:shadow-md">
       <img
         src={member.imageSrc}
         alt={member.name}
-        className="mb-4 h-[120px] w-[120px] rounded-full object-cover"
+        className="mb-5 h-[100px] w-[100px] rounded-full object-cover"
       />
-      <h3 className="text-[18px] font-semibold text-navy">{member.name}</h3>
-      <p className="mt-0.5 text-[13px] font-semibold text-blue">{member.title}</p>
+      <h3 className="text-[17px] font-bold text-navy">{member.name}</h3>
+      <p className="mt-1 text-[13px] font-semibold text-blue">{member.title}</p>
       <p className="mt-0.5 text-[13px] italic text-muted">{member.location}</p>
-      <div className="my-4 border-t border-gray-100" />
-      <p className="text-[14px] leading-[1.6] text-[#374151]">{member.bio}</p>
-    </>
+      <p className="mt-4 text-[14px] leading-[1.7] text-[#374151]">{member.bio}</p>
+    </div>
   )
 }

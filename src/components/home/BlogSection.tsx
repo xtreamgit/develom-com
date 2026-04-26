@@ -1,20 +1,19 @@
 import Link from 'next/link'
 
+interface Tag {
+  id: number
+  name: string
+  slug: string
+  color: string
+}
+
 interface BlogPost {
   id: string
   title: string
   slug: string
   date: string
   excerpt: string
-  pillarTag: string
-}
-
-const pillarColors: Record<string, string> = {
-  Automation: 'bg-blue-50 text-blue-700',
-  Compliance: 'bg-amber-50 text-amber-700',
-  Scalability: 'bg-green-50 text-green-700',
-  Security: 'bg-red-50 text-red-700',
-  Sustainability: 'bg-purple-50 text-purple-700',
+  tags?: Tag[] | null
 }
 
 function formatDate(dateString: string): string {
@@ -27,15 +26,21 @@ function formatDate(dateString: string): string {
 }
 
 function PostCard({ post }: { post: BlogPost }) {
-  const colorClass = pillarColors[post.pillarTag] || 'bg-gray-50 text-gray-700'
+  const primaryTag = post.tags?.[0] ?? null
 
   return (
     <div className="flex flex-col rounded-lg bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-      <span
-        className={`inline-block self-start rounded-sm px-2.5 py-1 text-[12px] font-semibold ${colorClass}`}
-      >
-        {post.pillarTag}
-      </span>
+      {primaryTag && (
+        <span
+          className="inline-block self-start rounded-sm px-2.5 py-1 text-[12px] font-semibold"
+          style={{
+            backgroundColor: `${primaryTag.color}18`,
+            color: primaryTag.color,
+          }}
+        >
+          {primaryTag.name}
+        </span>
+      )}
 
       <h3 className="mt-3 text-[18px] font-semibold text-navy">{post.title}</h3>
 
@@ -64,7 +69,8 @@ export default function BlogSection({ posts }: { posts: BlogPost[] }) {
         <h2 className="mt-3 text-h2 text-navy">What We{'\u2019'}re Thinking About</h2>
 
         <p className="mt-4 max-w-[560px] text-lg text-muted">
-          Original analysis on AI automation, compliance engineering, and what actually works in production.
+          Original analysis on AI automation, compliance engineering, and what actually works in
+          production.
         </p>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -74,10 +80,7 @@ export default function BlogSection({ posts }: { posts: BlogPost[] }) {
         </div>
 
         <div className="mt-8 text-center">
-          <Link
-            href="/blog"
-            className="text-[16px] font-semibold text-blue hover:underline"
-          >
+          <Link href="/blog" className="text-[16px] font-semibold text-blue hover:underline">
             Read all posts &rarr;
           </Link>
         </div>

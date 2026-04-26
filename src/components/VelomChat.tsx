@@ -58,7 +58,7 @@ export default function VelomChat() {
           className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue shadow-lg hover:brightness-90 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
           aria-label="Open Velom AI chat"
         >
-          <Image src="/velom/velom.svg" alt="Velom" width={28} height={28} />
+          <Image src="/velom/velom.svg" alt="Velom" width={54} height={61} className="h-7 w-auto" />
         </button>
       )}
 

@@ -1,0 +1,32 @@
+/*
+ * Develom admin overrides
+ * Injected via admin.css in payload.config.ts
+ *
+ * Root problem: Payload's StepNav wraps the Icon in a <span>, and
+ * .step-nav span { overflow: hidden; max-width: 160px } clips any SVG
+ * larger than the element's computed width.
+ * Additionally, .step-nav__home is hard-coded to 16×16px.
+ * These rules restore the 50×50 icon to full visibility.
+ */
+
+/* 1. Expand the home button container to hold a 50×50 icon */
+.step-nav__home,
+.step-nav .step-nav__home {
+  width: 50px !important;
+  height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: visible !important;
+}
+
+/* 2. The <span> Payload injects around the Icon clips overflow — undo that */
+.step-nav__home > span,
+.step-nav .step-nav__home > span {
+  overflow: visible !important;
+  max-width: none !important;
+  white-space: normal !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}

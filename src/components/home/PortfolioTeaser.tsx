@@ -1,39 +1,59 @@
 import Link from 'next/link'
 
+interface Tag {
+  id: number
+  name: string
+  slug: string
+  color: string
+}
+
 interface PortfolioProject {
   id: string
   title: string
   stack: string
   problem: string
-  pillars?: string[] | null
+  tags?: Tag[] | null
   flagship?: boolean | null
   status?: string | null
   order?: number | null
 }
 
-function PillarTag({ name, flagship }: { name: string; flagship: boolean }) {
+function PillarTag({ tag, flagship }: { tag: Tag; flagship: boolean }) {
+  if (flagship) {
+    return (
+      <span
+        className="inline-block rounded-sm px-2.5 py-1 text-[12px] font-semibold"
+        style={{
+          backgroundColor: `${tag.color}25`,
+          color: tag.color,
+        }}
+      >
+        {tag.name}
+      </span>
+    )
+  }
   return (
     <span
-      className={`inline-block rounded-sm px-2.5 py-1 text-[12px] font-semibold ${
-        flagship ? 'bg-white/10 text-white/90' : 'bg-[#F1F5F9] text-navy'
-      }`}
+      className="inline-block rounded-sm px-2.5 py-1 text-[12px] font-semibold"
+      style={{
+        backgroundColor: `${tag.color}18`,
+        color: tag.color,
+      }}
     >
-      {name}
+      {tag.name}
     </span>
   )
 }
 
 function ProjectCard({ project }: { project: PortfolioProject }) {
   const isFlagship = project.flagship === true
-  const buttonText =
-    project.status === 'live' ? 'View Case Study' : 'Demo Coming May 2026'
+  const buttonText = project.status === 'live' ? 'View Case Study' : 'Demo Coming May 2026'
+  const tags = project.tags ?? []
 
   return (
     <div
       className={`relative flex flex-col rounded-lg p-7 transition-shadow ${
-        isFlagship
-          ? 'bg-navy text-white shadow-md'
-          : 'bg-white shadow-sm hover:shadow-md'
+        isFlagship ? 'bg-navy text-white shadow-md' : 'bg-white shadow-sm hover:shadow-md'
       }`}
     >
       {isFlagship && (
@@ -48,22 +68,18 @@ function ProjectCard({ project }: { project: PortfolioProject }) {
         {project.title}
       </h3>
 
-      <p
-        className={`mt-2 text-[13px] ${isFlagship ? 'text-white/70' : 'text-muted'}`}
-      >
+      <p className={`mt-2 text-[13px] ${isFlagship ? 'text-white/70' : 'text-muted'}`}>
         {project.stack}
       </p>
 
-      <p
-        className={`mt-3 text-[15px] ${isFlagship ? 'text-white/80' : 'text-text'}`}
-      >
+      <p className={`mt-3 text-[15px] ${isFlagship ? 'text-white/80' : 'text-text'}`}>
         {project.problem}
       </p>
 
-      {project.pillars && project.pillars.length > 0 && (
+      {tags.length > 0 && (
         <div className="mt-4 flex flex-wrap gap-2">
-          {project.pillars.map((pillar) => (
-            <PillarTag key={pillar} name={pillar} flagship={isFlagship} />
+          {tags.map((tag) => (
+            <PillarTag key={tag.id} tag={tag} flagship={isFlagship} />
           ))}
         </div>
       )}
@@ -78,22 +94,17 @@ function ProjectCard({ project }: { project: PortfolioProject }) {
   )
 }
 
-export default function PortfolioTeaser({
-  projects,
-}: {
-  projects: PortfolioProject[]
-}) {
+export default function PortfolioTeaser({ projects }: { projects: PortfolioProject[] }) {
   return (
     <section className="bg-bg-alt px-6 py-20">
       <div className="mx-auto max-w-content">
         <p className="text-label uppercase text-blue">OUR BUILDS</p>
 
-        <h2 className="mt-3 text-h2 text-navy">
-          Working AI Systems, Not Slide Decks.
-        </h2>
+        <h2 className="mt-3 text-h2 text-navy">Working AI Systems, Not Slide Decks.</h2>
 
         <p className="mt-4 max-w-[620px] text-lg text-muted">
-          Every portfolio project ships with architecture documentation, a five-pillar compliance narrative, and a live demo environment.
+          Every portfolio project ships with architecture documentation, a five-pillar compliance
+          narrative, and a live demo environment.
         </p>
 
         <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -103,10 +114,7 @@ export default function PortfolioTeaser({
         </div>
 
         <div className="mt-10 text-center">
-          <Link
-            href="/portfolio"
-            className="text-[16px] font-semibold text-blue hover:underline"
-          >
+          <Link href="/portfolio" className="text-[16px] font-semibold text-blue hover:underline">
             View full portfolio &rarr;
           </Link>
         </div>

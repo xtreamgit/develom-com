@@ -1,0 +1,205 @@
+/* ============================================================
+   Develom CMS — Payload Admin Custom Theme
+   Brand tokens from .impeccable.md
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+/* ─── Light-mode elevation scale ─────────────────────────── */
+:root {
+  --theme-elevation-0:   #FFFFFF;
+  --theme-elevation-50:  #F8FAFC;
+  --theme-elevation-100: #F1F5F9;
+  --theme-elevation-150: #E2E8F0;
+  --theme-elevation-200: #CBD5E1;
+  --theme-elevation-250: #94A3B8;
+  --theme-elevation-300: #64748B;
+  --theme-elevation-350: #475569;
+  --theme-elevation-400: #334155;
+  --theme-elevation-450: #1E293B;
+  --theme-elevation-500: #0D1B2A;
+
+  /* Accent — electric blue */
+  --theme-elevation-800:  #2563EB;
+  --theme-elevation-900:  #1D4ED8;
+  --theme-elevation-1000: #1E40AF;
+
+  /* Semantic */
+  --theme-success-100: #DCFCE7;
+  --theme-success-500: #22C55E;
+  --theme-error-100:   #FEE2E2;
+  --theme-error-500:   #EF4444;
+  --theme-warning-100: #FEF3C7;
+  --theme-warning-500: #F59E0B;
+
+  --theme-text:       #0D1B2A;
+  --theme-input-text: #0D1B2A;
+
+  /* Typography */
+  --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'DM Mono', 'SF Mono', Consolas, monospace;
+}
+
+/* ─── Dark-mode elevation scale ─────────────────────────── */
+[data-theme='dark'] {
+  --theme-elevation-0:   #0D1B2A;
+  --theme-elevation-50:  #111F30;
+  --theme-elevation-100: #152435;
+  --theme-elevation-150: #1E293B;
+  --theme-elevation-200: #263345;
+  --theme-elevation-250: #334155;
+  --theme-elevation-300: #475569;
+  --theme-elevation-350: #64748B;
+  --theme-elevation-400: #94A3B8;
+  --theme-elevation-450: #CBD5E1;
+  --theme-elevation-500: #F8FAFC;
+
+  --theme-text:       #E2E8F0;
+  --theme-input-text: #E2E8F0;
+}
+
+/* ─── Global typography ─────────────────────────────────── */
+body,
+.payload-default,
+.nav,
+.template-default,
+.dashboard {
+  font-family: var(--font-body) !important;
+}
+
+code,
+pre,
+.code-field,
+[class*='mono'],
+[class*='code'] {
+  font-family: var(--font-mono) !important;
+}
+
+/* ─── Sidebar ────────────────────────────────────────────── */
+.nav {
+  background-color: #0D1B2A !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.nav__wrap {
+  background-color: #0D1B2A !important;
+}
+
+/* Nav links */
+.nav a,
+.nav button,
+.nav__link,
+.nav-group__toggle {
+  color: #CBD5E1 !important;
+  font-family: var(--font-body) !important;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.nav a:hover,
+.nav button:hover,
+.nav__link:hover {
+  color: #FFFFFF !important;
+  background-color: rgba(37, 99, 235, 0.12) !important;
+  border-radius: 6px;
+}
+
+.nav a.active,
+.nav button.active,
+.nav__link--active {
+  color: #FFFFFF !important;
+  background-color: #2563EB !important;
+  border-radius: 6px;
+}
+
+/* Group labels */
+.nav-group__label,
+.nav-group__title {
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+/* ─── Buttons ───────────────────────────────────────────── */
+.btn {
+  border-radius: 8px !important;
+  font-family: var(--font-body) !important;
+  font-weight: 600 !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease !important;
+}
+
+.btn--style-primary,
+.btn--style-pill.btn--style-primary {
+  background-color: #2563EB !important;
+  color: #FFFFFF !important;
+  border-color: transparent !important;
+}
+
+.btn--style-primary:hover,
+.btn--style-pill.btn--style-primary:hover {
+  background-color: #1D4ED8 !important;
+}
+
+.btn--style-secondary,
+.btn--style-pill.btn--style-secondary {
+  border-color: #E2E8F0 !important;
+  color: #0D1B2A !important;
+  background-color: transparent !important;
+}
+
+.btn--style-secondary:hover {
+  background-color: #F1F5F9 !important;
+}
+
+/* ─── Form inputs ────────────────────────────────────────── */
+.field-type input,
+.field-type textarea,
+.field-type select {
+  font-family: var(--font-body) !important;
+  border-radius: 6px !important;
+}
+
+/* ─── Login page ─────────────────────────────────────────── */
+.template-login {
+  background-color: #F8FAFC !important;
+}
+
+.template-login .login__form {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E2E8F0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 24px rgba(13, 27, 42, 0.08) !important;
+}
+
+/* ─── Page headers ───────────────────────────────────────── */
+.collection-list__header h1,
+.edit-view__header h1,
+.global-edit__header h1,
+h1.collection-list__heading {
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  color: #0D1B2A !important;
+}
+
+[data-theme='dark'] .collection-list__header h1,
+[data-theme='dark'] .edit-view__header h1,
+[data-theme='dark'] .global-edit__header h1 {
+  color: #F8FAFC !important;
+}
+
+/* ─── Dashboard ─────────────────────────────────────────── */
+.dashboard__wrap {
+  font-family: var(--font-body) !important;
+}
+
+/* ─── Thumbnail / card overrides ─────────────────────────── */
+.collection-card {
+  border-radius: 8px !important;
+  border-color: #E2E8F0 !important;
+}
+
+.collection-card:hover {
+  border-color: #2563EB !important;
+}

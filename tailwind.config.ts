@@ -12,7 +12,8 @@ const config: Config = {
         muted: '#6B7280',
       },
       fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        sans: ['DM Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        mono: ['DM Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
         hero: ['56px', { lineHeight: '1.2', letterSpacing: '-0.02em', fontWeight: '800' }],

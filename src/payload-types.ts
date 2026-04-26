@@ -69,9 +69,15 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    'media-folders': MediaFolder;
     'blog-posts': BlogPost;
     'portfolio-projects': PortfolioProject;
     services: Service;
+    tags: Tag;
+    categories: Category;
+    pages: Page;
+    testimonials: Testimonial;
+    'case-studies': CaseStudy;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -81,9 +87,15 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'media-folders': MediaFoldersSelect<false> | MediaFoldersSelect<true>;
     'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
     'portfolio-projects': PortfolioProjectsSelect<false> | PortfolioProjectsSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -94,9 +106,11 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    navigation: Navigation;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -137,7 +151,18 @@ export interface User {
    * Full name — displayed in admin panel
    */
   name: string;
-  role: 'admin' | 'editor';
+  /**
+   * Determines what this user can do in the CMS
+   */
+  role: 'admin' | 'editor' | 'author' | 'viewer';
+  /**
+   * Profile photo — uses the avatar image size (200×200)
+   */
+  avatar?: (number | null) | Media;
+  /**
+   * Auto-updated on login
+   */
+  lastLogin?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -163,7 +188,40 @@ export interface User {
  */
 export interface Media {
   id: number;
+  /**
+   * Descriptive alt text for accessibility
+   */
   alt: string;
+  /**
+   * Caption for display below images
+   */
+  caption?: string | null;
+  /**
+   * Photographer or source attribution
+   */
+  credit?: string | null;
+  /**
+   * Organize into a folder
+   */
+  folder?: (number | null) | MediaFolder;
+  /**
+   * Auto-populated from MIME type on upload
+   */
+  fileType?: ('image' | 'video' | 'audio' | 'document' | 'pdf' | 'other') | null;
+  /**
+   * Tag for filtering and organization
+   */
+  tags?: (number | Tag)[] | null;
+  license?: ('owned' | 'licensed' | 'creative-commons' | 'public-domain') | null;
+  /**
+   * License expiration — only relevant for licensed assets
+   */
+  expirationDate?: string | null;
+  accessLevel?: ('public' | 'internal' | 'restricted') | null;
+  /**
+   * Auto-set to the creating user
+   */
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -200,7 +258,68 @@ export interface Media {
       filesize?: number | null;
       filename?: string | null;
     };
+    og?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    avatar?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-folders".
+ */
+export interface MediaFolder {
+  id: number;
+  name: string;
+  /**
+   * URL-safe identifier for this folder
+   */
+  slug: string;
+  /**
+   * Parent folder (leave empty for top-level)
+   */
+  parent?: (number | null) | MediaFolder;
+  /**
+   * Visual label for quick folder identification
+   */
+  colorLabel?: ('blue' | 'green' | 'amber' | 'red' | 'purple' | 'gray') | null;
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  name: string;
+  /**
+   * URL-safe identifier. Auto-generated from name if left blank.
+   */
+  slug: string;
+  /**
+   * Hex color for chip display (e.g. #2563EB)
+   */
+  color: string;
+  /**
+   * Optional — used in tag archive pages and tooltips
+   */
+  description?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -212,7 +331,14 @@ export interface BlogPost {
   slug: string;
   date: string;
   excerpt: string;
-  pillarTag: 'Automation' | 'Compliance' | 'Scalability' | 'Security' | 'Sustainability';
+  /**
+   * One or more pillar tags
+   */
+  tags: (number | Tag)[];
+  /**
+   * Primary content category
+   */
+  category?: (number | null) | Category;
   body?: {
     root: {
       type: string;
@@ -230,9 +356,33 @@ export interface BlogPost {
   } | null;
   featuredImage?: (number | null) | Media;
   published?: boolean | null;
+  /**
+   * Auto-set to the creating user
+   */
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  /**
+   * Optional parent category for hierarchy (e.g. "AI" → "RAG Systems")
+   */
+  parent?: (number | null) | Category;
+  description?: string | null;
+  /**
+   * Icon identifier — frontend maps this to a Lucide icon
+   */
+  icon?: ('brain' | 'shield' | 'scale' | 'cloud' | 'code' | 'chart' | 'users' | 'zap') | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -243,11 +393,15 @@ export interface PortfolioProject {
   title: string;
   stack: string;
   problem: string;
-  pillars?: ('Automation' | 'Compliance' | 'Scalability' | 'Security' | 'Sustainability')[] | null;
+  tags: (number | Tag)[];
   flagship?: boolean | null;
   demoUrl?: string | null;
   status?: ('coming-soon' | 'live') | null;
   order?: number | null;
+  /**
+   * Auto-set to the creating user
+   */
+  createdBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
 }
@@ -288,6 +442,288 @@ export interface Service {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * URL path — e.g. "privacy-policy" → /privacy-policy
+   */
+  slug: string;
+  status: 'draft' | 'published';
+  publishedDate?: string | null;
+  meta?: {
+    /**
+     * Overrides page title in <title> tag
+     */
+    metaTitle?: string | null;
+    metaDescription?: string | null;
+    metaImage?: (number | null) | Media;
+  };
+  layout: (
+    | {
+        heading: string;
+        subheading?: string | null;
+        ctaText?: string | null;
+        ctaLink?: string | null;
+        background?: ('navy' | 'white') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'hero-block';
+      }
+    | {
+        content: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'rich-text-block';
+      }
+    | {
+        leftContent: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        rightType?: ('richText' | 'image') | null;
+        rightContent?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        rightImage?: (number | null) | Media;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'two-column-block';
+      }
+    | {
+        heading: string;
+        body?: string | null;
+        buttonText?: string | null;
+        buttonLink?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'cta-block';
+      }
+    | {
+        image: number | Media;
+        caption?: string | null;
+        width?: ('contained' | 'full') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'image-block';
+      }
+    | {
+        heading?: string | null;
+        items?:
+          | {
+              question: string;
+              answer: {
+                root: {
+                  type: string;
+                  children: {
+                    type: any;
+                    version: number;
+                    [k: string]: unknown;
+                  }[];
+                  direction: ('ltr' | 'rtl') | null;
+                  format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                  indent: number;
+                  version: number;
+                };
+                [k: string]: unknown;
+              };
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'faq-block';
+      }
+  )[];
+  /**
+   * Auto-set to the creating user
+   */
+  createdBy?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  /**
+   * The testimonial text — keep under 200 words for display
+   */
+  quote: string;
+  /**
+   * Full name of the person giving the testimonial
+   */
+  authorName: string;
+  /**
+   * Job title — e.g. "CTO" or "VP Engineering"
+   */
+  authorTitle?: string | null;
+  /**
+   * Company name
+   */
+  company?: string | null;
+  /**
+   * Headshot — uses the avatar image size (200×200)
+   */
+  avatar?: (number | null) | Media;
+  /**
+   * Optional 1-5 star rating
+   */
+  rating?: number | null;
+  /**
+   * Which pillars does this testimonial relate to?
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * Featured testimonials appear on the homepage
+   */
+  featured?: boolean | null;
+  /**
+   * Display order (lower = first)
+   */
+  order?: number | null;
+  /**
+   * Auto-set to the creating user
+   */
+  createdBy?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies".
+ */
+export interface CaseStudy {
+  id: number;
+  title: string;
+  /**
+   * URL path — e.g. "voice-rag-compliance" → /case-studies/voice-rag-compliance
+   */
+  slug: string;
+  /**
+   * Client name — leave blank if under NDA
+   */
+  client?: string | null;
+  /**
+   * Target industry — matches Develom ICP segments
+   */
+  industry: 'healthcare' | 'financial-services' | 'insurance' | 'legal' | 'technology' | 'other';
+  /**
+   * What problem did the client face?
+   */
+  challenge: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * How did Develom solve it?
+   */
+  solution: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Quantifiable results — at least one metric required
+   */
+  results?:
+    | {
+        /**
+         * e.g. "Response Time"
+         */
+        metric: string;
+        /**
+         * e.g. "3.2s → 0.4s"
+         */
+        value: string;
+        /**
+         * Optional context — e.g. "88% improvement"
+         */
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  tags: (number | Tag)[];
+  /**
+   * Technology stack used — e.g. "LangGraph · PGVector · GCP"
+   */
+  stack?: string | null;
+  featuredImage?: (number | null) | Media;
+  published?: boolean | null;
+  order?: number | null;
+  /**
+   * Auto-set to the creating user
+   */
+  createdBy?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -319,6 +755,10 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
+        relationTo: 'media-folders';
+        value: number | MediaFolder;
+      } | null)
+    | ({
         relationTo: 'blog-posts';
         value: number | BlogPost;
       } | null)
@@ -329,6 +769,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'services';
         value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: number | Tag;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: number | Category;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'case-studies';
+        value: number | CaseStudy;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -379,6 +839,8 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   role?: T;
+  avatar?: T;
+  lastLogin?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -402,6 +864,15 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  caption?: T;
+  credit?: T;
+  folder?: T;
+  fileType?: T;
+  tags?: T;
+  license?: T;
+  expirationDate?: T;
+  accessLevel?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -446,7 +917,40 @@ export interface MediaSelect<T extends boolean = true> {
               filesize?: T;
               filename?: T;
             };
+        og?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        avatar?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-folders_select".
+ */
+export interface MediaFoldersSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  parent?: T;
+  colorLabel?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -457,10 +961,12 @@ export interface BlogPostsSelect<T extends boolean = true> {
   slug?: T;
   date?: T;
   excerpt?: T;
-  pillarTag?: T;
+  tags?: T;
+  category?: T;
   body?: T;
   featuredImage?: T;
   published?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
@@ -473,11 +979,12 @@ export interface PortfolioProjectsSelect<T extends boolean = true> {
   title?: T;
   stack?: T;
   problem?: T;
-  pillars?: T;
+  tags?: T;
   flagship?: T;
   demoUrl?: T;
   status?: T;
   order?: T;
+  createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -500,6 +1007,164 @@ export interface ServicesSelect<T extends boolean = true> {
   sortOrder?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  color?: T;
+  description?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  parent?: T;
+  description?: T;
+  icon?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  status?: T;
+  publishedDate?: T;
+  meta?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        metaImage?: T;
+      };
+  layout?:
+    | T
+    | {
+        'hero-block'?:
+          | T
+          | {
+              heading?: T;
+              subheading?: T;
+              ctaText?: T;
+              ctaLink?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'rich-text-block'?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'two-column-block'?:
+          | T
+          | {
+              leftContent?: T;
+              rightType?: T;
+              rightContent?: T;
+              rightImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'cta-block'?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              buttonText?: T;
+              buttonLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'image-block'?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              width?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'faq-block'?:
+          | T
+          | {
+              heading?: T;
+              items?:
+                | T
+                | {
+                    question?: T;
+                    answer?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  createdBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  quote?: T;
+  authorName?: T;
+  authorTitle?: T;
+  company?: T;
+  avatar?: T;
+  rating?: T;
+  tags?: T;
+  featured?: T;
+  order?: T;
+  createdBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "case-studies_select".
+ */
+export interface CaseStudiesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  client?: T;
+  industry?: T;
+  challenge?: T;
+  solution?: T;
+  results?:
+    | T
+    | {
+        metric?: T;
+        value?: T;
+        description?: T;
+        id?: T;
+      };
+  tags?: T;
+  stack?: T;
+  featuredImage?: T;
+  published?: T;
+  order?: T;
+  createdBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -543,32 +1208,202 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  /**
+   * Top navigation bar items. Order matters — first item appears leftmost.
+   */
+  mainNav?:
+    | {
+        /**
+         * Display text — e.g. "Services"
+         */
+        label: string;
+        /**
+         * URL path — e.g. "/services" or "https://calendly.com/..."
+         */
+        link: string;
+        /**
+         * Optional sub-navigation — appears as a dropdown on hover
+         */
+        children?:
+          | {
+              label: string;
+              link: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Footer link groups — each group has a heading and list of links
+   */
+  footerNav?:
+    | {
+        /**
+         * Group heading — e.g. "Company", "Services", "Resources"
+         */
+        groupLabel: string;
+        links?:
+          | {
+              label: string;
+              link: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The primary call-to-action button in the navigation bar
+   */
+  ctaButton?: {
+    label?: string | null;
+    link?: string | null;
+    variant?: ('primary' | 'outline') | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
   id: number;
+  /**
+   * Used in browser tab and meta tags
+   */
+  siteTitle?: string | null;
+  /**
+   * Default meta description — used when pages don't have their own
+   */
+  siteDescription?: string | null;
+  /**
+   * Default OG image — uses the og image size (1200×630)
+   */
+  defaultMetaImage?: (number | null) | Media;
   primaryCTA?: string | null;
-  email?: string | null;
+  contactEmail?: string | null;
+  /**
+   * Optional — display format e.g. "+1 (555) 123-4567"
+   */
+  contactPhone?: string | null;
+  address?: {
+    street?: string | null;
+    city?: string | null;
+    state?: string | null;
+    zip?: string | null;
+    country?: string | null;
+  };
+  /**
+   * Free-text business hours — displayed on contact page
+   */
+  businessHours?: string | null;
   linkedinUrl?: string | null;
   githubUrl?: string | null;
   twitterUrl?: string | null;
   youtubeUrl?: string | null;
   instagramUrl?: string | null;
+  /**
+   * GA4 Measurement ID
+   */
+  googleAnalyticsId?: string | null;
+  /**
+   * Custom scripts for GTM, pixels, etc. Admin-only.
+   */
+  scripts?: {
+    /**
+     * Injected into <head> — for GTM, meta tags, etc.
+     */
+    headScripts?: string | null;
+    /**
+     * Injected before </body> — for tracking pixels, chat widgets, etc.
+     */
+    bodyScripts?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  mainNav?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        children?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  footerNav?:
+    | T
+    | {
+        groupLabel?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        variant?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  siteDescription?: T;
+  defaultMetaImage?: T;
   primaryCTA?: T;
-  email?: T;
+  contactEmail?: T;
+  contactPhone?: T;
+  address?:
+    | T
+    | {
+        street?: T;
+        city?: T;
+        state?: T;
+        zip?: T;
+        country?: T;
+      };
+  businessHours?: T;
   linkedinUrl?: T;
   githubUrl?: T;
   twitterUrl?: T;
   youtubeUrl?: T;
   instagramUrl?: T;
+  googleAnalyticsId?: T;
+  scripts?:
+    | T
+    | {
+        headScripts?: T;
+        bodyScripts?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
