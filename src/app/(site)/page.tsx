@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import HeroSection from '@/components/home/HeroSection'
+import TrustStrip from '@/components/home/TrustStrip'
+import SocialProof from '@/components/home/SocialProof'
 import PillarsStrip from '@/components/home/PillarsStrip'
 import WhatWeDoSection from '@/components/home/WhatWeDoSection'
 import PortfolioTeaser from '@/components/home/PortfolioTeaser'
@@ -67,8 +69,20 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
+      <TrustStrip />
+      <SocialProof />
       <PillarsStrip />
       <WhatWeDoSection />
+      {/* Industry row — Option A: static text only, no /industries/[vertical] links.
+          Build routes post-launch. */}
+      <div className="bg-[#0A0F1E] px-6 py-10 text-center">
+        <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-white/40">
+          Built for
+        </p>
+        <p className="mt-2 text-[16px] font-semibold text-white/70">
+          Healthcare &nbsp;·&nbsp; Finance &nbsp;·&nbsp; Legal &nbsp;·&nbsp; Insurance
+        </p>
+      </div>
       <PortfolioTeaser projects={projects} />
       <AuthoritySignal />
       <BlogSection posts={posts} />

@@ -67,7 +67,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         <Nav />
         {children}
         <Footer />
-        <VelomChatLoader />
+        {process.env.NEXT_PUBLIC_API_URL && <VelomChatLoader />}
         <Analytics />
         <SpeedInsights />
         {gaId && <GoogleAnalytics gaId={gaId} />}

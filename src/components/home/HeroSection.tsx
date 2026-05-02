@@ -43,9 +43,9 @@ export default function HeroSection() {
           <div className="mt-4">
             <Link
               href="/portfolio"
-              className="text-[16px] text-white/70 hover:text-white transition-colors"
+              className="inline-block rounded border border-white/60 px-8 py-3 text-[16px] font-semibold text-white hover:border-white hover:bg-white/10 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
             >
-              Or explore our portfolio &rarr;
+              See the Work
             </Link>
           </div>
         </div>

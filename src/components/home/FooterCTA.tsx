@@ -2,28 +2,30 @@ import Link from 'next/link'
 
 export default function FooterCTA() {
   return (
-    <section className="bg-navy px-6 py-24">
-      <div className="mx-auto max-w-text text-center">
-        <h2 className="text-h1 text-white leading-tight">
-          Ready to Automate What{'\u2019'}s Slowing You Down?
+    <section className="bg-navy px-6 py-24 text-center">
+      <div className="mx-auto max-w-[640px]">
+        <h2 className="text-h2 text-white">
+          Ready to Replace Your Compliance Bottleneck?
         </h2>
 
-        <p className="mx-auto mt-5 max-w-narrow text-lg text-white/80">
-          Tell us your biggest compliance or automation challenge. We{'\u2019'}ll tell you exactly how we{'\u2019'}d approach it — no pitch, no fluff.
+        <p className="mx-auto mt-5 max-w-narrow text-lg text-white/75">
+          Tell us what{"'"}s slowing your team down. We{"'"}ll tell you what{"'"}s possible.
         </p>
 
-        <div className="mt-10">
+        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <Link
             href="/contact"
-            className="inline-block rounded bg-blue px-10 py-4 text-[16px] font-bold text-white hover:brightness-90 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="inline-block rounded bg-blue px-8 py-3.5 text-[16px] font-bold text-white hover:brightness-90 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             Book a Discovery Call
           </Link>
+          <Link
+            href="/portfolio"
+            className="inline-block rounded border border-white/40 px-8 py-3 text-[16px] font-semibold text-white hover:border-white hover:bg-white/10 transition-all focus:outline-none focus:ring-2 focus:ring-white/50"
+          >
+            See the Work
+          </Link>
         </div>
-
-        <p className="mt-3 text-[14px] text-white/60">
-          30 minutes. No commitment. Just a real conversation.
-        </p>
       </div>
     </section>
   )

@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const credentials = [
   'Google Cloud Professional Architect',
-  '33 Years IT Engineering, Networking & Security',
+  '33 Years Enterprise IT in Regulated Industries',
   'AI & Machine Learning Certified',
   'GCP-Native Architecture Specialist',
   'DevSecOps & Zero-Trust Design',
@@ -15,16 +15,31 @@ export default function AuthoritySignal() {
         <p className="text-label uppercase text-blue">WHY DEVELOM</p>
 
         <h2 className="mt-3 text-h2 text-navy">
-          33 Years of IT Engineering. Now Applied to AI.
+          33 Years Building Infrastructure for Regulated Industries. Now Applied to AI.
         </h2>
 
         <p className="mt-5 text-lg leading-relaxed text-text">
-          Hector brings 33 years of IT system engineering, networking, and security experience to every Develom engagement. He holds the Google Cloud Professional Architect certification and has completed advanced training in Artificial Intelligence and Machine Learning.
+          Hector DeJesus has spent 33 years building the infrastructure that regulated industries run on — data systems for healthcare organizations, platforms for financial institutions, architecture for environments where downtime isn{'’'}t acceptable and data handling isn{'’'}t negotiable. That experience is the foundation of every Develom engagement. Not as a credential on a page — as the design constraint that shapes how we build.
         </p>
 
         <p className="mt-5 text-lg leading-relaxed text-text">
-          Develom{'\u2019'}s builds reflect that background: zero-trust by default, cloud-native from the start, and documented for the compliance officer, not just the developer.
+          Every system Develom ships is documented against the applicable regulatory framework, tested for compliance, and handed over production-ready. Because the industries we work with don{'’'}t have the option of figuring it out later.
         </p>
+
+        {/* Pull quote — pending Hector's confirmation */}
+        <blockquote className="mt-8 border-l-4 border-blue pl-6">
+          <p className="text-[17px] italic leading-relaxed text-navy/80">
+            {'“'}The organizations that will get the most from AI in regulated industries are the ones that deploy systems built for their environment — not general-purpose platforms that describe themselves as compliant.{'”'}
+          </p>
+          <footer className="mt-3 text-[14px] font-semibold text-muted">
+            — Hector DeJesus, Founder &amp; CEO, Develom
+          </footer>
+        </blockquote>
+
+        {/* Headshot placeholder — photo incoming from Hector */}
+        <div className="mt-8 h-24 w-24 rounded-full bg-[#E2E8F0] flex items-center justify-center">
+          <span className="text-[11px] font-semibold uppercase tracking-wide text-muted">Photo</span>
+        </div>
 
         <div className="mt-10 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {credentials.map((cred) => (
@@ -44,7 +59,7 @@ export default function AuthoritySignal() {
           href="/about"
           className="mt-8 inline-block text-[16px] font-semibold text-blue hover:underline"
         >
-          Read Hector{'\u2019'}s full background &rarr;
+          Read Hector{'’'}s full background &rarr;
         </Link>
       </div>
     </section>

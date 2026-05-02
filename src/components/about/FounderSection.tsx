@@ -1,84 +1,85 @@
+import Link from 'next/link'
+
 const credentials = [
   'Google Cloud Professional Architect',
-  '33 Years IT Engineering & Security',
+  '33 Years Enterprise IT in Regulated Industries',
   'AI & Machine Learning Certified',
   'GCP-Native Architecture Specialist',
   'DevSecOps & Zero-Trust Design',
-  'HIPAA · AML/KYC · GDPR Systems',
 ]
 
 export default function FounderSection() {
   return (
-    <section className="bg-white px-6 py-24 md:py-32">
-      <div className="mx-auto max-w-[960px]">
-        <p className="mb-12 text-[13px] font-semibold uppercase tracking-[0.12em] text-blue">
-          Founder
+    <section className="bg-white px-6 py-20">
+      <div className="mx-auto max-w-[800px]">
+        <p className="text-label uppercase text-blue">WHY DEVELOM</p>
+
+        <h2 className="mt-3 text-h2 text-navy">
+          33 Years Building Infrastructure for Regulated Industries. Now Applied to AI.
+        </h2>
+
+        <p className="mt-5 text-lg leading-relaxed text-text">
+          Hector DeJesus has spent 33 years building the infrastructure that regulated industries
+          run on — data systems for healthcare organizations, platforms for financial institutions,
+          architecture for environments where downtime isn{"'"}t acceptable and data handling
+          isn{"'"}t negotiable. That experience is the foundation of every Develom engagement.
+          Not as a credential on a page — as the design constraint that shapes how we build.
         </p>
 
-        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[280px_1fr]">
-          {/* Left: portrait + name + credentials */}
-          <div className="flex flex-col items-start">
-            <img
-              src="/team/hector.svg"
-              alt="Hector DeJesus"
-              className="h-44 w-44 rounded-full object-cover"
-            />
-            <h2 className="mt-6 text-[28px] font-bold tracking-tight text-navy">
-              Hector DeJesus
-            </h2>
-            <p className="mt-1 text-[15px] font-semibold text-blue">Founder &amp; CTO</p>
+        <p className="mt-5 text-lg leading-relaxed text-text">
+          Every system Develom ships is documented against the applicable regulatory framework,
+          tested for compliance, and handed over production-ready. Because the industries we work
+          with don{"'"}t have the option of figuring it out later.
+        </p>
 
-            {/* Credential list */}
-            <ul className="mt-8 flex flex-col gap-2.5">
-              {credentials.map((cred) => (
-                <li
-                  key={cred}
-                  className="flex items-start gap-2.5 text-[13px] font-medium leading-snug text-navy/80"
-                >
-                  <svg
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-blue"
-                  >
-                    <path
-                      d="M13.5 4.5L6.5 11.5L2.5 7.5"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  {cred}
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Pull quote — pending Hector's confirmation (#10) */}
+        <blockquote className="mt-8 border-l-4 border-blue pl-6">
+          <p className="text-[17px] italic leading-relaxed text-navy/80">
+            {'"'}The organizations that will get the most from AI in regulated industries are the
+            ones that deploy systems built for their environment — not general-purpose platforms
+            that describe themselves as compliant.{'"'}
+          </p>
+          <footer className="mt-3 text-[14px] font-semibold text-muted">
+            — Hector DeJesus, Founder &amp; CEO, Develom
+          </footer>
+        </blockquote>
 
-          {/* Right: bio + pull quote */}
-          <div className="flex flex-col justify-center">
-            <p className="text-[17px] leading-[1.8] text-text">
-              Hector brings 33 years of IT system engineering, networking, and security experience to
-              every Develom engagement. He holds the Google Cloud Professional Architect
-              certification and has completed advanced training in Artificial Intelligence and Machine
-              Learning.
-            </p>
-
-            <blockquote className="my-10 rounded-lg bg-[#F8FAFC] px-8 py-7">
-              <p className="text-[18px] font-medium italic leading-[1.7] text-navy">
-                &ldquo;The AI firms that will matter in regulated industries aren&apos;t the ones
-                with the biggest teams. They&apos;re the ones that understood the compliance
-                requirements before they wrote the first line of code.&rdquo;
-              </p>
-            </blockquote>
-
-            <p className="text-[17px] leading-[1.8] text-text">
-              Develom&apos;s systems reflect that background: zero-trust by default, cloud-native
-              from the start, and documented for the compliance officer as well as the developer.
-              When you work with Develom, you work directly with Hector — not a project manager
-              handing off to an offshore team.
-            </p>
+        {/* TODO: replace src with Hector's photo once received via Telegram (#9) */}
+        <div className="mt-8 flex items-center gap-5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/hector-dejesus.jpg"
+            alt="Hector DeJesus — Founder &amp; CEO, Develom"
+            width={96}
+            height={96}
+            className="h-24 w-24 rounded-full object-cover bg-[#E2E8F0]"
+          />
+          <div>
+            <p className="text-[15px] font-semibold text-navy">Hector DeJesus</p>
+            <p className="text-[13px] text-muted">Founder &amp; CEO, Develom</p>
           </div>
         </div>
+
+        <div className="mt-10 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {credentials.map((cred) => (
+            <div
+              key={cred}
+              className="flex items-start gap-3 rounded border border-[#E2E8F0] bg-bg-alt px-5 py-3.5 hover:border-blue transition-colors"
+            >
+              <span className="text-[16px] font-bold text-blue" aria-hidden="true">
+                &#10003;
+              </span>
+              <span className="text-[15px] font-semibold text-navy">{cred}</span>
+            </div>
+          ))}
+        </div>
+
+        <Link
+          href="/about"
+          className="mt-8 inline-block text-[16px] font-semibold text-blue hover:underline"
+        >
+          Read Hector{"'"}s full background &rarr;
+        </Link>
       </div>
     </section>
   )
