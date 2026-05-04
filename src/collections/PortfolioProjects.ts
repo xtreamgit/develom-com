@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { canCreate, isLoggedIn, canUpdate, canDelete } from '../access/roles'
+import { canCreate, canUpdate, canDelete } from '../access/roles'
 import { setCreatedBy } from '../hooks/setCreatedBy'
 
 export const PortfolioProjects: CollectionConfig = {
@@ -10,7 +10,7 @@ export const PortfolioProjects: CollectionConfig = {
   },
   access: {
     create: canCreate,
-    read: isLoggedIn,
+    read: () => true,
     update: canUpdate,
     delete: canDelete,
   },
