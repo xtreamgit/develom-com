@@ -1,4 +1,3 @@
-// SOC 2 Type II and Google Cloud Partner badge not included until Hector confirms applicable certifications.
 const signals = [
   'Google Cloud Professional Architect',
   'GCP-Native Infrastructure',

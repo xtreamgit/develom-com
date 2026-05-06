@@ -2,14 +2,14 @@ import Link from 'next/link'
 import { ShieldCheckIcon } from '@heroicons/react/24/outline'
 
 const industries = [
-  { name: 'Healthcare', hipaa: true, amlKyc: false, gdpr: true, fda: true, ccpa: true, soc2: true },
-  { name: 'Financial Services', hipaa: false, amlKyc: true, gdpr: true, fda: false, ccpa: true, soc2: true },
-  { name: 'Insurance', hipaa: true, amlKyc: true, gdpr: true, fda: false, ccpa: true, soc2: true },
-  { name: 'Legal', hipaa: false, amlKyc: false, gdpr: true, fda: false, ccpa: true, soc2: true },
-  { name: 'Government', hipaa: true, amlKyc: true, gdpr: false, fda: true, ccpa: false, soc2: true },
+  { name: 'Healthcare', hipaa: true, amlKyc: false, gdpr: true, fda: true, ccpa: true },
+  { name: 'Financial Services', hipaa: false, amlKyc: true, gdpr: true, fda: false, ccpa: true },
+  { name: 'Insurance', hipaa: true, amlKyc: true, gdpr: true, fda: false, ccpa: true },
+  { name: 'Legal', hipaa: false, amlKyc: false, gdpr: true, fda: false, ccpa: true },
+  { name: 'Government', hipaa: true, amlKyc: true, gdpr: false, fda: true, ccpa: false },
 ]
 
-const frameworks = ['HIPAA', 'AML/KYC', 'GDPR', 'FDA', 'CCPA', 'SOC 2']
+const frameworks = ['HIPAA', 'AML/KYC', 'GDPR', 'FDA', 'CCPA']
 
 export default function ComplianceStrip() {
   return (
@@ -50,7 +50,7 @@ export default function ComplianceStrip() {
             </thead>
             <tbody>
               {industries.map((row, i) => {
-                const checks = [row.hipaa, row.amlKyc, row.gdpr, row.fda, row.ccpa, row.soc2]
+                const checks = [row.hipaa, row.amlKyc, row.gdpr, row.fda, row.ccpa]
                 return (
                   <tr
                     key={row.name}

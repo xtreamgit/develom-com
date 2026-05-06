@@ -22,7 +22,7 @@ export const SiteSettings: GlobalConfig = {
       name: 'siteDescription',
       type: 'textarea',
       defaultValue:
-        'AI consulting and development for regulated industries. HIPAA, AML, SOC 2 compliant solutions.',
+        'AI consulting and development for regulated industries. HIPAA-ready, AML/KYC-compliant solutions.',
       admin: {
         description: "Default meta description — used when pages don't have their own",
       },
