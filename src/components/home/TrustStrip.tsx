@@ -1,12 +1,10 @@
-// SOC 2 Aligned and Google Cloud Partner marked as placeholders (#11, #12)
-// pending Hector's certification confirmation.
+// SOC 2 Aligned marked as placeholder (#11) pending Hector's certification confirmation.
 const signals = [
   { label: 'GCP Pro Architect',      placeholder: false },
   { label: 'HIPAA-Ready',            placeholder: false },
   { label: 'AML/KYC',                placeholder: false },
   { label: 'Zero-Trust',             placeholder: false },
   { label: 'SOC 2 Aligned',          placeholder: true  },
-  { label: 'Google Cloud Partner',   placeholder: true  },
 ]
 
 export default function TrustStrip() {
