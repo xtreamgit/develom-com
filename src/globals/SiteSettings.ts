@@ -80,7 +80,7 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'googleAnalyticsId',
       type: 'text',
-      defaultValue: 'G-CP1M66J7RB',
+      defaultValue: 'G-8TXQH76GDK',
       admin: { description: 'GA4 Measurement ID' },
     },
     {

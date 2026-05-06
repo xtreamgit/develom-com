@@ -53,7 +53,7 @@ const siteSettingsData = {
   twitterUrl: 'https://twitter.com/develom',
   youtubeUrl: 'https://youtube.com/@develom',
   instagramUrl: 'https://instagram.com/develom',
-  googleAnalyticsId: 'G-CP1M66J7RB',
+  googleAnalyticsId: 'G-8TXQH76GDK',
 }
 
 export async function seedNavigation() {

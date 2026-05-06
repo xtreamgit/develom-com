@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
   console.log('[contact-form]', trimmed)
 
   const resendKey = process.env.RESEND_API_KEY
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? 'hector@develom.com'
+  const toEmail = process.env.CONTACT_TO_EMAIL ?? 'contact@agents.develom.com'
   const fromEmail = process.env.EMAIL_FROM ?? 'contact@develom.com'
 
   if (resendKey) {
