@@ -48,7 +48,7 @@ export default async function Footer() {
     })
     .filter(Boolean) as { href: string; icon: string; label: string }[]
 
-  const contactEmail = settings?.contactEmail ?? 'hello@develom.com'
+  const contactEmail = settings?.contactEmail ?? 'contact@agents.develom.com'
 
   return (
     <footer className="bg-[#0A0F1A]">

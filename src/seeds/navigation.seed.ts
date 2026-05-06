@@ -47,7 +47,7 @@ const siteSettingsData = {
   siteDescription:
     'AI consulting and development for regulated industries. HIPAA, AML, SOC 2 compliant solutions.',
   primaryCTA: 'Book a Discovery Call',
-  contactEmail: 'hello@develom.com',
+  contactEmail: 'contact@agents.develom.com',
   linkedinUrl: 'https://www.linkedin.com/company/develom',
   githubUrl: 'https://github.com/develom-dev',
   twitterUrl: 'https://twitter.com/develom',

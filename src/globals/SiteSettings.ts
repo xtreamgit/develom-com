@@ -45,7 +45,7 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'contactEmail',
       type: 'email',
-      defaultValue: 'hello@develom.com',
+      defaultValue: 'contact@agents.develom.com',
     },
     {
       name: 'contactPhone',
