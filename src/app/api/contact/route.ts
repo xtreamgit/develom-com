@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
         host: smtpHost,
         port: smtpPort,
         secure: smtpPort === 465,
-        auth: { user: smtpUser, pass: smtpPass },
+        auth: { user: smtpUser!, pass: smtpPass! },
       })
 
       await transporter.sendMail({
