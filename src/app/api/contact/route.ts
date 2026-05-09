@@ -47,12 +47,13 @@ export async function POST(req: NextRequest) {
 
   if (smtpHost && smtpUser && smtpPass) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const transporter = nodemailer.createTransport({
         host: smtpHost,
         port: smtpPort,
         secure: smtpPort === 465,
-        auth: { user: smtpUser!, pass: smtpPass! },
-      })
+        auth: { user: smtpUser, pass: smtpPass },
+      } as any)
 
       await transporter.sendMail({
         from: `Develom Contact <${fromEmail}>`,
