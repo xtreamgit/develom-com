@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import nodemailer from 'nodemailer'
 
 export async function POST(req: NextRequest) {
   let body: Record<string, unknown>
@@ -37,41 +38,42 @@ export async function POST(req: NextRequest) {
 
   console.log('[contact-form]', trimmed)
 
-  const resendKey = process.env.RESEND_API_KEY
+  const smtpHost = process.env.SMTP_HOST
+  const smtpPort = parseInt(process.env.SMTP_PORT ?? '465', 10)
+  const smtpUser = process.env.SMTP_USER
+  const smtpPass = process.env.SMTP_PASS
   const toEmail = process.env.CONTACT_TO_EMAIL ?? 'contact@agents.develom.com'
-  const fromEmail = process.env.EMAIL_FROM ?? 'contact@develom.com'
+  const fromEmail = process.env.EMAIL_FROM ?? smtpUser ?? 'contact@develom.com'
 
-  if (resendKey) {
-    const payload = {
-      from: `Develom Contact <${fromEmail}>`,
-      to: [toEmail],
-      reply_to: trimmed.email,
-      subject: `New contact: ${trimmed.name}${trimmed.company ? ` — ${trimmed.company}` : ''}`,
-      text: [
-        `Name: ${trimmed.name}`,
-        `Email: ${trimmed.email}`,
-        trimmed.company ? `Company: ${trimmed.company}` : null,
-        trimmed.service ? `Service: ${trimmed.service}` : null,
-        '',
-        `Message:\n${trimmed.message}`,
-        '',
-        `Submitted: ${trimmed.submittedAt}`,
-      ]
-        .filter((l) => l !== null)
-        .join('\n'),
-    }
+  if (smtpHost && smtpUser && smtpPass) {
+    try {
+      const transporter = nodemailer.createTransport({
+        host: smtpHost,
+        port: smtpPort,
+        secure: smtpPort === 465,
+        auth: { user: smtpUser, pass: smtpPass },
+      })
 
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-
-    if (!res.ok) {
-      console.error('[contact-form] Resend error', res.status, await res.text())
+      await transporter.sendMail({
+        from: `Develom Contact <${fromEmail}>`,
+        to: toEmail,
+        replyTo: trimmed.email,
+        subject: `New contact: ${trimmed.name}${trimmed.company ? ` — ${trimmed.company}` : ''}`,
+        text: [
+          `Name: ${trimmed.name}`,
+          `Email: ${trimmed.email}`,
+          trimmed.company ? `Company: ${trimmed.company}` : null,
+          trimmed.service ? `Service: ${trimmed.service}` : null,
+          '',
+          `Message:\n${trimmed.message}`,
+          '',
+          `Submitted: ${trimmed.submittedAt}`,
+        ]
+          .filter((l) => l !== null)
+          .join('\n'),
+      })
+    } catch (err) {
+      console.error('[contact-form] SMTP error', err)
       // Still return 200 — form submitted successfully even if email delivery fails
     }
   }

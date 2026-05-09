@@ -29,6 +29,7 @@ export const PortfolioProjects: CollectionConfig = {
       required: true,
     },
     { name: 'flagship', type: 'checkbox', defaultValue: false },
+    { name: 'imageUrl', type: 'text' },
     { name: 'demoUrl', type: 'text' },
     {
       name: 'status',
