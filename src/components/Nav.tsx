@@ -3,14 +3,14 @@ import NavClient from './NavClient'
 
 // Fallback nav used when the global hasn't been seeded yet
 const FALLBACK_NAV = [
-  { label: 'Services', link: '/services', children: [] },
-  { label: 'Portfolio', link: '/portfolio', children: [] },
-  { label: 'About', link: '/about', children: [] },
-  { label: 'Blog', link: '/blog', children: [] },
-  { label: 'Contact', link: '/contact', children: [] },
+  { label: 'Solutions & Use Cases', link: '/services', children: [] },
+  { label: 'Industry', link: '/contact', children: [] },
+  { label: 'Company Size', link: '/contact', children: [] },
+  { label: 'Resources', link: '/blog', children: [] },
+  { label: 'Pricing', link: '/contact', children: [] },
 ]
 
-const FALLBACK_CTA = { label: 'Book a Discovery Call', link: '/contact', variant: 'primary' as const }
+const FALLBACK_CTA = { label: 'Get Started', link: '/contact', variant: 'primary' as const }
 
 export default async function Nav() {
   let nav

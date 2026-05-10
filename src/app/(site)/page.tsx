@@ -3,22 +3,22 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import HeroSection from '@/components/home/HeroSection'
 import TrustStrip from '@/components/home/TrustStrip'
-import SocialProof from '@/components/home/SocialProof'
-import PillarsStrip from '@/components/home/PillarsStrip'
-import WhatWeDoSection from '@/components/home/WhatWeDoSection'
-import PortfolioTeaser from '@/components/home/PortfolioTeaser'
-import AuthoritySignal from '@/components/home/AuthoritySignal'
+import SolutionsOutcome from '@/components/home/SolutionsOutcome'
+import SolutionFinder from '@/components/home/SolutionFinder'
+import ReferralBanner from '@/components/home/ReferralBanner'
+import UseCasesSection from '@/components/home/UseCasesSection'
+import ResourcesSection from '@/components/home/ResourcesSection'
 import BlogSection from '@/components/home/BlogSection'
 import FooterCTA from '@/components/home/FooterCTA'
 
 export const metadata: Metadata = {
-  title: 'Develom | AI Automation for Regulated Industries',
+  title: 'Develom | Intelligent AI Solutions. Measurable Impact.',
   description:
-    'Develom builds AI systems for healthcare, finance, insurance, and legal — where compliance, security, and auditability are non-negotiable.',
+    'We help businesses of all sizes automate, optimize, and accelerate with AI solutions built for real-world results.',
   openGraph: {
-    title: 'Develom | AI Automation for Regulated Industries',
+    title: 'Develom | Intelligent AI Solutions. Measurable Impact.',
     description:
-      'AI systems built for industries where getting it wrong is not an option.',
+      'AI solutions that automate, optimize, and accelerate your business — with measurable results.',
     url: 'https://develom.com',
     siteName: 'Develom',
     images: [{ url: '/og-home.png', width: 1200, height: 630, alt: 'Develom' }],
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Develom | AI Automation for Regulated Industries',
+    title: 'Develom | Intelligent AI Solutions. Measurable Impact.',
     description:
-      'AI systems built for industries where getting it wrong is not an option.',
+      'AI solutions that automate, optimize, and accelerate your business — with measurable results.',
     images: ['/og-home.png'],
   },
   alternates: {
@@ -42,7 +42,6 @@ export default async function HomePage() {
   const payload = await getPayload({ config })
 
   let posts: any[] = []
-  let projects: any[] = []
 
   try {
     const postsResult = await payload.find({
@@ -56,36 +55,16 @@ export default async function HomePage() {
     /* DB may not be migrated yet */
   }
 
-  try {
-    const projectsResult = await payload.find({
-      collection: 'portfolio-projects',
-      sort: 'order',
-    })
-    projects = projectsResult.docs
-  } catch {
-    /* DB may not be migrated yet */
-  }
-
   return (
     <>
       <HeroSection />
       <TrustStrip />
-      <SocialProof />
-      <PillarsStrip />
-      <WhatWeDoSection />
-      {/* Industry row — Option A: static text only, no /industries/[vertical] links.
-          Build routes post-launch. */}
-      <div className="bg-[#0A0F1E] px-6 py-10 text-center">
-        <p className="text-[13px] font-semibold uppercase tracking-[0.12em] text-white/40">
-          Built for
-        </p>
-        <p className="mt-2 text-[16px] font-semibold text-white/70">
-          Healthcare &nbsp;·&nbsp; Finance &nbsp;·&nbsp; Legal &nbsp;·&nbsp; Insurance
-        </p>
-      </div>
-      <PortfolioTeaser projects={projects} />
-      <AuthoritySignal />
-      <BlogSection posts={posts} />
+      <SolutionsOutcome />
+      <SolutionFinder />
+      <ReferralBanner />
+      <UseCasesSection />
+      <ResourcesSection />
+      {posts.length > 0 && <BlogSection posts={posts} />}
       <FooterCTA />
     </>
   )

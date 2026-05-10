@@ -3,11 +3,11 @@ import configPromise from '@payload-config'
 
 const navigationData = {
   mainNav: [
-    { label: 'Services', link: '/services', children: [] },
-    { label: 'Portfolio', link: '/portfolio', children: [] },
-    { label: 'About', link: '/about', children: [] },
-    { label: 'Blog', link: '/blog', children: [] },
-    { label: 'Contact', link: '/contact', children: [] },
+    { label: 'Solutions & Use Cases', link: '/services', children: [] },
+    { label: 'Industry', link: '/contact', children: [] },
+    { label: 'Company Size', link: '/contact', children: [] },
+    { label: 'Resources', link: '/blog', children: [] },
+    { label: 'Pricing', link: '/contact', children: [] },
   ],
   footerNav: [
     {
@@ -36,7 +36,7 @@ const navigationData = {
     },
   ],
   ctaButton: {
-    label: 'Book a Discovery Call',
+    label: 'Get Started',
     link: '/contact',
     variant: 'primary' as const,
   },
