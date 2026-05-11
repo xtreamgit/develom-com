@@ -25,6 +25,7 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
   admin: {
     user: Users.slug,
     importMap: {
@@ -81,6 +82,7 @@ export default buildConfig({
     vercelBlobStorage({
       enabled: process.env.NODE_ENV === 'production',
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
+      clientUploads: true,
       collections: {
         media: true,
       },
