@@ -395,6 +395,7 @@ export interface PortfolioProject {
   problem: string;
   tags: (number | Tag)[];
   flagship?: boolean | null;
+  imageUrl?: string | null;
   demoUrl?: string | null;
   status?: ('coming-soon' | 'live') | null;
   order?: number | null;
@@ -981,6 +982,7 @@ export interface PortfolioProjectsSelect<T extends boolean = true> {
   problem?: T;
   tags?: T;
   flagship?: T;
+  imageUrl?: T;
   demoUrl?: T;
   status?: T;
   order?: T;
