@@ -78,6 +78,7 @@ export interface Config {
     pages: Page;
     testimonials: Testimonial;
     'case-studies': CaseStudy;
+    leads: Lead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -725,6 +727,19 @@ export interface CaseStudy {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  name: string;
+  email: string;
+  company?: string | null;
+  source?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1167,6 +1182,18 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  company?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
