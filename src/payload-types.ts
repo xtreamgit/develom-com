@@ -79,6 +79,7 @@ export interface Config {
     testimonials: Testimonial;
     'case-studies': CaseStudy;
     leads: Lead;
+    interviews: Interview;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +99,7 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
+    interviews: InterviewsSelect<false> | InterviewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -734,6 +736,50 @@ export interface Lead {
   name: string;
   email: string;
   company?: string | null;
+  /**
+   * Which page/offer generated this lead
+   */
+  source?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "interviews".
+ */
+export interface Interview {
+  id: number;
+  name: string;
+  email: string;
+  company?: string | null;
+  /**
+   * Interview question responses
+   */
+  answers?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  /**
+   * Claude-generated AI roadmap
+   */
+  recommendation?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  status?: ('pending' | 'generated' | 'failed') | null;
+  /**
+   * Origin page or campaign
+   */
   source?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -805,6 +851,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'case-studies';
         value: number | CaseStudy;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
+      } | null)
+    | ({
+        relationTo: 'interviews';
+        value: number | Interview;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1191,6 +1245,21 @@ export interface LeadsSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   company?: T;
+  source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "interviews_select".
+ */
+export interface InterviewsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  company?: T;
+  answers?: T;
+  recommendation?: T;
+  status?: T;
   source?: T;
   updatedAt?: T;
   createdAt?: T;

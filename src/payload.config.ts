@@ -19,6 +19,7 @@ import { Pages } from './collections/Pages'
 import { Testimonials } from './collections/Testimonials'
 import { CaseStudies } from './collections/CaseStudies'
 import { Leads } from './collections/Leads'
+import { Interviews } from './collections/Interviews'
 import { Navigation } from './globals/Navigation'
 import { SiteSettings } from './globals/SiteSettings'
 
@@ -48,7 +49,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, MediaFolders, BlogPosts, PortfolioProjects, Services, Tags, Categories, Pages, Testimonials, CaseStudies, Leads],
+  collections: [Users, Media, MediaFolders, BlogPosts, PortfolioProjects, Services, Tags, Categories, Pages, Testimonials, CaseStudies, Leads, Interviews],
   globals: [Navigation, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

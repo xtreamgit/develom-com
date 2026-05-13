@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   const smtpPort = parseInt(process.env.SMTP_PORT ?? '465', 10)
   const smtpUser = process.env.SMTP_USER
   const smtpPass = process.env.SMTP_PASS
-  const toEmail = process.env.CONTACT_TO_EMAIL ?? 'hector@develom.com'
+  const toEmail = process.env.CONTACT_TO_EMAIL || 'hector@develom.com'
   const fromEmail = process.env.EMAIL_FROM ?? smtpUser ?? 'contact@develom.com'
 
   if (smtpHost && smtpUser && smtpPass) {
