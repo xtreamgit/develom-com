@@ -3,7 +3,9 @@ import { isAdmin, isAdminOrSelf, isAdminField } from '../access/roles'
 
 export const Users: CollectionConfig = {
   slug: 'users',
-  auth: true,
+  auth: {
+    useAPIKey: true,
+  },
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'email', 'role', 'lastLogin'],
