@@ -3,7 +3,7 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-vercel-postg
 export async function up({ db }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
     ALTER TABLE "users"
-      ADD COLUMN IF NOT EXISTS "enable_api_key" boolean DEFAULT false,
+      ADD COLUMN IF NOT EXISTS "enable_a_p_i_key" boolean DEFAULT false,
       ADD COLUMN IF NOT EXISTS "api_key" varchar,
       ADD COLUMN IF NOT EXISTS "api_key_index" varchar;
 
@@ -18,8 +18,8 @@ export async function down({ db }: MigrateDownArgs): Promise<void> {
     DROP INDEX IF EXISTS "users_api_key_index_idx";
 
     ALTER TABLE "users"
-      DROP COLUMN IF EXISTS "enable_api_key",
+      DROP COLUMN IF EXISTS "enable_a_p_i_key",
       DROP COLUMN IF EXISTS "api_key",
-      DROP COLU6 IF EXISTS "api_key_index";
+      DROP COLUMN IF EXISTS "api_key_index";
   `)
 }
