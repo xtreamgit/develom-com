@@ -89,10 +89,10 @@ export default function ContactInfo() {
           Direct contact
         </p>
         <a
-          href="mailto:hector@develom.com"
+          href="mailto:contact@agents.develom.com"
           className="text-[15px] font-medium text-blue hover:opacity-80 transition-opacity"
         >
-          hector@develom.com
+          contact@agents.develom.com
         </a>
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
           Based in the United States. Working with clients across regulated industries
