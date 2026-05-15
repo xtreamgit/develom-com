@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
-import { canCreate, isLoggedIn, canUpdate, canDelete, canPublish } from '../access/roles'
+import { canCreate, isLoggedIn, canUpdate, canDelete } from '../access/roles'
 import { setCreatedBy } from '../hooks/setCreatedBy'
 
 export const BlogPosts: CollectionConfig = {
@@ -50,12 +50,6 @@ export const BlogPosts: CollectionConfig = {
     },
     { name: 'body', type: 'richText' },
     { name: 'featuredImage', type: 'upload', relationTo: 'media' },
-    {
-      name: 'published',
-      type: 'checkbox',
-      defaultValue: false,
-      access: { update: canPublish },
-    },
     {
       name: 'createdBy',
       type: 'relationship',

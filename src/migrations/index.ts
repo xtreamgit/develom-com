@@ -3,6 +3,7 @@ import * as migration_20260512_000000 from './20260512_000000';
 import * as migration_20260513_000000 from './20260513_000000';
 import * as migration_20260513_120000 from './20260513_120000';
 import * as migration_20260513_180000_locked_documents_rels from './20260513_180000_locked_documents_rels';
+import * as migration_20260515_180000_drop_blog_posts_published from './20260515_180000_drop_blog_posts_published';
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260513_180000_locked_documents_rels.up,
     down: migration_20260513_180000_locked_documents_rels.down,
     name: '20260513_180000_locked_documents_rels'
+  },
+  {
+    up: migration_20260515_180000_drop_blog_posts_published.up,
+    down: migration_20260515_180000_drop_blog_posts_published.down,
+    name: '20260515_180000_drop_blog_posts_published'
   },
 ];

@@ -46,7 +46,7 @@ export default async function HomePage() {
   try {
     const postsResult = await payload.find({
       collection: 'blog-posts',
-      where: { published: { equals: true } },
+      where: { _status: { equals: 'published' } },
       sort: '-date',
       limit: 3,
     })

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   try {
     const result = await payload.find({
       collection: 'blog-posts',
-      where: { slug: { equals: slug }, published: { equals: true } },
+      where: { slug: { equals: slug }, _status: { equals: 'published' } },
       limit: 1,
       depth: 0,
     })
@@ -49,7 +49,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   try {
     const result = await payload.find({
       collection: 'blog-posts',
-      where: { slug: { equals: slug }, published: { equals: true } },
+      where: { slug: { equals: slug }, _status: { equals: 'published' } },
       limit: 1,
       depth: 2,
     })
