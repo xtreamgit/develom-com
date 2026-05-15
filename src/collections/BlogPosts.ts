@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical'
 import { canCreate, isLoggedIn, canUpdate, canDelete, canPublish } from '../access/roles'
 import { setCreatedBy } from '../hooks/setCreatedBy'
 
@@ -15,6 +16,17 @@ export const BlogPosts: CollectionConfig = {
     delete: canDelete,
   },
   hooks: {
+    // Accept body as a markdown string from API clients (e.g. the writer agent).
+    // The admin UI sends body as a Lexical object — leave that path untouched.
+    beforeValidate: [
+      async ({ data, req }) => {
+        if (data && typeof data.body === 'string' && data.body.trim().length > 0) {
+          const editorConfig = await editorConfigFactory.default({ config: req.payload.config })
+          data.body = convertMarkdownToLexical({ editorConfig, markdown: data.body })
+        }
+        return data
+      },
+    ],
     beforeChange: [setCreatedBy],
   },
   fields: [
