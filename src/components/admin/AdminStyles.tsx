@@ -34,6 +34,15 @@ const ADMIN_OVERRIDES = `
     align-items: center !important;
     justify-content: center !important;
   }
+
+  /* Secondary / Cancel buttons — transparent bg + dark border is invisible on
+     the dark admin background. Give them a readable neutral fill. */
+  .btn--style-secondary:not(.btn--disabled) {
+    --bg-color: rgba(255, 255, 255, 0.1) !important;
+    --btn-border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    --hover-bg: rgba(255, 255, 255, 0.18) !important;
+    --hover-btn-border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  }
 `
 
 export default function AdminStyles() {
