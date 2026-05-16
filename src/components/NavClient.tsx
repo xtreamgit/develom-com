@@ -93,6 +93,60 @@ function DropdownItem({ item }: { item: NavItem }) {
   )
 }
 
+function MobileNavItem({ item, onClose }: { item: NavItem; onClose: () => void }) {
+  const [open, setOpen] = useState(false)
+  const hasChildren = item.children && item.children.length > 0
+
+  if (!hasChildren) {
+    return (
+      <Link
+        href={item.link}
+        onClick={onClose}
+        className="text-label uppercase text-navy hover:text-blue transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+      >
+        {item.label}
+      </Link>
+    )
+  }
+
+  return (
+    <div>
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between text-label uppercase text-navy hover:text-blue transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+      >
+        {item.label}
+        <svg
+          className={`h-3 w-3 transition-transform ${open ? 'rotate-180' : ''}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2.5}
+          aria-hidden="true"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {open && (
+        <div className="mt-2 flex flex-col gap-0.5 border-l-2 border-[#E2E8F0] pl-4">
+          {item.children!.map((child) => (
+            <Link
+              key={child.link}
+              href={child.link}
+              onClick={onClose}
+              className="py-1.5 text-[13px] text-navy hover:text-blue transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
+            >
+              {child.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function NavClient({ mainNav, ctaButton }: NavClientProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -151,14 +205,7 @@ export default function NavClient({ mainNav, ctaButton }: NavClientProps) {
         <div className="border-t border-[#E2E8F0] bg-white px-6 py-6 md:hidden">
           <div className="flex flex-col gap-4">
             {mainNav.map((item) => (
-              <Link
-                key={item.link}
-                href={item.link}
-                onClick={() => setMenuOpen(false)}
-                className="text-label uppercase text-navy hover:text-blue transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded"
-              >
-                {item.label}
-              </Link>
+              <MobileNavItem key={item.link} item={item} onClose={() => setMenuOpen(false)} />
             ))}
             <Link
               href={ctaLink}
