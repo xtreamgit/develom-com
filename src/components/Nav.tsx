@@ -6,6 +6,7 @@ const FALLBACK_NAV = [
   { label: 'Solutions & Use Cases', link: '/services', children: [] },
   { label: 'Industry', link: '/contact', children: [] },
   { label: 'Company Size', link: '/contact', children: [] },
+  { label: 'Blog', link: '/blog', children: [] },
   { label: 'Resources', link: '/blog', children: [] },
   { label: 'Pricing', link: '/contact', children: [] },
 ]
