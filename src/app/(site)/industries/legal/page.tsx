@@ -81,7 +81,7 @@ export default function LegalPage() {
         columns: WHAT_WE_DO_COLUMNS,
       }}
       solutions={SOLUTIONS}
-      trust='Develom\'s implementation methodology is built for environments where getting it wrong has professional consequences. We design human oversight into every AI deployment — because in legal, "the AI did it" is not a defense.'
+      trust={`Develom's implementation methodology is built for environments where getting it wrong has professional consequences. We design human oversight into every AI deployment — because in legal, "the AI did it" is not a defense.`}
       ctaClose={{
         headline: 'Find the Right AI for Your Legal Team',
         body: 'Tell us about your practice area, use case, and risk tolerance. We match you to AI tools that fit — and build the review structure that makes them safe to use.',
