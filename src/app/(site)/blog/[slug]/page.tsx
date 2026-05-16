@@ -3,7 +3,10 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import LexicalContent from '@/components/blocks/LexicalContent'
+import { unstable_noStore as noStore } from 'next/cache'
+import { BlogBody } from '@/components/blog/BlogBody'
+
+export const dynamic = 'force-dynamic'
 
 interface Tag {
   id: number | string
@@ -42,6 +45,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function BlogPostPage({ params }: PageProps) {
+  noStore()
   const { slug } = await params
   const payload = await getPayload({ config: configPromise })
 
@@ -52,6 +56,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       where: { slug: { equals: slug }, _status: { equals: 'published' } },
       limit: 1,
       depth: 2,
+      overrideAccess: true,
     })
     post = result.docs[0] ?? null
   } catch {
@@ -124,11 +129,7 @@ export default async function BlogPostPage({ params }: PageProps) {
       {/* Content */}
       <section className="bg-bg-alt px-6 py-16 md:py-24">
         <div className="mx-auto max-w-[720px]">
-          {post.content ? (
-            <LexicalContent data={post.content} className="text-[16px]" />
-          ) : (
-            <p className="text-muted">No content yet.</p>
-          )}
+          <BlogBody content={post.body} />
 
           <div className="mt-16 pt-10 border-t border-[#E5E7EB]">
             <Link
