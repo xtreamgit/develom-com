@@ -4,7 +4,16 @@ import configPromise from '@payload-config'
 const navigationData = {
   mainNav: [
     { label: 'Solutions & Use Cases', link: '/services', children: [] },
-    { label: 'Industry', link: '/contact', children: [] },
+    {
+      label: 'Industry',
+      link: '/industries/healthcare',
+      children: [
+        { label: 'Healthcare', link: '/industries/healthcare' },
+        { label: 'Financial Services', link: '/industries/financial-services' },
+        { label: 'Legal', link: '/industries/legal' },
+        { label: 'Insurance', link: '/industries/insurance' },
+      ],
+    },
     { label: 'Company Size', link: '/contact', children: [] },
     { label: 'Blog', link: '/blog', children: [] },
     { label: 'Resources', link: '/blog', children: [] },
