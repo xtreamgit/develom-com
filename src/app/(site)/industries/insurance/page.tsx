@@ -5,7 +5,11 @@ export const metadata: Metadata = {
   title: 'AI for Insurance — Claims, Underwriting, and Fraud Detection | Develom',
   description:
     'Actuarial AI, claims automation, fraud detection — insurance is one of the heaviest AI adopters in financial services. Develom matches insurers with AI built for the state regulatory patchwork, disparate impact scrutiny, and the audit trail that follows.',
-  openGraph: { title: 'AI for Insurance — Claims, Underwriting, and Fraud Detection | Develom', type: 'website' },
+  openGraph: {
+    title: 'AI for Insurance — Claims, Underwriting, and Fraud Detection | Develom',
+    type: 'website',
+    images: [{ url: '/og/og-industry-insurance.jpg', width: 1200, height: 630 }],
+  },
 }
 
 const WHAT_WE_DO_COLUMNS = [

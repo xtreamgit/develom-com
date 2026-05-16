@@ -12,6 +12,7 @@ const navigationData = {
         { label: 'Financial Services', link: '/industries/financial-services' },
         { label: 'Legal', link: '/industries/legal' },
         { label: 'Insurance', link: '/industries/insurance' },
+        { label: 'Oil & Gas', link: '/industries/oil-gas' },
       ],
     },
     { label: 'Company Size', link: '/contact', children: [] },

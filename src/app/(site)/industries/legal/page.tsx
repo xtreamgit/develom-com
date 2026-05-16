@@ -5,7 +5,11 @@ export const metadata: Metadata = {
   title: 'AI for Legal Teams — Reliable, Defensible, Deployable | Develom',
   description:
     'Contract review, discovery, legal research — AI is in every major law firm and legal department. Develom helps legal teams find and deploy AI that\'s accurate enough to rely on and defensible enough to stand behind.',
-  openGraph: { title: 'AI for Legal Teams — Reliable, Defensible, Deployable | Develom', type: 'website' },
+  openGraph: {
+    title: 'AI for Legal Teams — Reliable, Defensible, Deployable | Develom',
+    type: 'website',
+    images: [{ url: '/og/og-industry-legal.jpg', width: 1200, height: 630 }],
+  },
 }
 
 const WHAT_WE_DO_COLUMNS = [

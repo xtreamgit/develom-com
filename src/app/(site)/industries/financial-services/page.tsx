@@ -5,7 +5,11 @@ export const metadata: Metadata = {
   title: 'AI for Financial Services — Compliant, Auditable, Deployable | Develom',
   description:
     'Credit scoring, fraud detection, underwriting AI — all high-risk under emerging regulation. Develom matches financial services firms with AI built for OCC model risk guidance, EU AI Act scope, and CFPB oversight.',
-  openGraph: { title: 'AI for Financial Services — Compliant, Auditable, Deployable | Develom', type: 'website' },
+  openGraph: {
+    title: 'AI for Financial Services — Compliant, Auditable, Deployable | Develom',
+    type: 'website',
+    images: [{ url: '/og/og-industry-financial.jpg', width: 1200, height: 630 }],
+  },
 }
 
 const WHAT_WE_DO_COLUMNS = [

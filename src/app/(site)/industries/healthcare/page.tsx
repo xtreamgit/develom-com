@@ -5,7 +5,11 @@ export const metadata: Metadata = {
   title: 'Healthcare AI Solutions — HIPAA-Compliant Implementation | Develom',
   description:
     'Find the right AI for your health system — tools built for clinical workflows, HIPAA compliance, and audit-ready governance. Develom matches healthcare organizations with AI that holds up under scrutiny.',
-  openGraph: { title: 'Healthcare AI Solutions — HIPAA-Compliant Implementation | Develom', type: 'website' },
+  openGraph: {
+    title: 'Healthcare AI Solutions — HIPAA-Compliant Implementation | Develom',
+    type: 'website',
+    images: [{ url: '/og/og-industry-healthcare.jpg', width: 1200, height: 630 }],
+  },
 }
 
 const WHAT_WE_DO_COLUMNS = [
