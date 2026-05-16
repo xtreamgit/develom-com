@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'AI for Oil & Gas — Operational, Safety, and ESG Compliance | Develom',
     type: 'website',
-    images: [{ url: '/og/og-industry-oil-gas.jpg', width: 1200, height: 630 }],
+    images: [{ url: 'https://develom-com.vercel.app/api/media/file/header_industry_oil_gas-1200x630.png', width: 1200, height: 630 }],
   },
 }
 
