@@ -44,11 +44,10 @@ export default function FounderSection() {
           </footer>
         </blockquote>
 
-        {/* TODO: replace src with Hector's photo once received via Telegram (#9) */}
         <div className="mt-8 flex items-center gap-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/images/hector-dejesus.jpg"
+            src="https://develom-com.vercel.app/api/media/file/founder-headshot-200x200.jpg"
             alt="Hector DeJesus — Founder &amp; CEO, Develom"
             width={96}
             height={96}
