@@ -18,7 +18,7 @@ export default async function ServicesPage() {
 
   const { docs: services } = await payload.find({
     collection: 'services',
-    where: { _status: { equals: 'published' } },
+    where: { status: { equals: 'published' } },
     sort: 'sortOrder',
     limit: 20,
   })
