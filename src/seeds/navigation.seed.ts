@@ -15,7 +15,6 @@ const navigationData = {
         { label: 'Oil & Gas', link: '/industries/oil-gas' },
       ],
     },
-    { label: 'Company Size', link: '/contact', children: [] },
     { label: 'Blog', link: '/blog', children: [] },
     { label: 'Resources', link: '/blog', children: [] },
     { label: 'Pricing', link: '/contact', children: [] },
