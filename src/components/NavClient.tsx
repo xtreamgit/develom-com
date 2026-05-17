@@ -19,6 +19,8 @@ export interface CtaButton {
 interface NavClientProps {
   mainNav: NavItem[]
   ctaButton: CtaButton
+  lastUpdatedText?: string | null
+  latestModelText?: string | null
 }
 
 function DropdownItem({ item }: { item: NavItem }) {
@@ -147,7 +149,7 @@ function MobileNavItem({ item, onClose }: { item: NavItem; onClose: () => void }
   )
 }
 
-export default function NavClient({ mainNav, ctaButton }: NavClientProps) {
+export default function NavClient({ mainNav, ctaButton, lastUpdatedText, latestModelText }: NavClientProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -175,6 +177,17 @@ export default function NavClient({ mainNav, ctaButton }: NavClientProps) {
           {mainNav.map((item) => (
             <DropdownItem key={item.link} item={item} />
           ))}
+
+          {(lastUpdatedText || latestModelText) && (
+            <div className="hidden lg:flex items-center gap-3 border-l border-slate-200 pl-6 text-[11px] text-slate-400 leading-tight">
+              {lastUpdatedText && <span>{lastUpdatedText}</span>}
+              {lastUpdatedText && latestModelText && (
+                <span className="text-slate-300" aria-hidden="true">·</span>
+              )}
+              {latestModelText && <span>{latestModelText}</span>}
+            </div>
+          )}
+
           <Link
             href={ctaLink}
             className={

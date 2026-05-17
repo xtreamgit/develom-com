@@ -1,7 +1,7 @@
-import { getNavigation } from '@/lib/getGlobals'
+import { getNavigation, getHeaderWidgetData } from '@/lib/getGlobals'
+import { relativeTime } from '@/lib/relativeTime'
 import NavClient from './NavClient'
 
-// Fallback nav used when the global hasn't been seeded yet
 const FALLBACK_NAV = [
   { label: 'Solutions', link: '/services', children: [] },
   { label: 'Use Cases', link: '/contact', children: [] },
@@ -28,12 +28,29 @@ export default async function Nav() {
   try {
     nav = await getNavigation()
   } catch {
-    // Global not yet seeded — use fallback so the site still renders
     nav = null
   }
+
+  const widgetData = await getHeaderWidgetData()
+
+  const lastUpdatedText = widgetData?.lastContentUpdate
+    ? `Updated ${relativeTime(widgetData.lastContentUpdate)}.`
+    : null
+
+  const latestModelText =
+    widgetData?.latestAIModel?.releasedAt && widgetData.latestAIModel.name
+      ? `New model ${relativeTime(widgetData.latestAIModel.releasedAt)} — ${widgetData.latestAIModel.name}.`
+      : null
 
   const mainNav = nav?.mainNav && nav.mainNav.length > 0 ? nav.mainNav : FALLBACK_NAV
   const ctaButton = nav?.ctaButton ?? FALLBACK_CTA
 
-  return <NavClient mainNav={mainNav as Parameters<typeof NavClient>[0]['mainNav']} ctaButton={ctaButton} />
+  return (
+    <NavClient
+      mainNav={mainNav as Parameters<typeof NavClient>[0]['mainNav']}
+      ctaButton={ctaButton}
+      lastUpdatedText={lastUpdatedText}
+      latestModelText={latestModelText}
+    />
+  )
 }

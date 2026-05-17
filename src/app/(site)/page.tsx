@@ -10,6 +10,10 @@ import UseCasesSection from '@/components/home/UseCasesSection'
 import ResourcesSection from '@/components/home/ResourcesSection'
 import BlogSection from '@/components/home/BlogSection'
 import FooterCTA from '@/components/home/FooterCTA'
+import ComplianceCalendar from '@/components/home/ComplianceCalendar'
+import type { ComplianceItem } from '@/components/home/ComplianceCalendar'
+import { getComplianceDeadlines } from '@/lib/getGlobals'
+import { formatDate } from '@/lib/relativeTime'
 
 export const metadata: Metadata = {
   title: 'Develom | Intelligent AI Solutions. Measurable Impact.',
@@ -55,9 +59,18 @@ export default async function HomePage() {
     /* DB may not be migrated yet */
   }
 
+  const rawDeadlines = await getComplianceDeadlines()
+  const complianceItems: ComplianceItem[] = rawDeadlines.map((d) => ({
+    title: d.title,
+    dueDate: formatDate(d.dueDate),
+    industry: d.industry,
+    regulatoryBody: d.regulatoryBody,
+  }))
+
   return (
     <>
       <HeroSection />
+      {complianceItems.length > 0 && <ComplianceCalendar items={complianceItems} />}
       <TrustStrip />
       <SolutionsOutcome />
       <SolutionFinder />
