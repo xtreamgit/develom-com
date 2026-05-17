@@ -1,17 +1,22 @@
+import { unstable_noStore as noStore } from 'next/cache'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import RenderBlocks from '@/components/blocks/RenderBlocks'
 
+export const dynamic = 'force-dynamic'
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }
 
 async function getPage(slug: string) {
+  noStore()
   const payload = await getPayload({ config: configPromise })
   const { docs } = await payload.find({
     collection: 'pages',
+    overrideAccess: true,
     where: {
       and: [
         { slug: { equals: slug } },
@@ -29,6 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const payload = await getPayload({ config: configPromise })
   const { docs } = await payload.find({
     collection: 'pages',
+    overrideAccess: true,
     where: { slug: { equals: slug } },
     limit: 1,
   })

@@ -61,9 +61,9 @@ export default async function HomePage() {
 
   const rawDeadlines = await getComplianceDeadlines()
   const complianceItems: ComplianceItem[] = rawDeadlines.map((d) => ({
-    title: d.title,
+    requirement: d.requirement,
     dueDate: formatDate(d.dueDate),
-    industry: d.industry,
+    vertical: d.vertical,
     regulatoryBody: d.regulatoryBody,
   }))
 

@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react'
 
 export interface ComplianceItem {
-  title: string
+  requirement: string
   dueDate: string
-  industry: string
+  vertical: string
   regulatoryBody: string
 }
 
@@ -44,10 +44,10 @@ export default function ComplianceCalendar({ items }: { items: ComplianceItem[] 
           className="flex-1 min-w-0 flex flex-wrap items-baseline gap-x-3 gap-y-0.5"
           style={{ opacity: visible ? 1 : 0, transition: `opacity ${FADE_MS}ms ease` }}
         >
-          <span className="text-[13px] text-white font-medium truncate">{item.title}</span>
+          <span className="text-[13px] text-white font-medium truncate">{item.requirement}</span>
           <span className="text-[12px] text-slate-400 flex-shrink-0">Due {item.dueDate}</span>
           <span className="text-slate-600 flex-shrink-0" aria-hidden="true">·</span>
-          <span className="text-[12px] text-slate-500 flex-shrink-0">{item.industry}</span>
+          <span className="text-[12px] text-slate-500 flex-shrink-0">{item.vertical}</span>
           <span className="text-slate-600 flex-shrink-0" aria-hidden="true">·</span>
           <span className="text-[12px] text-slate-600 flex-shrink-0">{item.regulatoryBody}</span>
         </div>

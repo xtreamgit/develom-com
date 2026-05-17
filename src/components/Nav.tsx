@@ -37,10 +37,13 @@ export default async function Nav() {
     ? `Updated ${relativeTime(widgetData.lastContentUpdate)}.`
     : null
 
-  const latestModelText =
-    widgetData?.latestAIModel?.releasedAt && widgetData.latestAIModel.name
-      ? `New model ${relativeTime(widgetData.latestAIModel.releasedAt)} — ${widgetData.latestAIModel.name}.`
-      : null
+  const latestModelText = (() => {
+    const m = widgetData?.latestAIModel
+    if (!m?.releasedAt || !m.name) return null
+    const parts = [`New model ${relativeTime(m.releasedAt)} — ${m.name}`]
+    if (m.mainFeature) parts.push(m.mainFeature)
+    return parts.join(' · ') + '.'
+  })()
 
   const mainNav = nav?.mainNav && nav.mainNav.length > 0 ? nav.mainNav : FALLBACK_NAV
   const ctaButton = nav?.ctaButton ?? FALLBACK_CTA
