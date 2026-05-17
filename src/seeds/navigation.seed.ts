@@ -3,7 +3,8 @@ import configPromise from '@payload-config'
 
 const navigationData = {
   mainNav: [
-    { label: 'Solutions & Use Cases', link: '/services', children: [] },
+    { label: 'Solutions', link: '/services', children: [] },
+    { label: 'Use Cases', link: '/contact', children: [] },
     {
       label: 'Industry',
       link: '/industries/healthcare',

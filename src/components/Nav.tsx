@@ -3,7 +3,8 @@ import NavClient from './NavClient'
 
 // Fallback nav used when the global hasn't been seeded yet
 const FALLBACK_NAV = [
-  { label: 'Solutions & Use Cases', link: '/services', children: [] },
+  { label: 'Solutions', link: '/services', children: [] },
+  { label: 'Use Cases', link: '/contact', children: [] },
   {
     label: 'Industry',
     link: '/industries/healthcare',
