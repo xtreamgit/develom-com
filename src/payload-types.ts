@@ -80,6 +80,8 @@ export interface Config {
     'case-studies': CaseStudy;
     leads: Lead;
     interviews: Interview;
+    'latest-models': LatestModel;
+    'compliance-deadlines': ComplianceDeadline;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -100,6 +102,8 @@ export interface Config {
     'case-studies': CaseStudiesSelect<false> | CaseStudiesSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
     interviews: InterviewsSelect<false> | InterviewsSelect<true>;
+    'latest-models': LatestModelsSelect<false> | LatestModelsSelect<true>;
+    'compliance-deadlines': ComplianceDeadlinesSelect<false> | ComplianceDeadlinesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -169,6 +173,9 @@ export interface User {
   lastLogin?: string | null;
   updatedAt: string;
   createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
   email: string;
   resetPasswordToken?: string | null;
   resetPasswordExpiration?: string | null;
@@ -359,7 +366,6 @@ export interface BlogPost {
     [k: string]: unknown;
   } | null;
   featuredImage?: (number | null) | Media;
-  published?: boolean | null;
   /**
    * Auto-set to the creating user
    */
@@ -786,6 +792,65 @@ export interface Interview {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "latest-models".
+ */
+export interface LatestModel {
+  id: number;
+  provider: 'anthropic' | 'openai' | 'google' | 'meta' | 'mistral' | 'xai' | 'other';
+  modelName: string;
+  version?: string | null;
+  releaseDate: string;
+  /**
+   * One-line headline capability (e.g. "1M token context, native tool use")
+   */
+  mainFeature: string;
+  /**
+   * Short recommended use case (e.g. "Complex reasoning, agentic workflows")
+   */
+  recommendedUsage: string;
+  /**
+   * Link to announcement or documentation
+   */
+  modelUrl?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "compliance-deadlines".
+ */
+export interface ComplianceDeadline {
+  id: number;
+  /**
+   * e.g. "EU AI Act High-Risk Conformity Assessment"
+   */
+  requirement: string;
+  /**
+   * For recurring deadlines this anchors the month/day — year rolls forward automatically
+   */
+  dueDate: string;
+  vertical: 'healthcare' | 'financial-services' | 'legal' | 'insurance' | 'oil-gas' | 'cross-industry';
+  /**
+   * e.g. "HHS OCR", "EU Commission", "NAIC"
+   */
+  regulatoryBody: string;
+  /**
+   * Optional short description or context
+   */
+  notes?: string | null;
+  /**
+   * Deadline repeats — due date rolls forward automatically
+   */
+  recurring?: boolean | null;
+  /**
+   * How often this deadline recurs
+   */
+  recurrenceType?: ('annual' | 'quarterly') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -859,6 +924,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'interviews';
         value: number | Interview;
+      } | null)
+    | ({
+        relationTo: 'latest-models';
+        value: number | LatestModel;
+      } | null)
+    | ({
+        relationTo: 'compliance-deadlines';
+        value: number | ComplianceDeadline;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -913,6 +986,9 @@ export interface UsersSelect<T extends boolean = true> {
   lastLogin?: T;
   updatedAt?: T;
   createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
   email?: T;
   resetPasswordToken?: T;
   resetPasswordExpiration?: T;
@@ -1035,7 +1111,6 @@ export interface BlogPostsSelect<T extends boolean = true> {
   category?: T;
   body?: T;
   featuredImage?: T;
-  published?: T;
   createdBy?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1261,6 +1336,36 @@ export interface InterviewsSelect<T extends boolean = true> {
   recommendation?: T;
   status?: T;
   source?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "latest-models_select".
+ */
+export interface LatestModelsSelect<T extends boolean = true> {
+  provider?: T;
+  modelName?: T;
+  version?: T;
+  releaseDate?: T;
+  mainFeature?: T;
+  recommendedUsage?: T;
+  modelUrl?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "compliance-deadlines_select".
+ */
+export interface ComplianceDeadlinesSelect<T extends boolean = true> {
+  requirement?: T;
+  dueDate?: T;
+  vertical?: T;
+  regulatoryBody?: T;
+  notes?: T;
+  recurring?: T;
+  recurrenceType?: T;
   updatedAt?: T;
   createdAt?: T;
 }
