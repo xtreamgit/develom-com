@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
+import type { Where } from 'payload'
 import configPromise from '@payload-config'
 
 /** Given a base date and recurrence type, return the next upcoming occurrence from today */
@@ -30,7 +31,7 @@ export async function GET(req: NextRequest) {
 
   const payload = await getPayload({ config: configPromise })
 
-  const where: Record<string, unknown> = {}
+  const where: Where = {}
   if (vertical) where.vertical = { equals: vertical }
 
   let docs: any[] = []
