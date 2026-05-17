@@ -2,13 +2,26 @@ import type { Metadata } from 'next'
 import IndustryPage from '@/components/industries/IndustryPage'
 
 export const metadata: Metadata = {
-  title: 'AI for Legal Teams — Reliable, Defensible, Deployable | Develom',
+  title: 'AI for Legal Teams — Contract Review, eDiscovery & Research | Develom',
   description:
-    'Contract review, discovery, legal research — AI is in every major law firm and legal department. Develom helps legal teams find and deploy AI that\'s accurate enough to rely on and defensible enough to stand behind.',
+    'Contract review, eDiscovery triage, and legal research AI carry different accuracy and accountability requirements. Develom helps legal teams deploy AI that is accurate enough to rely on and defensible enough to stand behind — with governance structures that satisfy bar association guidance.',
+  alternates: {
+    canonical: 'https://develom.com/industries/legal',
+  },
   openGraph: {
-    title: 'AI for Legal Teams — Reliable, Defensible, Deployable | Develom',
+    title: 'AI for Legal Teams — Contract Review, eDiscovery & Research | Develom',
+    description:
+      'Contract review, eDiscovery triage, and legal research AI carry different accuracy and accountability requirements. Develom helps legal teams deploy AI that is defensible enough to stand behind.',
     type: 'website',
+    url: 'https://develom.com/industries/legal',
     images: [{ url: '/og/og-industry-legal.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI for Legal Teams — Contract Review, eDiscovery & Research | Develom',
+    description:
+      'Contract review, eDiscovery, and legal research AI carry different accuracy requirements. Develom helps legal teams deploy AI that is accurate enough to rely on and defensible enough to stand behind.',
+    images: ['/og/og-industry-legal.jpg'],
   },
 }
 
@@ -61,9 +74,53 @@ const SOLUTIONS = [
   },
 ]
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What bar association guidance exists on AI use by lawyers?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Bar associations across the US have issued formal guidance on attorney AI use under existing professional responsibility rules. Common themes include: competence requirements extend to AI tools used in legal work; attorneys remain responsible for AI-generated output; confidentiality obligations apply to data submitted to AI systems; and supervision duties extend to AI-assisted work product. Several state bars require disclosure of AI use in filings. Attorneys should consult their jurisdiction\'s guidance before deploying AI in client matters.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is AI hallucination in legal context and why does it matter?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'AI hallucination occurs when a language model generates plausible-sounding but factually incorrect output — including fabricated case citations, invented statutes, or misrepresented holdings. In legal practice, submitting AI-hallucinated citations has resulted in sanctions, fee awards, and disciplinary referrals. The risk is not hypothetical: multiple courts have now issued standing orders requiring attorneys to verify any AI-generated legal research before filing.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Which legal tasks are most suitable for AI automation?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Legal tasks with structured, pattern-based inputs tolerate AI well: contract clause review, document classification, eDiscovery triage, privilege screening, and conflict checking. Tasks requiring judgment, novelty, or factual accuracy under penalty — drafting dispositive motions, case strategy, court filings — require rigorous human review of all AI output. The appropriate AI tool and oversight structure differ by task, which is why task-specific evaluation matters more than selecting a single legal AI platform.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How should law firms structure human oversight of AI tools?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Effective human oversight of legal AI requires: designating a supervising attorney responsible for reviewing AI output before use; establishing task-specific review protocols that match oversight intensity to risk level; documenting the AI tools used and the review steps applied; and maintaining records sufficient to demonstrate that attorney judgment — not AI output — drove final work product. This structure satisfies both professional responsibility obligations and growing court disclosure requirements.',
+      },
+    },
+  ],
+}
+
 export default function LegalPage() {
   return (
-    <IndustryPage
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <IndustryPage
       eyebrow="Legal AI"
       hero={{
         headline: "Legal AI That's Defensible, Not Just Impressive",
@@ -88,5 +145,6 @@ export default function LegalPage() {
         cta: 'Start the Match',
       }}
     />
+    </>
   )
 }

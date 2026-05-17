@@ -2,13 +2,26 @@ import type { Metadata } from 'next'
 import IndustryPage from '@/components/industries/IndustryPage'
 
 export const metadata: Metadata = {
-  title: 'Healthcare AI Solutions — HIPAA-Compliant Implementation | Develom',
+  title: 'HIPAA-Compliant AI Agents for Healthcare | Develom',
   description:
-    'Find the right AI for your health system — tools built for clinical workflows, HIPAA compliance, and audit-ready governance. Develom matches healthcare organizations with AI that holds up under scrutiny.',
+    'Health systems are deploying AI without the HIPAA governance infrastructure those tools require — and OCR enforcement is catching up. Develom matches healthcare organizations with compliant AI solutions built for BAA alignment, Section 1557 mandates, and audit-ready governance.',
+  alternates: {
+    canonical: 'https://develom.com/industries/healthcare',
+  },
   openGraph: {
-    title: 'Healthcare AI Solutions — HIPAA-Compliant Implementation | Develom',
+    title: 'HIPAA-Compliant AI Agents for Healthcare | Develom',
+    description:
+      'Health systems are deploying AI without the HIPAA governance infrastructure those tools require. Develom matches healthcare organizations with HIPAA-compliant AI solutions built for BAA alignment, Section 1557 mandates, and audit-ready governance.',
     type: 'website',
+    url: 'https://develom.com/industries/healthcare',
     images: [{ url: '/og/og-industry-healthcare.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HIPAA-Compliant AI Agents for Healthcare | Develom',
+    description:
+      'Health systems are deploying AI without the HIPAA governance infrastructure those tools require. Develom matches healthcare organizations with compliant, audit-ready AI solutions.',
+    images: ['/og/og-industry-healthcare.jpg'],
   },
 }
 
@@ -61,9 +74,53 @@ const SOLUTIONS = [
   },
 ]
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What makes an AI agent HIPAA-compliant?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "A HIPAA-compliant AI agent operates under a signed Business Associate Agreement (BAA), includes AI tools in the covered entity's required risk analysis, maintains an audit trail of PHI access, and is governed by policies meeting the HIPAA Security Rule. HIPAA compliance is a governance posture built into deployment architecture — not a product feature.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do hospitals need to update their risk analysis when deploying AI?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. The HHS HIPAA Security Rule rewrite explicitly includes AI tools in the required risk analysis. Any AI system that accesses, processes, or stores protected health information (PHI) must be analyzed for risk and documented accordingly. Failing to update the risk analysis when deploying AI is an enforcement gap that OCR has begun targeting.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is Section 1557 and how does it apply to AI in healthcare?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "Section 1557 of the Affordable Care Act prohibits discrimination in health programs receiving federal funding. The 2024 final rule extends nondiscrimination requirements to AI-assisted clinical decision tools. Covered entities using AI in patient-facing workflows — including prior authorization algorithms and clinical decision support — must assess that those tools do not produce discriminatory outcomes.",
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can healthcare organizations use cloud AI and remain HIPAA-compliant?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Cloud AI can be HIPAA-compliant under a valid BAA with proper data handling controls. However, many healthcare organizations in sensitive environments are moving toward self-hosted AI agents that keep PHI entirely within their own infrastructure — eliminating third-party data-handling risk and strengthening audit posture.',
+      },
+    },
+  ],
+}
+
 export default function HealthcarePage() {
   return (
-    <IndustryPage
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <IndustryPage
       eyebrow="Healthcare AI"
       hero={{
         headline: 'Healthcare AI That Holds Up Under Scrutiny',
@@ -88,5 +145,6 @@ export default function HealthcarePage() {
         cta: 'Start the Match',
       }}
     />
+    </>
   )
 }

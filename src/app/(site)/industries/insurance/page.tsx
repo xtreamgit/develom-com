@@ -2,13 +2,26 @@ import type { Metadata } from 'next'
 import IndustryPage from '@/components/industries/IndustryPage'
 
 export const metadata: Metadata = {
-  title: 'AI for Insurance — Claims, Underwriting, and Fraud Detection | Develom',
+  title: 'AI Claims Processing & Insurance Underwriting Solutions | Develom',
   description:
-    'Actuarial AI, claims automation, fraud detection — insurance is one of the heaviest AI adopters in financial services. Develom matches insurers with AI built for the state regulatory patchwork, disparate impact scrutiny, and the audit trail that follows.',
+    'Insurance AI for claims automation, actuarial modeling, and fraud detection carries state regulatory scrutiny on adverse action notice and disparate impact. Develom matches insurers with audit-ready AI solutions built for the regulatory patchwork your line of business operates under.',
+  alternates: {
+    canonical: 'https://develom.com/industries/insurance',
+  },
   openGraph: {
-    title: 'AI for Insurance — Claims, Underwriting, and Fraud Detection | Develom',
+    title: 'AI Claims Processing & Insurance Underwriting Solutions | Develom',
+    description:
+      'Insurance AI for claims automation and fraud detection carries state regulatory scrutiny. Develom matches insurers with audit-ready AI solutions built for the state regulatory patchwork your business operates under.',
     type: 'website',
+    url: 'https://develom.com/industries/insurance',
     images: [{ url: '/og/og-industry-insurance.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Claims Processing & Insurance Underwriting Solutions | Develom',
+    description:
+      'Insurance AI for claims automation and fraud detection carries state regulatory scrutiny. Develom matches insurers with audit-ready solutions built for the regulatory patchwork you operate under.',
+    images: ['/og/og-industry-insurance.jpg'],
   },
 }
 
@@ -62,9 +75,53 @@ const SOLUTIONS = [
   },
 ]
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What regulatory requirements apply to AI used in insurance claims processing?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Insurance AI used in claims processing is subject to state-level regulations that vary significantly. Most states require adverse action notices when AI contributes to a coverage denial or claim reduction. Many states have enacted or are developing algorithmic accountability rules that require explainability and disparate impact testing. Carriers deploying claims AI nationally must map their implementation to each applicable state regulatory framework before launch.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is disparate impact in insurance AI and how do carriers address it?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Disparate impact occurs when an AI model produces outcomes that disproportionately disadvantage a protected class — even without discriminatory intent. In insurance underwriting and claims processing, disparate impact scrutiny has intensified at both the state regulatory and federal enforcement levels. Carriers address this through pre-deployment bias testing, ongoing outcome monitoring, documentation of model assumptions, and human oversight checkpoints in the decision pipeline.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can insurance carriers use AI for underwriting decisions?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes, but with significant compliance requirements. AI-assisted underwriting must comply with state insurance codes, FCRA requirements where applicable, and adverse action notice obligations. Models must be validated for accuracy, fairness, and explainability. Carriers must maintain documentation demonstrating that AI-assisted decisions do not produce discriminatory outcomes and that human oversight is built into the process.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is an on-premise AI solution for insurance claims?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'An on-premise (self-hosted) AI solution for insurance claims processes policyholder and claims data within the carrier\'s own infrastructure rather than sending it to a third-party cloud provider. This deployment model eliminates vendor data-handling risk, simplifies data residency compliance, and gives the carrier full audit control — which is increasingly important as state regulators scrutinize how carriers manage sensitive policyholder data in AI workflows.',
+      },
+    },
+  ],
+}
+
 export default function InsurancePage() {
   return (
-    <IndustryPage
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <IndustryPage
       eyebrow="Insurance AI"
       hero={{
         headline: 'Insurance AI Built for the Regulatory Patchwork',
@@ -89,5 +146,6 @@ export default function InsurancePage() {
         cta: 'Start the Match',
       }}
     />
+    </>
   )
 }

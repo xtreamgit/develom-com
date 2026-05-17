@@ -2,13 +2,26 @@ import type { Metadata } from 'next'
 import IndustryPage from '@/components/industries/IndustryPage'
 
 export const metadata: Metadata = {
-  title: 'AI for Financial Services — Compliant, Auditable, Deployable | Develom',
+  title: 'AI for Financial Services — SOC 2 Compliant, Audit-Ready | Develom',
   description:
-    'Credit scoring, fraud detection, underwriting AI — all high-risk under emerging regulation. Develom matches financial services firms with AI built for OCC model risk guidance, EU AI Act scope, and CFPB oversight.',
+    'Credit scoring, loan underwriting, and fraud detection AI are classified high-risk under the EU AI Act and subject to OCC model risk guidance. Develom matches financial services firms with compliant AI solutions — mapped to your regulatory exposure before deployment.',
+  alternates: {
+    canonical: 'https://develom.com/industries/financial-services',
+  },
   openGraph: {
-    title: 'AI for Financial Services — Compliant, Auditable, Deployable | Develom',
+    title: 'AI for Financial Services — SOC 2 Compliant, Audit-Ready | Develom',
+    description:
+      'Credit scoring, loan underwriting, and fraud detection AI are classified high-risk under the EU AI Act. Develom matches financial services firms with compliant, audit-ready AI solutions mapped to your regulatory exposure.',
     type: 'website',
+    url: 'https://develom.com/industries/financial-services',
     images: [{ url: '/og/og-industry-financial.jpg', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI for Financial Services — SOC 2 Compliant, Audit-Ready | Develom',
+    description:
+      'Credit scoring, loan underwriting, and fraud detection AI are classified high-risk under the EU AI Act. Develom matches financial services firms with compliant, audit-ready AI solutions.',
+    images: ['/og/og-industry-financial.jpg'],
   },
 }
 
@@ -62,9 +75,53 @@ const SOLUTIONS = [
   },
 ]
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Can banks use cloud AI, or is self-hosted AI required for regulatory compliance?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Banks can use cloud AI under the right governance structure, but OCC model risk guidance (SR 11-7) requires documented model validation, explainability, and independent review regardless of deployment model. Many financial institutions are moving toward self-hosted AI to satisfy data residency requirements, reduce vendor dependency risk, and maintain full audit control over model inputs and outputs.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What is OCC model risk guidance and how does it apply to AI?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'OCC SR 11-7 (Model Risk Management) applies to any quantitative model used in decision-making, including AI systems used for credit scoring, fraud detection, or loan underwriting. It requires model validation, ongoing performance monitoring, documentation of assumptions and limitations, and independent review. AI models that influence credit decisions must satisfy all of these requirements.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is AI used in loan underwriting subject to the EU AI Act?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. The EU AI Act classifies AI used in creditworthiness assessment and loan decisions as high-risk. High-risk AI systems require conformity assessments, human oversight mechanisms, technical documentation, and registration in the EU database before deployment. Financial institutions operating in the EU or processing EU-resident data must comply by August 2026.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What does SOC 2 compliant mean for an AI platform?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: "A SOC 2 compliant AI platform has been audited against the AICPA Trust Services Criteria, demonstrating controls for security, availability, processing integrity, confidentiality, and privacy. For financial services firms, SOC 2 Type II compliance from an AI vendor is often a baseline requirement — but it is not a substitute for the firm's own model risk governance obligations.",
+      },
+    },
+  ],
+}
+
 export default function FinancialServicesPage() {
   return (
-    <IndustryPage
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <IndustryPage
       eyebrow="Financial Services AI"
       hero={{
         headline: 'Compliant AI for Financial Services — Before the Deadline',
@@ -89,5 +146,6 @@ export default function FinancialServicesPage() {
         cta: 'Start the Match',
       }}
     />
+    </>
   )
 }
