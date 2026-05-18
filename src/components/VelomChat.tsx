@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import Image from 'next/image'
 
 interface Message {
@@ -8,37 +8,69 @@ interface Message {
   content: string
 }
 
+const OPENING = "Hi! I'm Velom, Develom's AI discovery guide. I'll help you find the right AI solution for your team. What industry are you in?"
+
 export default function VelomChat() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const bottomRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, loading])
 
   const sendMessage = useCallback(async () => {
     const trimmed = input.trim()
     if (!trimmed || loading) return
 
-    const userMessage: Message = { role: 'user', content: trimmed }
-    setMessages((prev) => [...prev, userMessage])
+    const userMsg: Message = { role: 'user', content: trimmed }
+    const next = [...messages, userMsg]
+    setMessages(next)
     setInput('')
     setLoading(true)
 
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL
-      if (!apiUrl) throw new Error('API URL not configured')
-
-      const res = await fetch(`${apiUrl}/graphql`, {
+      const res = await fetch('/api/chat/discovery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: `mutation Chat($message: String!) { chat(message: $message) { response } }`,
-          variables: { message: trimmed },
-        }),
+        body: JSON.stringify({ messages: next }),
       })
 
-      const data = await res.json()
-      const reply = data?.data?.chat?.response || 'Sorry, I could not process that request.'
-      setMessages((prev) => [...prev, { role: 'assistant', content: reply }])
+      if (!res.ok || !res.body) throw new Error('request failed')
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let assistantText = ''
+
+      setMessages((prev) => [...prev, { role: 'assistant', content: '' }])
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        const chunk = decoder.decode(value, { stream: true })
+
+        for (const line of chunk.split('\n')) {
+          if (!line.startsWith('data: ')) continue
+          const data = line.slice(6).trim()
+          if (data === '[DONE]') break
+          try {
+            const parsed = JSON.parse(data)
+            const delta = parsed?.delta?.text ?? parsed?.delta?.content ?? ''
+            if (delta) {
+              assistantText += delta
+              setMessages((prev) => {
+                const updated = [...prev]
+                updated[updated.length - 1] = { role: 'assistant', content: assistantText }
+                return updated
+              })
+            }
+          } catch {
+            // skip malformed SSE lines
+          }
+        }
+      }
     } catch {
       setMessages((prev) => [
         ...prev,
@@ -47,14 +79,20 @@ export default function VelomChat() {
     } finally {
       setLoading(false)
     }
-  }, [input, loading])
+  }, [input, loading, messages])
+
+  const handleOpen = () => {
+    setIsOpen(true)
+    if (messages.length === 0) {
+      setMessages([{ role: 'assistant', content: OPENING }])
+    }
+  }
 
   return (
     <>
-      {/* Chat bubble */}
       {!isOpen && (
         <button
-          onClick={() => setIsOpen(true)}
+          onClick={handleOpen}
           className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue shadow-lg hover:brightness-90 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500"
           aria-label="Open Velom AI chat"
         >
@@ -62,10 +100,8 @@ export default function VelomChat() {
         </button>
       )}
 
-      {/* Chat panel */}
       {isOpen && (
         <div className="fixed bottom-6 right-6 z-50 flex h-[480px] w-[360px] flex-col rounded-lg bg-white shadow-lg border border-[#E2E8F0]">
-          {/* Header */}
           <div className="flex items-center justify-between border-b border-[#E2E8F0] px-4 py-3">
             <div className="flex items-center gap-2">
               <Image src="/velom/velomxs.svg" alt="Velom" width={24} height={24} />
@@ -80,33 +116,25 @@ export default function VelomChat() {
             </button>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
-            {messages.length === 0 && (
-              <p className="text-[14px] text-muted">
-                Hi! I{'\u2019'}m Velom, Develom{'\u2019'}s AI assistant. How can I help?
-              </p>
-            )}
             {messages.map((msg, i) => (
               <div
                 key={i}
-                className={`max-w-[85%] rounded-lg px-3 py-2 text-[14px] ${
-                  msg.role === 'user'
-                    ? 'ml-auto bg-blue text-white'
-                    : 'bg-[#F1F5F9] text-text'
+                className={`max-w-[85%] rounded-lg px-3 py-2 text-[14px] leading-relaxed whitespace-pre-wrap ${
+                  msg.role === 'user' ? 'ml-auto bg-blue text-white' : 'bg-[#F1F5F9] text-text'
                 }`}
               >
                 {msg.content}
               </div>
             ))}
-            {loading && (
+            {loading && messages[messages.length - 1]?.content === '' && (
               <div className="max-w-[85%] rounded-lg bg-[#F1F5F9] px-3 py-2 text-[14px] text-muted">
-                Thinking...
+                Thinking…
               </div>
             )}
+            <div ref={bottomRef} />
           </div>
 
-          {/* Input */}
           <div className="border-t border-[#E2E8F0] px-4 py-3">
             <div className="flex gap-2">
               <input
@@ -114,7 +142,7 @@ export default function VelomChat() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                placeholder="Ask Velom anything..."
+                placeholder="Type your answer…"
                 className="flex-1 rounded border border-[#E2E8F0] px-3 py-2 text-[14px] text-text placeholder:text-muted focus:border-blue focus:outline-none focus:ring-1 focus:ring-blue"
               />
               <button
