@@ -3,22 +3,21 @@ import { relativeTime } from '@/lib/relativeTime'
 import NavClient from './NavClient'
 
 const FALLBACK_NAV = [
-  { label: 'Solutions', link: '/services', children: [] },
-  { label: 'Use Cases', link: '/contact', children: [] },
+  { label: 'Solutions', link: '/solutions', children: [] },
+  { label: 'Use Cases', link: '/use-cases', children: [] },
   {
-    label: 'Industry',
-    link: '/industries/healthcare',
+    label: 'Industries',
+    link: '/industries',
     children: [
+      { label: 'Oil & Gas', link: '/industries/oil-gas' },
       { label: 'Healthcare', link: '/industries/healthcare' },
       { label: 'Financial Services', link: '/industries/financial-services' },
       { label: 'Legal', link: '/industries/legal' },
       { label: 'Insurance', link: '/industries/insurance' },
-      { label: 'Oil & Gas', link: '/industries/oil-gas' },
     ],
   },
+  { label: 'Resources', link: '/resources', children: [] },
   { label: 'Blog', link: '/blog', children: [] },
-  { label: 'Resources', link: '/blog', children: [] },
-  { label: 'Pricing', link: '/contact', children: [] },
 ]
 
 const FALLBACK_CTA = { label: 'Get Started', link: '/contact', variant: 'primary' as const }
