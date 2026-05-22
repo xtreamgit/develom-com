@@ -8,7 +8,7 @@ interface Message {
   content: string
 }
 
-const OPENING = "Hi! I'm Velom, Develom's AI discovery guide. I'll help you find the right AI solution for your team. What industry are you in?"
+const OPENING = "Hi! I'm Velom — an AI assistant from Develom. I'll help you find the right AI solution for your team. What industry are you in?"
 
 export default function VelomChat() {
   const [isOpen, setIsOpen] = useState(false)

@@ -248,6 +248,9 @@ export default function InterviewFlow() {
 
   return (
     <div>
+      <p className="mb-5 text-[12px] text-[#6B7280]">
+        This recommendation flow is powered by AI. Your answers will be analyzed to generate results.
+      </p>
       <StepIndicator current={step} />
 
       <div className="relative mt-8 overflow-hidden">
