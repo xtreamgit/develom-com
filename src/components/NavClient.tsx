@@ -167,7 +167,7 @@ export default function NavClient({ mainNav, ctaButton }: NavClientProps) {
     >
       <div className="mx-auto flex max-w-content items-center justify-between px-6 py-3">
         <Link href="/" aria-label="Develom home">
-          <img src="/develom-full-logo.svg" alt="Develom LLC" className="h-9 w-auto" />
+          <img src="/develom_logo.svg" alt="Develom LLC" className="h-9 w-auto" />
         </Link>
 
         {/* Desktop links */}
