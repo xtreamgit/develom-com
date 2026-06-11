@@ -202,7 +202,7 @@ export default async function Dashboard({ initPageResult }: AdminViewServerProps
     payload.count({ collection: 'pages' }),
     payload.count({ collection: 'case-studies' }),
     payload.count({ collection: 'testimonials' }),
-    payload.count({ collection: 'social-posts', where: { status: { in: ['draft', 'pending-review'] } } }),
+    payload.count({ collection: 'social-posts', where: { status: { in: ['draft', 'pending-review'] } } }).catch(() => ({ totalDocs: 0 })),
   ])
 
   const [recentPosts, recentPages, recentCases, recentMedia] = await Promise.all([
