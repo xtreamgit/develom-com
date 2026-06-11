@@ -3,10 +3,6 @@ import Stripe from 'stripe'
 
 export const dynamic = 'force-dynamic'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '', {
-  apiVersion: '2026-04-22.dahlia',
-})
-
 const PRICES: Record<string, Record<string, string>> = {
   starter: {
     monthly: process.env.STRIPE_PRICE_STARTER_MONTHLY ?? '',
@@ -26,6 +22,10 @@ export async function POST(req: NextRequest) {
   if (!process.env.STRIPE_SECRET_KEY) {
     return NextResponse.json({ error: 'Stripe not configured' }, { status: 503 })
   }
+
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2026-04-22.dahlia',
+  })
 
   const { plan, billing, email } = await req.json()
 
