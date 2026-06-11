@@ -193,7 +193,19 @@ export default async function Dashboard({ initPageResult }: AdminViewServerProps
   const role = (user?.role ?? 'viewer') as Role
   const userName = user?.name ?? 'there'
 
-  const payload = await getPayload({ config: configPromise })
+  let payload
+  try {
+    payload = await getPayload({ config: configPromise })
+  } catch {
+    return (
+      <div style={{ padding: 48, fontFamily: 'DM Sans, sans-serif', color: '#374151' }}>
+        <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>Admin temporarily unavailable</h2>
+        <p style={{ fontSize: 14, color: '#64748B' }}>
+          The CMS is initializing. Please refresh in a moment.
+        </p>
+      </div>
+    )
+  }
 
   const zero = { totalDocs: 0 }
   const emptyFind = { docs: [] }
