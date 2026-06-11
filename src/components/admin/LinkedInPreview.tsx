@@ -1,5 +1,6 @@
 'use client'
 
+import type { ReactNode } from 'react'
 import { useFormFields } from '@payloadcms/ui'
 
 const GLOBE_ICON = (
@@ -31,7 +32,7 @@ const SEND_ICON = (
   </svg>
 )
 
-function ActionBtn({ icon, label }: { icon: React.ReactNode; label: string }) {
+function ActionBtn({ icon, label }: { icon: ReactNode; label: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 5, padding: '10px 16px', cursor: 'default', borderRadius: 4, color: '#666', fontSize: 13, fontWeight: 600, userSelect: 'none' }}>
       {icon}
