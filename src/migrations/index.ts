@@ -6,7 +6,7 @@ import * as migration_20260513_120000 from './20260513_120000';
 import * as migration_20260513_180000_locked_documents_rels from './20260513_180000_locked_documents_rels';
 import * as migration_20260515_180000_drop_blog_posts_published from './20260515_180000_drop_blog_posts_published';
 import * as migration_20260517_211549 from './20260517_211549';
-import * as migration_20260611_000000_social_posts from './20260611_000000_social_posts';
+import * as migration_20260611_170134 from './20260611_170134';
 
 export const migrations = [
   {
@@ -50,8 +50,8 @@ export const migrations = [
     name: '20260517_211549',
   },
   {
-    up: migration_20260611_000000_social_posts.up,
-    down: migration_20260611_000000_social_posts.down,
-    name: '20260611_000000_social_posts',
+    up: migration_20260611_170134.up,
+    down: migration_20260611_170134.down,
+    name: '20260611_170134'
   },
 ];
