@@ -195,21 +195,24 @@ export default async function Dashboard({ initPageResult }: AdminViewServerProps
 
   const payload = await getPayload({ config: configPromise })
 
+  const zero = { totalDocs: 0 }
+  const emptyFind = { docs: [] }
+
   const [posts, projects, mediaFiles, pages, caseStudies, testimonials, socialDrafts] = await Promise.all([
-    payload.count({ collection: 'blog-posts' }),
-    payload.count({ collection: 'portfolio-projects' }),
-    payload.count({ collection: 'media' }),
-    payload.count({ collection: 'pages' }),
-    payload.count({ collection: 'case-studies' }),
-    payload.count({ collection: 'testimonials' }),
-    payload.count({ collection: 'social-posts', where: { status: { in: ['draft', 'pending-review'] } } }).catch(() => ({ totalDocs: 0 })),
+    payload.count({ collection: 'blog-posts' }).catch(() => zero),
+    payload.count({ collection: 'portfolio-projects' }).catch(() => zero),
+    payload.count({ collection: 'media' }).catch(() => zero),
+    payload.count({ collection: 'pages' }).catch(() => zero),
+    payload.count({ collection: 'case-studies' }).catch(() => zero),
+    payload.count({ collection: 'testimonials' }).catch(() => zero),
+    payload.count({ collection: 'social-posts', where: { status: { in: ['draft', 'pending-review'] } } }).catch(() => zero),
   ])
 
   const [recentPosts, recentPages, recentCases, recentMedia] = await Promise.all([
-    payload.find({ collection: 'blog-posts',    sort: '-updatedAt', limit: 3, depth: 0 }),
-    payload.find({ collection: 'pages',         sort: '-updatedAt', limit: 3, depth: 0 }),
-    payload.find({ collection: 'case-studies',  sort: '-updatedAt', limit: 2, depth: 0 }),
-    payload.find({ collection: 'media',         sort: '-updatedAt', limit: 2, depth: 0 }),
+    payload.find({ collection: 'blog-posts',    sort: '-updatedAt', limit: 3, depth: 0 }).catch(() => emptyFind),
+    payload.find({ collection: 'pages',         sort: '-updatedAt', limit: 3, depth: 0 }).catch(() => emptyFind),
+    payload.find({ collection: 'case-studies',  sort: '-updatedAt', limit: 2, depth: 0 }).catch(() => emptyFind),
+    payload.find({ collection: 'media',         sort: '-updatedAt', limit: 2, depth: 0 }).catch(() => emptyFind),
   ])
 
   const activity: ActivityItem[] = [
