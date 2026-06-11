@@ -7,6 +7,8 @@ import PortfolioGrid from '@/components/portfolio/PortfolioGrid'
 import PortfolioCTA from '@/components/portfolio/PortfolioCTA'
 import type { PortfolioProject } from '@/types/portfolio'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Portfolio | Develom AI Projects',
   description:

@@ -7,6 +7,8 @@ import ServicesGroups from '@/components/services/ServicesGroups'
 import ComplianceStrip from '@/components/services/ComplianceStrip'
 import ServicesCTA from '@/components/services/ServicesCTA'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'AI Services — Architecture, Applications & Automation | Develom',
   description:
