@@ -82,6 +82,7 @@ export interface Config {
     interviews: Interview;
     'latest-models': LatestModel;
     'compliance-deadlines': ComplianceDeadline;
+    'social-posts': SocialPost;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -104,6 +105,7 @@ export interface Config {
     interviews: InterviewsSelect<false> | InterviewsSelect<true>;
     'latest-models': LatestModelsSelect<false> | LatestModelsSelect<true>;
     'compliance-deadlines': ComplianceDeadlinesSelect<false> | ComplianceDeadlinesSelect<true>;
+    'social-posts': SocialPostsSelect<false> | SocialPostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -851,6 +853,41 @@ export interface ComplianceDeadline {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-posts".
+ */
+export interface SocialPost {
+  id: number;
+  /**
+   * Internal title — not published, for your own reference
+   */
+  postTitle: string;
+  platform: 'linkedin' | 'x';
+  status: 'draft' | 'pending-review' | 'approved';
+  /**
+   * Target publish date & time
+   */
+  scheduledAt?: string | null;
+  /**
+   * Mara notified at this time
+   */
+  notifiedAt?: string | null;
+  /**
+   * Full post copy including hashtags
+   */
+  postText: string;
+  /**
+   * Optional image or thumbnail
+   */
+  image?: (number | null) | Media;
+  /**
+   * Platform message sent to Mara
+   */
+  platformNotified?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -932,6 +969,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'compliance-deadlines';
         value: number | ComplianceDeadline;
+      } | null)
+    | ({
+        relationTo: 'social-posts';
+        value: number | SocialPost;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -1366,6 +1407,22 @@ export interface ComplianceDeadlinesSelect<T extends boolean = true> {
   notes?: T;
   recurring?: T;
   recurrenceType?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-posts_select".
+ */
+export interface SocialPostsSelect<T extends boolean = true> {
+  postTitle?: T;
+  platform?: T;
+  status?: T;
+  scheduledAt?: T;
+  notifiedAt?: T;
+  postText?: T;
+  image?: T;
+  platformNotified?: T;
   updatedAt?: T;
   createdAt?: T;
 }

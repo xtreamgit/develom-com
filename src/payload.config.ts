@@ -22,6 +22,7 @@ import { Leads } from './collections/Leads'
 import { Interviews } from './collections/Interviews'
 import { LatestModels } from './collections/LatestModels'
 import { ComplianceDeadlines } from './collections/ComplianceDeadlines'
+import { SocialPosts } from './collections/SocialPosts'
 import { Navigation } from './globals/Navigation'
 import { SiteSettings } from './globals/SiteSettings'
 
@@ -51,7 +52,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, MediaFolders, BlogPosts, PortfolioProjects, Services, Tags, Categories, Pages, Testimonials, CaseStudies, Leads, Interviews, LatestModels, ComplianceDeadlines],
+  collections: [Users, Media, MediaFolders, BlogPosts, PortfolioProjects, Services, Tags, Categories, Pages, Testimonials, CaseStudies, Leads, Interviews, LatestModels, ComplianceDeadlines, SocialPosts],
   globals: [Navigation, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

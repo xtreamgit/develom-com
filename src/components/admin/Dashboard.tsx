@@ -71,6 +71,7 @@ const ico = {
   nav:        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" width={15} height={15}><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>,
   settings:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" width={15} height={15}><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
   account:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" width={15} height={15}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+  social:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" width={15} height={15}><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.88 1.1A4.52 4.52 0 0 0 16.11 0c-2.5 0-4.52 2.02-4.52 4.52 0 .35.04.7.11 1.03A12.83 12.83 0 0 1 2.4.89a4.52 4.52 0 0 0 1.4 6.03A4.47 4.47 0 0 1 1.76 6v.06c0 2.19 1.56 4.02 3.63 4.43a4.53 4.53 0 0 1-2.04.08 4.52 4.52 0 0 0 4.22 3.14A9.07 9.07 0 0 1 1 19.54a12.8 12.8 0 0 0 6.92 2.03c8.3 0 12.85-6.88 12.85-12.85 0-.2 0-.39-.01-.58A9.18 9.18 0 0 0 23 3z"/></svg>,
   fileText:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>,
   briefcase:  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>,
   image:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" width={22} height={22}><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>,
@@ -194,13 +195,14 @@ export default async function Dashboard({ initPageResult }: AdminViewServerProps
 
   const payload = await getPayload({ config: configPromise })
 
-  const [posts, projects, mediaFiles, pages, caseStudies, testimonials] = await Promise.all([
+  const [posts, projects, mediaFiles, pages, caseStudies, testimonials, socialDrafts] = await Promise.all([
     payload.count({ collection: 'blog-posts' }),
     payload.count({ collection: 'portfolio-projects' }),
     payload.count({ collection: 'media' }),
     payload.count({ collection: 'pages' }),
     payload.count({ collection: 'case-studies' }),
     payload.count({ collection: 'testimonials' }),
+    payload.count({ collection: 'social-posts', where: { status: { in: ['draft', 'pending-review'] } } }),
   ])
 
   const [recentPosts, recentPages, recentCases, recentMedia] = await Promise.all([
@@ -261,6 +263,12 @@ export default async function Dashboard({ initPageResult }: AdminViewServerProps
         { label: 'Folders',       href: '/admin/collections/media-folders', icon: ico.folder },
       ],
     },
+    {
+      heading: 'Marketing',
+      items: [
+        { label: 'Social Posts', href: '/admin/collections/social-posts', icon: ico.social },
+      ],
+    },
     ...(isAdmin ? [{
       heading: 'Users',
       items: [
@@ -319,6 +327,9 @@ export default async function Dashboard({ initPageResult }: AdminViewServerProps
               <StatCard label="Pages"        count={pages.totalDocs}        icon={ico.layout}    />
               <StatCard label="Case Studies" count={caseStudies.totalDocs}  icon={ico.barChart}  />
               <StatCard label="Testimonials" count={testimonials.totalDocs} icon={ico.quote}     />
+              {socialDrafts.totalDocs > 0 && (
+                <StatCard label="Social Drafts" count={socialDrafts.totalDocs} icon={ico.social} />
+              )}
             </div>
           </div>
 
