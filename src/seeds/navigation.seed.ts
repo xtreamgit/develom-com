@@ -17,7 +17,14 @@ const navigationData = {
       ],
     },
     { label: 'Blog', link: '/blog', children: [] },
-    { label: 'Resources', link: '/blog', children: [] },
+    {
+      label: 'Resources',
+      link: '/resources',
+      children: [
+        { label: 'AI Governance Guide', link: '/resources/ai-governance-guide' },
+        { label: 'Agentic AI Tools', link: '/resources/agentic-ai-tools' },
+      ],
+    },
     { label: 'Pricing', link: '/contact', children: [] },
   ],
   footerNav: [

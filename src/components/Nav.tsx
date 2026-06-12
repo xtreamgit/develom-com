@@ -15,7 +15,14 @@ const FALLBACK_NAV = [
       { label: 'Insurance', link: '/industries/insurance' },
     ],
   },
-  { label: 'Resources', link: '/resources', children: [] },
+  {
+    label: 'Resources',
+    link: '/resources',
+    children: [
+      { label: 'AI Governance Guide', link: '/resources/ai-governance-guide' },
+      { label: 'Agentic AI Tools', link: '/resources/agentic-ai-tools' },
+    ],
+  },
   { label: 'Blog', link: '/blog', children: [] },
 ]
 
