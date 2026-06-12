@@ -61,7 +61,9 @@ export default buildConfig({
   },
   db: vercelPostgresAdapter({
     pool: {
-      connectionString: process.env.POSTGRES_URL || '',
+      // Use non-pooled URL when available — required for migrations (DDL) and
+      // more reliable in Vercel build environment where PgBouncer can timeout.
+      connectionString: process.env.POSTGRES_URL_NON_POOLING || process.env.POSTGRES_URL || '',
     },
   }),
   email: nodemailerAdapter({
