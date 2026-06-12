@@ -19,8 +19,6 @@ export interface CtaButton {
 interface NavClientProps {
   mainNav: NavItem[]
   ctaButton: CtaButton
-  lastUpdatedText?: string | null
-  latestModelText?: string | null
 }
 
 function DropdownItem({ item }: { item: NavItem }) {
@@ -149,7 +147,7 @@ function MobileNavItem({ item, onClose }: { item: NavItem; onClose: () => void }
   )
 }
 
-export default function NavClient({ mainNav, ctaButton, lastUpdatedText, latestModelText }: NavClientProps) {
+export default function NavClient({ mainNav, ctaButton }: NavClientProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -169,7 +167,7 @@ export default function NavClient({ mainNav, ctaButton, lastUpdatedText, latestM
     >
       <div className="mx-auto flex max-w-content items-center justify-between px-6 py-3">
         <Link href="/" aria-label="Develom home">
-          <img src="/develom_logo.svg" alt="Develom LLC" className="h-9 w-auto" />
+          <img src="/develom-full-logo.svg" alt="Develom LLC" className="h-9 w-auto" />
         </Link>
 
         {/* Desktop links */}
@@ -177,16 +175,6 @@ export default function NavClient({ mainNav, ctaButton, lastUpdatedText, latestM
           {mainNav.map((item) => (
             <DropdownItem key={item.link} item={item} />
           ))}
-
-          {(lastUpdatedText || latestModelText) && (
-            <div className="hidden lg:flex items-center gap-3 border-l border-slate-200 pl-6 text-[11px] text-slate-400 leading-tight">
-              {lastUpdatedText && <span>{lastUpdatedText}</span>}
-              {lastUpdatedText && latestModelText && (
-                <span className="text-slate-300" aria-hidden="true">·</span>
-              )}
-              {latestModelText && <span>{latestModelText}</span>}
-            </div>
-          )}
 
           <Link
             href={ctaLink}

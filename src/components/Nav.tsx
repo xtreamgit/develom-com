@@ -1,5 +1,4 @@
-import { getNavigation, getHeaderWidgetData } from '@/lib/getGlobals'
-import { relativeTime } from '@/lib/relativeTime'
+import { getNavigation } from '@/lib/getGlobals'
 import NavClient from './NavClient'
 
 const FALLBACK_NAV = [
@@ -30,20 +29,6 @@ export default async function Nav() {
     nav = null
   }
 
-  const widgetData = await getHeaderWidgetData()
-
-  const lastUpdatedText = widgetData?.lastContentUpdate
-    ? `Updated ${relativeTime(widgetData.lastContentUpdate)}.`
-    : null
-
-  const latestModelText = (() => {
-    const m = widgetData?.latestAIModel
-    if (!m?.releasedAt || !m.name) return null
-    const parts = [`New model ${relativeTime(m.releasedAt)} — ${m.name}`]
-    if (m.mainFeature) parts.push(m.mainFeature)
-    return parts.join(' · ') + '.'
-  })()
-
   const mainNav = nav?.mainNav && nav.mainNav.length > 0 ? nav.mainNav : FALLBACK_NAV
   const ctaButton = nav?.ctaButton ?? FALLBACK_CTA
 
@@ -51,8 +36,6 @@ export default async function Nav() {
     <NavClient
       mainNav={mainNav as Parameters<typeof NavClient>[0]['mainNav']}
       ctaButton={ctaButton}
-      lastUpdatedText={lastUpdatedText}
-      latestModelText={latestModelText}
     />
   )
 }
