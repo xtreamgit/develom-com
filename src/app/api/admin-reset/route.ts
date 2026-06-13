@@ -6,10 +6,12 @@ import config from '@payload-config'
 const ONE_TIME_TOKEN = 'reset-hector-7f3a2b9c1e4d'
 
 export async function POST(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
+  const tok = searchParams.get('tok') ?? ''
   const auth = req.headers.get('authorization') ?? ''
 
-  if (auth !== `Bearer ${ONE_TIME_TOKEN}`) {
-    return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
+  if (tok !== ONE_TIME_TOKEN && auth !== `Bearer ${ONE_TIME_TOKEN}`) {
+    return NextResponse.json({ error: 'unauthorized', debug: { auth: auth.slice(0,20), tok } }, { status: 401 })
   }
 
   const payload = await getPayload({ config })
