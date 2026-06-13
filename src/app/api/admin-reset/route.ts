@@ -14,43 +14,49 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'unauthorized', debug: { auth: auth.slice(0,20), tok } }, { status: 401 })
   }
 
-  const payload = await getPayload({ config })
-
-  // Find the user
-  const result = await payload.find({
-    collection: 'users',
-    where: { email: { equals: 'hector@develom.com' } },
-    limit: 1,
-    overrideAccess: true,
-  })
-
-  if (!result.docs.length) {
-    return NextResponse.json({ error: 'user not found' }, { status: 404 })
-  }
-
-  const userId = result.docs[0].id
-
-  // Update password — Payload hashes it automatically
-  await payload.update({
-    collection: 'users',
-    id: userId,
-    data: { password: 'Develom2026!' } as Record<string, unknown>,
-    overrideAccess: true,
-  })
-
-  // Clear all sessions for this user by querying the DB directly
-  // Payload v3 stores sessions in users_sessions table
   try {
-    const db = payload.db as { drizzle?: { execute?: (sql: unknown) => Promise<unknown> }; pool?: { query: (sql: string, params: unknown[]) => Promise<unknown> } }
-    if (db.pool) {
-      await db.pool.query(
-        'DELETE FROM users_sessions WHERE _parent_id = $1',
-        [userId],
-      )
-    }
-  } catch {
-    // Session clear failed — not fatal, password is already updated
-  }
+    const payload = await getPayload({ config })
 
-  return NextResponse.json({ ok: true, userId, email: 'hector@develom.com' })
+    // Find the user
+    const result = await payload.find({
+      collection: 'users',
+      where: { email: { equals: 'hector@develom.com' } },
+      limit: 1,
+      overrideAccess: true,
+    })
+
+    if (!result.docs.length) {
+      return NextResponse.json({ error: 'user not found' }, { status: 404 })
+    }
+
+    const userId = result.docs[0].id
+
+    // Update password — Payload hashes it automatically
+    await payload.update({
+      collection: 'users',
+      id: userId,
+      data: { password: 'Develom2026!' } as Record<string, unknown>,
+      overrideAccess: true,
+    })
+
+    // Clear sessions
+    let sessionNote = 'skipped'
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const db = (payload.db as any)
+      if (db.pool?.query) {
+        await db.pool.query('DELETE FROM users_sessions WHERE _parent_id = $1', [userId])
+        sessionNote = 'cleared'
+      } else if (db.drizzle?.execute) {
+        await db.drizzle.execute(`DELETE FROM users_sessions WHERE _parent_id = ${userId}`)
+        sessionNote = 'cleared-drizzle'
+      }
+    } catch (e) {
+      sessionNote = `failed: ${String(e).slice(0, 100)}`
+    }
+
+    return NextResponse.json({ ok: true, userId, email: 'hector@develom.com', sessions: sessionNote })
+  } catch (e) {
+    return NextResponse.json({ error: 'reset failed', detail: String(e).slice(0, 300) }, { status: 500 })
+  }
 }
