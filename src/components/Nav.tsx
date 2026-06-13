@@ -48,9 +48,10 @@ export default async function Nav() {
   let mainNav = nav?.mainNav && nav.mainNav.length > 0 ? nav.mainNav : FALLBACK_NAV
 
   // Backfill required children for any nav item where the DB record has none
-  mainNav = (mainNav as Array<{ label: string; link: string; children?: unknown[] }>).map((item) => {
-    const required = REQUIRED_CHILDREN[item.label]
-    if (required && (!item.children || item.children.length === 0)) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  mainNav = (mainNav as any[]).map((item: any) => {
+    const required = REQUIRED_CHILDREN[item.label as string]
+    if (required && (!item.children || (item.children as unknown[]).length === 0)) {
       return { ...item, children: required }
     }
     return item
