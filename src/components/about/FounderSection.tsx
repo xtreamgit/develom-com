@@ -47,7 +47,7 @@ export default function FounderSection() {
         <div className="mt-8 flex items-center gap-5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="https://develom-com.vercel.app/api/media/file/founder-headshot-200x200.jpg"
+            src="/images/hector-dejesus.jpg"
             alt="Hector DeJesus — Founder &amp; CEO, Develom"
             width={96}
             height={96}
