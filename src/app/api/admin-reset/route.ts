@@ -2,13 +2,13 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-// One-shot admin password reset endpoint.
-// Protected by PAYLOAD_SECRET — delete this file after use.
+// One-shot admin password reset endpoint — delete after use.
+const ONE_TIME_TOKEN = 'reset-hector-7f3a2b9c1e4d'
+
 export async function POST(req: NextRequest) {
   const auth = req.headers.get('authorization') ?? ''
-  const secret = process.env.PAYLOAD_SECRET ?? ''
 
-  if (!secret || auth !== `Bearer ${secret}`) {
+  if (auth !== `Bearer ${ONE_TIME_TOKEN}`) {
     return NextResponse.json({ error: 'unauthorized' }, { status: 401 })
   }
 
