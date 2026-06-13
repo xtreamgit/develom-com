@@ -17,11 +17,12 @@ export async function POST(req: NextRequest) {
   try {
     const payload = await getPayload({ config })
 
-    // Find the user
+    // Find the user (depth:0 avoids populating avatar→media join)
     const result = await payload.find({
       collection: 'users',
       where: { email: { equals: 'hector@develom.com' } },
       limit: 1,
+      depth: 0,
       overrideAccess: true,
     })
 
