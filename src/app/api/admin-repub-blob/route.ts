@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { put } from '@vercel/blob'
+import { put, head } from '@vercel/blob'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
@@ -17,14 +17,19 @@ export async function POST(req: NextRequest) {
   try {
     const token = process.env.BLOB_READ_WRITE_TOKEN ?? ''
 
-    // Fetch the private blob — pass token in Authorization header
-    const fetchRes = await fetch(PRIVATE_URL, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    // Get blob metadata — head() returns a short-lived downloadUrl for private blobs
+    const meta = await head(PRIVATE_URL, { token })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const downloadUrl = (meta as any).downloadUrl ?? PRIVATE_URL
 
+    // Fetch using the signed download URL
+    const fetchRes = await fetch(downloadUrl)
     if (!fetchRes.ok) {
-      const text = await fetchRes.text()
-      return NextResponse.json({ error: 'fetch private blob failed', status: fetchRes.status, body: text.slice(0, 200) }, { status: 500 })
+      return NextResponse.json({
+        error: 'fetch via downloadUrl failed',
+        status: fetchRes.status,
+        downloadUrl: downloadUrl.slice(0, 80),
+      }, { status: 500 })
     }
 
     const arrayBuffer = await fetchRes.arrayBuffer()
