@@ -19,6 +19,7 @@ const heroBlock: Block = {
         { label: 'White', value: 'white' },
       ],
     },
+    { name: 'heroImage', type: 'upload', relationTo: 'media' },
   ],
 }
 

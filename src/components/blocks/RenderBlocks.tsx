@@ -31,6 +31,7 @@ export default function RenderBlocks({ blocks }: RenderBlocksProps) {
                 ctaText={block.ctaText}
                 ctaLink={block.ctaLink}
                 background={block.background}
+                heroImage={block.heroImage}
               />
             )
 
