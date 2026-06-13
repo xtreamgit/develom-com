@@ -5,6 +5,7 @@ export const Users: CollectionConfig = {
   slug: 'users',
   auth: {
     useAPIKey: true,
+    maxLoginAttempts: 0,
   },
   admin: {
     useAsTitle: 'name',
