@@ -12,7 +12,7 @@ const resources = [
     eyebrow: 'Reference',
     title: 'Top 10 Agentic AI Tools',
     description:
-      'A practitioner's guide to the leading frameworks and platforms behind production agentic AI — LangGraph, CrewAI, Langfuse, Mem0, and seven more. Stage-tagged and indexed by use case.',
+      `A practitioner's guide to the leading frameworks and platforms behind production agentic AI — LangGraph, CrewAI, Langfuse, Mem0, and seven more. Stage-tagged and indexed by use case.`,
     href: '/resources/agentic-ai-tools',
     cta: 'Browse the guide',
     accent: 'bg-blue/10 text-blue border-blue/20',
