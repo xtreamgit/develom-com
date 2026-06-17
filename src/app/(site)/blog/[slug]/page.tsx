@@ -28,16 +28,28 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       collection: 'blog-posts',
       where: { slug: { equals: slug }, _status: { equals: 'published' } },
       limit: 1,
-      depth: 0,
+      depth: 1,
     })
 
-    const post = result.docs[0] as { title?: string; excerpt?: string } | undefined
+    const post = result.docs[0] as {
+      title?: string
+      excerpt?: string
+      featuredImage?: { url?: string; sizes?: { og?: { url?: string } } }
+    } | undefined
     if (!post) return {}
+
+    const ogImageUrl =
+      post.featuredImage?.sizes?.og?.url ??
+      post.featuredImage?.url ??
+      '/og-home.png'
 
     return {
       title: `${post.title ?? ''} | Develom Blog`,
       description: post.excerpt ?? undefined,
       alternates: { canonical: `https://develom.com/blog/${slug}` },
+      openGraph: {
+        images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+      },
     }
   } catch {
     return {}
