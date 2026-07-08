@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import HeroSection from '@/components/home/HeroSection'
-import NewsWidget from '@/components/home/NewsWidget'
 import TrustStrip from '@/components/home/TrustStrip'
 import SolutionsOutcome from '@/components/home/SolutionsOutcome'
 import SolutionFinder from '@/components/home/SolutionFinder'
@@ -71,7 +70,6 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <NewsWidget />
       {complianceItems.length > 0 && <ComplianceCalendar items={complianceItems} />}
       <TrustStrip />
       <SolutionsOutcome />
