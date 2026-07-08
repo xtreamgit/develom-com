@@ -28,10 +28,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     { url: 'https://develom.com', lastModified: new Date(), changeFrequency: 'weekly', priority: 1.0 },
     { url: 'https://develom.com/services', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: 'https://develom.com/solutions', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: 'https://develom.com/use-cases', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: 'https://develom.com/about', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: 'https://develom.com/portfolio', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: 'https://develom.com/pricing', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
+    { url: 'https://develom.com/industries', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: 'https://develom.com/ai-solution-finder', lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://develom.com/blog', lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: 'https://develom.com/contact', lastModified: new Date(), changeFrequency: 'yearly', priority: 0.7 },
+    { url: 'https://develom.com/privacy-policy', lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
+    { url: 'https://develom.com/terms', lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
     ...blogEntries,
   ]
 }
