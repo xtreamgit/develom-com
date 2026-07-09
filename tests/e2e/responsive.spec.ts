@@ -82,7 +82,8 @@ test.describe('Mobile responsiveness', () => {
 
   test('CTA buttons are visible on homepage', async ({ page }) => {
     await page.goto('/')
-    const cta = page.locator('a[href*="contact"], button').filter({ hasText: /get started|contact|talk|schedule|book/i }).first()
+    // Use :visible to skip nav links hidden inside the mobile hamburger
+    const cta = page.locator('a[href*="contact"]:visible, button:visible').filter({ hasText: /get started|contact|talk|schedule|book/i }).first()
     await expect(cta, 'no CTA button found on homepage').toBeVisible()
   })
 
@@ -137,6 +138,12 @@ test.describe('Cross-browser visual consistency', () => {
 
   test('no broken images on homepage', async ({ page }) => {
     await page.goto('/')
+    // Scroll to bottom so lazy-loaded images in the footer trigger a fetch
+    await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    // Wait until every img element has finished loading
+    await page.waitForFunction(() =>
+      Array.from(document.querySelectorAll('img')).every((img) => img.complete)
+    )
     const brokenImages = await page.evaluate(() => {
       const imgs = Array.from(document.querySelectorAll('img'))
       return imgs
