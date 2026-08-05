@@ -103,8 +103,30 @@ export default async function BlogPostPage({ params }: PageProps) {
     })
   }
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt ?? '',
+    url: `https://develom.com/blog/${slug}`,
+    datePublished: post.date ? new Date(post.date).toISOString().slice(0, 10) : undefined,
+    dateModified: post.updatedAt ? new Date(post.updatedAt).toISOString().slice(0, 10) : undefined,
+    author: { '@type': 'Organization', name: 'Develom', url: 'https://develom.com' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Develom',
+      url: 'https://develom.com',
+      logo: { '@type': 'ImageObject', url: 'https://develom.com/logo.png' },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `https://develom.com/blog/${slug}` },
+  }
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* Hero */}
       <section className="bg-navy px-6 pb-16 pt-32 md:pb-20 md:pt-40">
         <div className="mx-auto max-w-[720px]">
