@@ -5,7 +5,6 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import CookieConsent from '@/components/shared/CookieConsent'
-import VelomChatLoader from '@/components/VelomChatLoader'
 import { getSiteSettings } from '@/lib/getGlobals'
 import './globals.css'
 
@@ -68,7 +67,6 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         {children}
         <Footer />
         <CookieConsent gaId={gaId} />
-        {process.env.NEXT_PUBLIC_API_URL && <VelomChatLoader />}
         <Analytics />
         <SpeedInsights />
         {process.env.NODE_ENV === 'production' && bodyScripts && (
