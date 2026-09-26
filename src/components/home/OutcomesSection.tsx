@@ -1,46 +1,39 @@
 import Link from 'next/link'
 
-// PLACEHOLDER DATA — Vogel Alcove name/logo/metrics pending Robert consent + Jean-Luc copy clearance.
-// Replace anonymized entry with real case study once both gates clear (Phase 2).
+// All entries are generic placeholders.
+// Jean-Luc gate + PSA confidentiality check + Vogel/Robert confirmation required
+// before publishing client-reported framing, real metrics, or geographic identifiers.
 const outcomes = [
   {
-    vertical: 'Nonprofit + Salesforce',
-    problem:
-      'Donor stewardship and lapse-detection workflows managed manually — requiring significant staff time each week with inconsistent outreach timing.',
-    result:
-      'Large non-profit organization in Dallas, Texas deployed automated stewardship agents. Donor lifecycle workflows now run on schedule without manual intervention. Staff reallocated to strategy and high-value relationship work.',
+    label: 'Nonprofit + Salesforce',
+    statement:
+      'A large nonprofit organization streamlined donor research and outreach workflows, reducing manual coordination across their development team.',
   },
   {
-    vertical: 'Healthcare',
-    problem: '[PLACEHOLDER — Healthcare case study pending AGENTS-102 completion and Jean-Luc clearance]',
-    result: '[PLACEHOLDER]',
-    isPlaceholder: true,
+    label: 'Compliance Operations',
+    statement:
+      'Automated compliance monitoring integrated into ongoing operations, enabling faster response to regulatory requirements without adding headcount.',
   },
   {
-    vertical: 'Financial Services',
-    problem: '[PLACEHOLDER — Financial services case study pending future engagement]',
-    result: '[PLACEHOLDER]',
-    isPlaceholder: true,
+    label: 'Campaign Management',
+    statement:
+      'Campaign sequencing and lead scoring running continuously in the background, freeing team time for strategy and relationship-building.',
   },
 ]
 
 export default function OutcomesSection() {
-  const activeOutcomes = outcomes.filter((o) => !o.isPlaceholder)
-
   return (
     <section className="bg-[#0A0F1E] px-6 py-16">
       <div className="mx-auto max-w-content">
         <p className="text-label uppercase tracking-widest text-white/40">OUTCOMES DELIVERED</p>
 
-        <div className="mt-6 grid gap-4 sm:grid-cols-1 lg:grid-cols-1 max-w-[700px]">
-          {activeOutcomes.map((o) => (
-            <div key={o.vertical} className="flex flex-col rounded-lg bg-[#0F1628] px-6 py-6">
+        <div className="mt-6 grid gap-4 max-w-[700px]">
+          {outcomes.map((o) => (
+            <div key={o.label} className="flex flex-col rounded-lg bg-[#0F1628] px-6 py-6">
               <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2563EB]">
-                {o.vertical}
+                {o.label}
               </p>
-              <p className="mt-3 text-[14px] leading-relaxed text-white/50">{o.problem}</p>
-              <div className="my-4 border-t border-white/10" />
-              <p className="text-[15px] leading-relaxed text-white/85 flex-1">{o.result}</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-white/80">{o.statement}</p>
             </div>
           ))}
         </div>
