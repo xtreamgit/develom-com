@@ -1,66 +1,45 @@
 import Link from 'next/link'
 
-const solutions = [
+const verticals = [
   {
-    title: 'Automate & Optimize',
-    description: 'Streamline operations and reduce manual work.',
+    title: 'Nonprofit + Salesforce',
+    description: 'Donor lifecycle automation, stewardship, and campaign operations — running continuously on Salesforce. Your team sets the priorities; we keep everything moving.',
+    outcomes: ['Donor lapse detection', 'Stewardship scheduling', 'Campaign operations'],
     iconBg: 'bg-blue-50',
     iconColor: 'text-[#2563EB]',
-    href: '/services',
+    href: '/contact',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z" />
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+        <circle cx="9" cy="7" r="4" />
+        <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
       </svg>
     ),
   },
   {
-    title: 'Analyze & Predict',
-    description: 'Turn data into insights and predict future outcomes.',
+    title: 'Healthcare',
+    description: 'Operational AI workflows designed for HIPAA-governed environments. We handle the compliance complexity so clinical and administrative teams can focus on care.',
+    outcomes: ['HIPAA-aware workflows', 'Administrative automation', 'Compliance monitoring'],
     iconBg: 'bg-emerald-50',
     iconColor: 'text-emerald-600',
-    href: '/services',
+    href: '/contact',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M3 3v18h18" />
-        <path d="m19 9-5 5-4-4-3 3" />
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
       </svg>
     ),
   },
   {
-    title: 'Engage & Assist',
-    description: 'Enhance customer and employee experiences.',
-    iconBg: 'bg-orange-50',
-    iconColor: 'text-orange-500',
-    href: '/services',
+    title: 'Financial Services',
+    description: 'Managed operational agents for RIAs, wealth managers, and professional services firms — built for compliance-sensitive workflows in regulated environments.',
+    outcomes: ['Fiduciary-aware design', 'Regulatory workflow automation', 'Operational continuity'],
+    iconBg: 'bg-indigo-50',
+    iconColor: 'text-indigo-600',
+    href: '/contact',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Protect & Detect',
-    description: 'Strengthen security and reduce risk with AI.',
-    iconBg: 'bg-red-50',
-    iconColor: 'text-red-500',
-    href: '/services',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        <path d="m9 12 2 2 4-4" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Innovate & Grow',
-    description: 'Build new products and unlock revenue opportunities.',
-    iconBg: 'bg-purple-50',
-    iconColor: 'text-purple-600',
-    href: '/services',
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-        <path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z" />
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <path d="M3 9h18M9 21V9" />
       </svg>
     ),
   },
@@ -70,20 +49,31 @@ export default function SolutionsOutcome() {
   return (
     <section className="bg-white px-6 py-16">
       <div className="mx-auto max-w-content">
-        <h2 className="text-h2 text-center text-gray-900">Explore Solutions by Outcome</h2>
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-5">
-          {solutions.map((sol) => (
-            <div key={sol.title} className="flex flex-col rounded-xl border border-gray-100 p-5 hover:border-gray-200 hover:shadow-md transition-all">
-              <div className={`mb-4 inline-flex w-11 h-11 items-center justify-center rounded-lg ${sol.iconBg} ${sol.iconColor}`}>
-                {sol.icon}
+        <p className="text-label uppercase tracking-widest text-[#2563EB]">WHAT WE OPERATE</p>
+        <h2 className="mt-3 text-h2 text-gray-900">Specialized verticals. Deep operational expertise.</h2>
+        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+          {verticals.map((v) => (
+            <div key={v.title} className="flex flex-col rounded-xl border border-gray-100 p-6 hover:border-gray-200 hover:shadow-md transition-all">
+              <div className={`mb-4 inline-flex w-11 h-11 items-center justify-center rounded-lg ${v.iconBg} ${v.iconColor}`}>
+                {v.icon}
               </div>
-              <h3 className="text-[16px] font-semibold text-gray-900">{sol.title}</h3>
-              <p className="mt-1.5 text-[13px] text-gray-500 leading-relaxed flex-1">{sol.description}</p>
+              <h3 className="text-[17px] font-semibold text-gray-900">{v.title}</h3>
+              <p className="mt-2 text-[13px] text-gray-500 leading-relaxed flex-1">{v.description}</p>
+              <ul className="mt-4 space-y-1.5">
+                {v.outcomes.map((outcome) => (
+                  <li key={outcome} className="flex items-center gap-2 text-[12px] text-gray-500">
+                    <svg className="w-3.5 h-3.5 text-[#2563EB] flex-shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                      <path d="M2 8.5l3.5 3.5 8.5-8" />
+                    </svg>
+                    {outcome}
+                  </li>
+                ))}
+              </ul>
               <Link
-                href={sol.href}
-                className="mt-4 flex items-center gap-1 text-[13px] font-semibold text-[#2563EB] hover:gap-2 transition-all"
+                href={v.href}
+                className="mt-5 flex items-center gap-1 text-[13px] font-semibold text-[#2563EB] hover:gap-2 transition-all"
               >
-                View Solutions
+                Learn more
                 <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="w-3.5 h-3.5">
                   <path d="M3 8h10M9 4l4 4-4 4" />
                 </svg>
