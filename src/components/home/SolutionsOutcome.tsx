@@ -3,7 +3,7 @@ import Link from 'next/link'
 const verticals = [
   {
     title: 'Nonprofit + Salesforce',
-    description: 'Donor lifecycle automation, stewardship, and campaign operations — running continuously on Salesforce. Your team sets the priorities; we keep everything moving.',
+    description: 'Automate donor lifecycle workflows — from prospect identification through stewardship and retention — without adding staff.',
     outcomes: ['Donor lapse detection', 'Stewardship scheduling', 'Campaign operations'],
     iconBg: 'bg-blue-50',
     iconColor: 'text-[#2563EB]',
@@ -18,7 +18,7 @@ const verticals = [
   },
   {
     title: 'Healthcare',
-    description: 'Operational AI workflows designed for HIPAA-governed environments. We handle the compliance complexity so clinical and administrative teams can focus on care.',
+    description: 'Operational workflows built for HIPAA-governed environments, enabling compliance-ready automation at scale.',
     outcomes: ['HIPAA-aware workflows', 'Administrative automation', 'Compliance monitoring'],
     iconBg: 'bg-emerald-50',
     iconColor: 'text-emerald-600',
@@ -31,7 +31,7 @@ const verticals = [
   },
   {
     title: 'Financial Services',
-    description: 'Managed operational agents for RIAs, wealth managers, and professional services firms — built for compliance-sensitive workflows in regulated environments.',
+    description: 'Regulatory-compliant operational agents for wealth advisors, accounting firms, and financial institutions managing complex client workflows.',
     outcomes: ['Fiduciary-aware design', 'Regulatory workflow automation', 'Operational continuity'],
     iconBg: 'bg-indigo-50',
     iconColor: 'text-indigo-600',
