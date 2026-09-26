@@ -15,8 +15,7 @@ const pillars = [
     number: '03',
     label: 'Compliance-Ready by Default',
     title: 'Security you can lean on',
-    // PLACEHOLDER — pending Hector SOC 2 status + Jean-Luc approval for HIPAA language
-    body: "Built from the ground up for regulated organizations. We handle the compliance complexity so you don't have to manage it separately from the operational layer.",
+    body: "Security-first by design: documented access policies, disaster recovery and business continuity planning, and formal audit preparation underway. We're building depth in healthcare for HIPAA-governed environments. All claims clear formal review before publication.",
   },
 ]
 
