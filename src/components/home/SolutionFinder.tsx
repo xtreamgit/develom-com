@@ -10,7 +10,7 @@ const verticals = [
     statusDot: 'bg-emerald-400',
     description:
       'Donor lifecycle automation, campaign operations, and stewardship workflows built on Salesforce — running continuously, managed by Develom.',
-    cta: 'Explore the approach',
+    cta: 'Learn how we operate nonprofit workflows',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -26,7 +26,7 @@ const verticals = [
     statusDot: 'bg-blue-400',
     description:
       'Operational workflows for health systems and specialty practices, designed for HIPAA-governed environments from the ground up.',
-    cta: 'Learn more',
+    cta: 'Learn how we operate healthcare workflows',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
         <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
@@ -40,7 +40,7 @@ const verticals = [
     statusDot: 'bg-gray-300',
     description:
       'Agents for RIAs, wealth managers, and professional services firms — built for fiduciary and compliance-sensitive workflows.',
-    cta: 'Learn more',
+    cta: 'Learn how we operate financial workflows',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
         <rect x="3" y="3" width="18" height="18" rx="2" />
