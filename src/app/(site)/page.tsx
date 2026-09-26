@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import HeroSection from '@/components/home/HeroSection'
-import TrustStrip from '@/components/home/TrustStrip'
+import PillarsSection from '@/components/home/PillarsSection'
+import OutcomesSection from '@/components/home/OutcomesSection'
 import SolutionsOutcome from '@/components/home/SolutionsOutcome'
 import SolutionFinder from '@/components/home/SolutionFinder'
-import ReferralBanner from '@/components/home/ReferralBanner'
 import UseCasesSection from '@/components/home/UseCasesSection'
 import ResourcesSection from '@/components/home/ResourcesSection'
 import BlogSection from '@/components/home/BlogSection'
@@ -16,13 +16,13 @@ import { getComplianceDeadlines } from '@/lib/getGlobals'
 import { formatDate } from '@/lib/relativeTime'
 
 export const metadata: Metadata = {
-  title: 'Develom | Intelligent AI Solutions. Measurable Impact.',
+  title: 'Develom | Operational AI Agents, Managed for You.',
   description:
-    'We help businesses of all sizes automate, optimize, and accelerate with AI solutions built for real-world results.',
+    'Develom manages operational AI agents end-to-end for regulated industries — so your team stays in control without the operational overhead.',
   openGraph: {
-    title: 'Develom | Intelligent AI Solutions. Measurable Impact.',
+    title: 'Develom | Operational AI Agents, Managed for You.',
     description:
-      'AI solutions that automate, optimize, and accelerate your business — with measurable results.',
+      'Operational AI workflows running continuously in regulated industries — managed by Develom.',
     url: 'https://develom.com',
     siteName: 'Develom',
     images: [{ url: '/og-home.png', width: 1200, height: 630, alt: 'Develom' }],
@@ -30,9 +30,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Develom | Intelligent AI Solutions. Measurable Impact.',
+    title: 'Develom | Operational AI Agents, Managed for You.',
     description:
-      'AI solutions that automate, optimize, and accelerate your business — with measurable results.',
+      'Operational AI workflows running continuously in regulated industries — managed by Develom.',
     images: ['/og-home.png'],
   },
   alternates: {
@@ -70,11 +70,11 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      {complianceItems.length > 0 && <ComplianceCalendar items={complianceItems} />}
-      <TrustStrip />
+      <PillarsSection />
+      <OutcomesSection />
       <SolutionsOutcome />
       <SolutionFinder />
-      <ReferralBanner />
+      {complianceItems.length > 0 && <ComplianceCalendar items={complianceItems} />}
       <UseCasesSection />
       <ResourcesSection />
       {posts.length > 0 && <BlogSection posts={posts} />}
