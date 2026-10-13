@@ -1,3 +1,44 @@
 @import "tailwindcss";
 
 @config "../../../tailwind.config.ts";
+
+/* ── CTA button — exact logo gradient, vertical ── */
+.btn-signal {
+  background: linear-gradient(to top, #0F80E3, #18B8C7);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(15,128,227,0.3), 0 3px 10px rgba(15,128,227,0.2);
+}
+.btn-signal:hover {
+  background: linear-gradient(to top, #0A6BCE, #12A0AE);
+}
+
+/* ── Ghost button (dark surface) ── */
+.btn-ghost-dark {
+  background: transparent;
+  color: #F0F7FD;
+  border: 1.5px solid rgba(240,247,253,0.25);
+}
+.btn-ghost-dark:hover {
+  border-color: rgba(240,247,253,0.5);
+}
+
+/* ── Compare / accountability table header row ── */
+.compare-header,
+.ct-header {
+  background: #D0E6F5;
+}
+
+/* ── Orchestration card hover glow ── */
+.orch-card:hover {
+  box-shadow: 0 0 0 1px rgba(24,184,199,0.25), 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* ── Orchestration icon badge ── */
+.orch-icon {
+  background: rgba(24,184,199,0.12);
+}
+
+/* ── Governance column top accent border ── */
+.gov-col {
+  border-top: 3px solid #1560B8;
+}
