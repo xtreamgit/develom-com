@@ -1,6 +1,6 @@
 const toolRows = [
   {
-    tool: 'Here's a chatbot that can answer questions about your data.',
+    tool: "Here's a chatbot that can answer questions about your data.",
     develom:
       'Processes the invoice, routes it, flags exceptions, updates the ERP. The question was never asked.',
   },
@@ -12,7 +12,7 @@ const toolRows = [
   {
     tool: 'Your team decides how to use it — outcomes depend on adoption.',
     develom:
-      'Outcome is Develom's responsibility to deliver. We configure, run, and improve the agents.',
+      "Outcome is Develom's responsibility to deliver. We configure, run, and improve the agents.",
   },
 ]
 

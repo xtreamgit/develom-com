@@ -9,7 +9,7 @@ const columns = [
     title: 'Rules',
     bullets: [
       'Human approval required for privileged and system-level operations',
-      'Per-agent authorization boundaries — agents do only what they're permitted to do',
+      "Per-agent authorization boundaries — agents do only what they're permitted to do",
       'Configurable escalation thresholds by business unit and risk level',
     ],
   },

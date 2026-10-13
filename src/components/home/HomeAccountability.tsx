@@ -5,7 +5,7 @@ const comparisonRows = [
   },
   {
     tool: 'Outcome depends on how well your team uses the tool.',
-    develom: 'Outcome is Develom's responsibility to deliver.',
+    develom: "Outcome is Develom's responsibility to deliver.",
   },
   {
     tool: 'Issues are your problem to diagnose and escalate.',

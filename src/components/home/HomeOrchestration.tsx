@@ -26,7 +26,7 @@ const cards = [
   },
   {
     title: 'Escalation by design',
-    body: 'Agents know exactly what they're authorized to do and what to escalate. Human approvals happen at the right moments — by rule, not by accident.',
+    body: "Agents know exactly what they're authorized to do and what to escalate. Human approvals happen at the right moments — by rule, not by accident.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <circle cx="10" cy="7" r="3" stroke="#18B8C7" strokeWidth="1.5"/>
