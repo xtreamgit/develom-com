@@ -3,6 +3,16 @@ import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richt
 import { canCreate, isLoggedIn, canUpdate, canDelete } from '../access/roles'
 import { setCreatedBy } from '../hooks/setCreatedBy'
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/, '')
+}
+
 export const BlogPosts: CollectionConfig = {
   slug: 'blog-posts',
   admin: {
@@ -16,10 +26,14 @@ export const BlogPosts: CollectionConfig = {
     delete: canDelete,
   },
   hooks: {
-    // Accept body as a markdown string from API clients (e.g. the writer agent).
-    // The admin UI sends body as a Lexical object — leave that path untouched.
     beforeValidate: [
       async ({ data, req }) => {
+        // Slugify the slug field before saving — prevents spaces and invalid chars
+        if (data?.slug) {
+          data.slug = slugify(data.slug)
+        }
+        // Accept body as a markdown string from API clients (e.g. the writer agent).
+        // The admin UI sends body as a Lexical object — leave that path untouched.
         if (data && typeof data.body === 'string' && data.body.trim().length > 0) {
           const editorConfig = await editorConfigFactory.default({ config: req.payload.config })
           data.body = convertMarkdownToLexical({ editorConfig, markdown: data.body })
