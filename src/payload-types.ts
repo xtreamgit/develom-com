@@ -201,10 +201,18 @@ export interface User {
  */
 export interface Media {
   id: number;
+  /** Display name for this asset */
+  title?: string | null;
   /**
    * Descriptive alt text for accessibility
    */
   alt: string;
+  /** Who created this asset */
+  creator?: string | null;
+  /** Auto-detected file format on upload */
+  formatNote?: ('raster' | 'vector-svg') | null;
+  /** Check when this asset is actively used on a live page */
+  inUse?: boolean | null;
   /**
    * Caption for display below images
    */
