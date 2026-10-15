@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     { name: 'Governance', slug: 'governance', color: '#0D3268' },
     { name: 'Orchestration', slug: 'orchestration', color: '#1560B8' },
   ]
-  const tagIds: (string | number)[] = []
+  const tagIds: number[] = []
 
   for (const def of tagDefs) {
     const existing = await payload.find({
