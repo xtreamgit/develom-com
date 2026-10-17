@@ -7,6 +7,18 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/velom',
+        destination: 'https://velom-roan.vercel.app/velom',
+      },
+      {
+        source: '/velom/:path*',
+        destination: 'https://velom-roan.vercel.app/velom/:path*',
+      },
+    ]
+  },
   async redirects() {
     return [
       {
