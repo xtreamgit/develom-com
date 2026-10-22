@@ -12,13 +12,14 @@ export async function POST(req: NextRequest) {
   }
 
   const payload = await getPayload({ config })
+  const key = crypto.randomUUID()
 
-  const result = await payload.update({
+  await payload.update({
     collection: 'users',
     id: TARGET_USER_ID,
-    data: { enableAPIKey: true },
+    data: { enableAPIKey: true, apiKey: key },
     overrideAccess: true,
   })
 
-  return NextResponse.json({ apiKey: result.apiKey })
+  return NextResponse.json({ apiKey: key })
 }
