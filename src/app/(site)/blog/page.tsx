@@ -62,13 +62,20 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
   let posts: any[] = []
   try {
-    const where: Record<string, any> = { _status: { equals: 'published' } }
+    const andClauses: Record<string, any>[] = [{ _status: { equals: 'published' } }]
     if (activeCategoryId) {
-      where['category'] = { equals: activeCategoryId }
+      andClauses.push({ category: { equals: activeCategoryId } })
     }
     if (searchQuery) {
-      where['title'] = { contains: searchQuery }
+      andClauses.push({
+        or: [
+          { title: { contains: searchQuery } },
+          { excerpt: { contains: searchQuery } },
+          { 'tags.name': { contains: searchQuery } },
+        ],
+      })
     }
+    const where = andClauses.length === 1 ? andClauses[0] : { and: andClauses }
     const result = await payload.find({
       collection: 'blog-posts',
       where,
