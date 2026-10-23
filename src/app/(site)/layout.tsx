@@ -2,9 +2,10 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import CookieConsent from '@/components/shared/CookieConsent'
+import VelomChatLoader from '@/components/VelomChatLoader'
 import { getSiteSettings } from '@/lib/getGlobals'
 import './globals.css'
 
@@ -29,7 +30,7 @@ const organizationSchema = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://develom.com'),
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/develom_logo.svg', type: 'image/svg+xml' }],
   },
 }
 
@@ -66,9 +67,10 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         <Nav />
         {children}
         <Footer />
-        <CookieConsent gaId={gaId} />
+        <VelomChatLoader />
         <Analytics />
         <SpeedInsights />
+        {gaId && <GoogleAnalytics gaId={gaId} />}
         {process.env.NODE_ENV === 'production' && bodyScripts && (
           <div dangerouslySetInnerHTML={{ __html: bodyScripts }} />
         )}
