@@ -9,6 +9,7 @@ import * as migration_20260517_211549 from './20260517_211549';
 import * as migration_20260611_170134 from './20260611_170134';
 import * as migration_20260613_200000_media_fields from './20260613_200000_media_fields';
 import * as migration_20260613_220000_hero_block_image from './20260613_220000_hero_block_image';
+import * as migration_20261023_000000_search_collection from './20261023_000000_search_collection';
 
 export const migrations = [
   {
@@ -65,5 +66,10 @@ export const migrations = [
     up: migration_20260613_220000_hero_block_image.up,
     down: migration_20260613_220000_hero_block_image.down,
     name: '20260613_220000_hero_block_image',
+  },
+  {
+    up: migration_20261023_000000_search_collection.up,
+    down: migration_20261023_000000_search_collection.down,
+    name: '20261023_000000_search_collection',
   },
 ];

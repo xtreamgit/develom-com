@@ -2,10 +2,12 @@ import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { searchPlugin } from '@payloadcms/plugin-search'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { lexicalToText } from './lib/lexicalToText'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
@@ -102,6 +104,40 @@ export default buildConfig({
       clientUploads: true,
       collections: {
         media: true,
+      },
+    }),
+    searchPlugin({
+      collections: ['blog-posts'],
+      searchOverrides: {
+        fields: ({ defaultFields }) => [
+          ...defaultFields,
+          { name: 'excerpt', type: 'textarea', admin: { readOnly: true } },
+          { name: 'tagsText', type: 'text', admin: { readOnly: true } },
+          { name: 'bodyText', type: 'textarea', admin: { readOnly: true } },
+        ],
+      },
+      beforeSync: async ({ originalDoc, payload, searchDoc }) => {
+        let fullDoc = originalDoc
+        try {
+          fullDoc = await payload.findByID({
+            collection: 'blog-posts',
+            id: originalDoc.id,
+            depth: 1,
+            overrideAccess: true,
+          })
+        } catch { /* fallback to originalDoc */ }
+
+        const tagsText = ((fullDoc.tags ?? []) as any[])
+          .map((t) => (typeof t === 'object' && t !== null ? t.name : ''))
+          .filter(Boolean)
+          .join(' ')
+
+        return {
+          ...searchDoc,
+          excerpt: fullDoc.excerpt ?? '',
+          tagsText,
+          bodyText: lexicalToText(fullDoc.body),
+        }
       },
     }),
   ],
