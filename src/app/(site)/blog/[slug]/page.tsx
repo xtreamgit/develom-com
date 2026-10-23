@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import { unstable_noStore as noStore } from 'next/cache'
@@ -72,6 +73,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
+function getLexicalText(node: any): string {
+  if (!node) return ''
+  if (typeof node.text === 'string') return node.text
+  if (Array.isArray(node.children)) return node.children.map(getLexicalText).join(' ')
+  return ''
+}
+
+function estimateReadTime(content: any): number {
+  const text = getLexicalText(content?.root ?? content)
+  const words = text.trim().split(/\s+/).filter(Boolean).length
+  return Math.max(1, Math.ceil(words / 200))
+}
+
+function formatDate(dateString: string): string {
+  return new Date(dateString).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export default async function BlogPostPage({ params }: PageProps) {
   noStore()
   const { slug } = await params
@@ -94,14 +116,10 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound()
 
   const tags: Tag[] = Array.isArray(post.tags) ? post.tags.filter(Boolean) : []
-
-  function formatDate(dateString: string): string {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-    })
-  }
+  const readTime = estimateReadTime(post.body)
+  const authorName: string = post.createdBy?.name ?? 'Develom'
+  const authorInitial = authorName.charAt(0).toUpperCase()
+  const heroImage = post.featuredImage?.url ? post.featuredImage : null
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -127,69 +145,249 @@ export default async function BlogPostPage({ params }: PageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Hero */}
-      <section className="bg-navy px-6 pb-16 pt-32 md:pb-20 md:pt-40">
-        <div className="mx-auto max-w-[720px]">
+
+      {/* ── Post Hero ── */}
+      <header style={{ background: '#071832', padding: '52px 0 48px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 40px' }}>
+
           <Link
             href="/blog"
-            className="mb-8 inline-flex items-center gap-1.5 text-[13px] font-semibold text-white/60 hover:text-white/90 transition-colors"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 6,
+              color: 'rgba(240,247,253,0.50)',
+              fontSize: 13,
+              fontWeight: 500,
+              textDecoration: 'none',
+              letterSpacing: '0.01em',
+              marginBottom: 32,
+              transition: 'color 0.15s',
+            }}
           >
-            <svg viewBox="0 0 16 16" fill="none" width={14} height={14} stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-              <path d="M13 8H3M7 4l-4 4 4 4" />
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M9 2L4 7l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             All posts
           </Link>
 
-          <div className="flex flex-wrap items-center gap-2 mb-6">
-            {tags.map((tag) => (
-              <span
-                key={tag.id}
-                className="inline-block rounded-sm px-2.5 py-1 text-[12px] font-semibold"
-                style={{ backgroundColor: `${tag.color}25`, color: tag.color }}
-              >
-                {tag.name}
-              </span>
-            ))}
-          </div>
+          {tags.length > 0 && (
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24, maxWidth: 680 }}>
+              {tags.map((tag) => (
+                <span
+                  key={tag.id}
+                  style={{
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    borderRadius: 20,
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: 11,
+                    fontWeight: 500,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    background: 'rgba(24,184,199,0.12)',
+                    border: '1px solid rgba(24,184,199,0.35)',
+                    color: '#18B8C7',
+                  }}
+                >
+                  {tag.name}
+                </span>
+              ))}
+            </div>
+          )}
 
           <h1
-            className="text-white"
             style={{
-              fontSize: 'clamp(1.75rem, 3vw + 0.75rem, 2.75rem)',
-              lineHeight: 1.2,
+              fontSize: 'clamp(1.75rem, 3.5vw + 0.5rem, 2.875rem)',
               fontWeight: 800,
-              letterSpacing: '-0.02em',
+              lineHeight: 1.1,
+              letterSpacing: '-0.03em',
+              color: '#F0F7FD',
+              maxWidth: 680,
+              marginBottom: 20,
             }}
           >
             {post.title}
           </h1>
 
           {post.excerpt && (
-            <p className="mt-6 max-w-[600px] text-[17px] leading-[1.75] text-white/75">
+            <p
+              style={{
+                fontSize: 18,
+                lineHeight: 1.6,
+                color: 'rgba(240,247,253,0.65)',
+                maxWidth: 680,
+                marginBottom: 32,
+                fontWeight: 400,
+              }}
+            >
               {post.excerpt}
             </p>
           )}
 
-          <p className="mt-6 text-[13px] text-white/50">
-            {formatDate(post.date)}
-          </p>
-        </div>
-      </section>
+          {/* Byline */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap', maxWidth: 680 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <div
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: '50%',
+                  background: '#0F2035',
+                  border: '1.5px solid rgba(255,255,255,0.1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 13,
+                  fontWeight: 700,
+                  color: '#18B8C7',
+                  flexShrink: 0,
+                }}
+              >
+                {authorInitial}
+              </div>
+              <span style={{ fontSize: 14, fontWeight: 600, color: 'rgba(240,247,253,0.65)' }}>
+                {authorName}
+              </span>
+            </div>
 
-      {/* Content */}
-      <section className="bg-bg-alt px-6 py-16 md:py-24">
-        <div className="mx-auto max-w-[720px]">
-          <BlogBody content={post.body} />
+            <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.12)' }} />
 
-          <div className="mt-16 pt-10 border-t border-[#E5E7EB]">
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-[14px] font-semibold text-blue hover:underline"
-            >
-              <svg viewBox="0 0 16 16" fill="none" width={14} height={14} stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M13 8H3M7 4l-4 4 4 4" />
+            {post.date && (
+              <>
+                <span style={{ fontSize: 13, color: 'rgba(240,247,253,0.50)', display: 'flex', alignItems: 'center', gap: 5 }}>
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style={{ opacity: 0.6 }}>
+                    <rect x="1" y="2" width="11" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.2" />
+                    <path d="M1 5h11" stroke="currentColor" strokeWidth="1.2" />
+                    <path d="M4 1v2M9 1v2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                  </svg>
+                  {formatDate(post.date)}
+                </span>
+                <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.12)' }} />
+              </>
+            )}
+
+            <span style={{ fontSize: 13, color: 'rgba(240,247,253,0.50)', display: 'flex', alignItems: 'center', gap: 5 }}>
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true" style={{ opacity: 0.6 }}>
+                <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" strokeWidth="1.2" />
+                <path d="M6.5 3.5V6.5l2 1.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
               </svg>
-              Back to all posts
+              {readTime} min read
+            </span>
+          </div>
+
+          {/* Hero image — only renders when post has a featuredImage */}
+          {heroImage && (
+            <div style={{ marginTop: 40, maxWidth: 680, borderRadius: 10, overflow: 'hidden' }}>
+              <Image
+                src={heroImage.url}
+                alt={heroImage.alt ?? post.title ?? ''}
+                width={heroImage.width ?? 680}
+                height={heroImage.height ?? 383}
+                style={{ width: '100%', height: 'auto', display: 'block' }}
+                priority
+              />
+            </div>
+          )}
+
+        </div>
+      </header>
+
+      {/* ── Gradient rule ── */}
+      <hr
+        style={{
+          height: 2,
+          background: 'linear-gradient(to right, #0F80E3, #18B8C7, transparent)',
+          border: 'none',
+          margin: 0,
+        }}
+      />
+
+      {/* ── Post body ── */}
+      <div style={{ background: '#F5FAFE', padding: '72px 40px 96px' }}>
+        <BlogBody content={post.body} />
+      </div>
+
+      {/* ── Post CTA ── */}
+      <section
+        style={{
+          background: '#0D3268',
+          padding: '72px 40px',
+          borderTop: '1px solid rgba(255,255,255,0.05)',
+        }}
+      >
+        <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
+          <p
+            style={{
+              fontFamily: "'DM Mono', monospace",
+              fontSize: 11,
+              fontWeight: 500,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'rgba(240,247,253,0.50)',
+              marginBottom: 16,
+            }}
+          >
+            Ready when you are
+          </p>
+          <h2
+            style={{
+              fontSize: 30,
+              fontWeight: 800,
+              lineHeight: 1.2,
+              letterSpacing: '-0.025em',
+              color: '#F0F7FD',
+              marginBottom: 12,
+            }}
+          >
+            Tell us what process you need to run. We&apos;ll tell you how.
+          </h2>
+          <p
+            style={{
+              fontSize: 16,
+              color: 'rgba(240,247,253,0.65)',
+              lineHeight: 1.6,
+              marginBottom: 32,
+            }}
+          >
+            No demo environment. A real conversation about your use case, your workflows, and what accountability looks like in practice.
+          </p>
+          <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link
+              href="/contact"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '13px 26px',
+                borderRadius: 8,
+                fontSize: 15,
+                fontWeight: 700,
+                letterSpacing: '-0.01em',
+                textDecoration: 'none',
+                background: 'linear-gradient(to top, #0F80E3, #18B8C7)',
+                color: '#fff',
+                boxShadow: '0 1px 2px rgba(15,128,227,0.3), 0 3px 10px rgba(15,128,227,0.2)',
+              }}
+            >
+              Talk to an Expert
+            </Link>
+            <Link
+              href="/solutions"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                padding: '13px 26px',
+                borderRadius: 8,
+                fontSize: 15,
+                fontWeight: 700,
+                letterSpacing: '-0.01em',
+                textDecoration: 'none',
+                background: 'transparent',
+                color: '#F0F7FD',
+                border: '1.5px solid rgba(240,247,253,0.25)',
+              }}
+            >
+              See How It Works
             </Link>
           </div>
         </div>
