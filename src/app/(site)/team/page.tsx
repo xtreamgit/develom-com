@@ -16,7 +16,7 @@ interface TeamMember {
   languages: string[]
   avatar: string
   isAgent: boolean
-  namePending?: boolean
+  note?: string
 }
 
 const PRINCIPALS: TeamMember[] = [
@@ -40,13 +40,12 @@ const PRINCIPALS: TeamMember[] = [
 
 const AGENTS: TeamMember[] = [
   {
-    name: 'Chief of Staff',        // name TBC — Saul placeholder
+    name: 'Saul Mercer',
     role: 'Chief of Staff',
     location: 'Houston, TX',
     languages: ['English'],
     avatar: '/team/saul.svg',
     isAgent: true,
-    namePending: true,
   },
   {
     name: 'Rami Haddad',
@@ -57,22 +56,20 @@ const AGENTS: TeamMember[] = [
     isAgent: true,
   },
   {
-    name: 'CFO',                   // name TBC — Harper placeholder
+    name: 'Harper Ellis',
     role: 'CFO',
     location: 'New York, USA',
     languages: ['English'],
     avatar: '/team/batch/harper-stern.jpg',
     isAgent: true,
-    namePending: true,
   },
   {
-    name: 'CPO',                   // name TBC — Steve placeholder
+    name: 'Steve Larsen',
     role: 'CPO',
     location: 'California, USA',
     languages: ['English'],
     avatar: '/team/batch/steve.jpg',
     isAgent: true,
-    namePending: true,
   },
   {
     name: 'Kai Tanaka',
@@ -89,6 +86,7 @@ const AGENTS: TeamMember[] = [
     languages: ['English', 'French'],
     avatar: '/team/batch/jean-luc-moreau.jpg',
     isAgent: true,
+    note: "Develom's General Counsel is an AI compliance function. This role does not imply bar admission, and nothing produced by this agent constitutes legal advice.",
   },
   {
     name: 'Victor Kovalenko',
@@ -244,14 +242,11 @@ function MemberCard({ member }: { member: TeamMember }) {
         )}
       </div>
       <div className={styles.cardBody}>
-        <p className={styles.cardName}>
-          {member.namePending ? (
-            <span className={styles.namePending}>Name TBC</span>
-          ) : (
-            member.name
-          )}
-        </p>
+        <p className={styles.cardName}>{member.name}</p>
         <p className={styles.cardRole}>{member.role}</p>
+        {member.note && (
+          <p className={styles.cardNote}>{member.note}</p>
+        )}
         <div className={styles.cardMeta}>
           <span className={styles.metaItem}>
             <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
