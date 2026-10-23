@@ -19,8 +19,7 @@ interface TeamMember {
   namePending?: boolean
 }
 
-const TEAM: TeamMember[] = [
-  // Human principals — no AI Agent badge
+const PRINCIPALS: TeamMember[] = [
   {
     name: 'Hector DeJesus',
     role: 'Co-Founder & CEO',
@@ -37,8 +36,9 @@ const TEAM: TeamMember[] = [
     avatar: '/team/robert.svg',
     isAgent: false,
   },
+]
 
-  // AI Agents — badge displayed on each card
+const AGENTS: TeamMember[] = [
   {
     name: 'Chief of Staff',        // name TBC — Saul placeholder
     role: 'Chief of Staff',
@@ -84,7 +84,7 @@ const TEAM: TeamMember[] = [
   },
   {
     name: 'Jean-Luc Moreau',
-    role: 'Legal & Compliance Lead',
+    role: 'General Counsel',
     location: 'USA',
     languages: ['English', 'French'],
     avatar: '/team/batch/jean-luc-moreau.jpg',
@@ -228,6 +228,45 @@ const TEAM: TeamMember[] = [
   },
 ]
 
+function MemberCard({ member }: { member: TeamMember }) {
+  return (
+    <div className={styles.card}>
+      <div className={styles.avatarWrap}>
+        <Image
+          src={member.avatar}
+          alt={member.namePending ? member.role : member.name}
+          width={100}
+          height={100}
+          className={styles.avatar}
+        />
+        {member.isAgent && (
+          <span className={styles.agentBadge}>AI Agent</span>
+        )}
+      </div>
+      <div className={styles.cardBody}>
+        <p className={styles.cardName}>
+          {member.namePending ? (
+            <span className={styles.namePending}>Name TBC</span>
+          ) : (
+            member.name
+          )}
+        </p>
+        <p className={styles.cardRole}>{member.role}</p>
+        <div className={styles.cardMeta}>
+          <span className={styles.metaItem}>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+              <path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.72 3.5 6 3.5 6S9 7.22 9 4.5C9 2.57 7.43 1 5.5 1zm0 4.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z" fill="currentColor"/>
+            </svg>
+            {member.location}
+          </span>
+          <span className={styles.metaDot} />
+          <span className={styles.metaItem}>{member.languages.join(' · ')}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function TeamPage() {
   return (
     <main className={styles.page}>
@@ -257,46 +296,35 @@ export default function TeamPage() {
         </div>
       </div>
 
-      {/* ── Team grid ── */}
+      {/* ── Team sections ── */}
       <div className={styles.shell}>
-        <div className={styles.grid}>
-          {TEAM.map((member) => (
-            <div key={member.name + member.role} className={styles.card}>
-              <div className={styles.avatarWrap}>
-                <Image
-                  src={member.avatar}
-                  alt={member.namePending ? member.role : member.name}
-                  width={100}
-                  height={100}
-                  className={styles.avatar}
-                />
-                {member.isAgent && (
-                  <span className={styles.agentBadge}>AI Agent</span>
-                )}
-              </div>
-              <div className={styles.cardBody}>
-                <p className={styles.cardName}>
-                  {member.namePending ? (
-                    <span className={styles.namePending}>Name TBC</span>
-                  ) : (
-                    member.name
-                  )}
-                </p>
-                <p className={styles.cardRole}>{member.role}</p>
-                <div className={styles.cardMeta}>
-                  <span className={styles.metaItem}>
-                    <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-                      <path d="M5.5 1C3.57 1 2 2.57 2 4.5c0 2.72 3.5 6 3.5 6S9 7.22 9 4.5C9 2.57 7.43 1 5.5 1zm0 4.75a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z" fill="currentColor"/>
-                    </svg>
-                    {member.location}
-                  </span>
-                  <span className={styles.metaDot} />
-                  <span className={styles.metaItem}>{member.languages.join(' · ')}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+
+        {/* People section */}
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>People</h2>
+            <p className={styles.sectionSub}>Human principals and owners</p>
+          </div>
+          <div className={`${styles.grid} ${styles.gridPrincipals}`}>
+            {PRINCIPALS.map((member) => (
+              <MemberCard key={member.name} member={member} />
+            ))}
+          </div>
+        </section>
+
+        {/* AI Agents section */}
+        <section className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <h2 className={styles.sectionTitle}>AI Agents</h2>
+            <p className={styles.sectionSub}>AI agents operating in functional business roles</p>
+          </div>
+          <div className={styles.grid}>
+            {AGENTS.map((member) => (
+              <MemberCard key={member.name + member.role} member={member} />
+            ))}
+          </div>
+        </section>
+
       </div>
     </main>
   )
