@@ -17,7 +17,7 @@ function MemberCard({ member }: { member: TeamMember }) {
       <div className={styles.avatarWrap}>
         <Image
           src={member.avatar}
-          alt={member.namePending ? member.role : member.name}
+          alt={member.name}
           width={100}
           height={100}
           className={styles.avatar}
