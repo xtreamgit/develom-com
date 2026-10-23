@@ -57,7 +57,10 @@ export default async function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1fr_repeat(3,auto)]">
           {/* Brand column */}
           <div>
-            <p className="text-[16px] font-bold text-white">DEVELOM</p>
+            <div className="flex items-center gap-2.5">
+              <Image src="/develom_logo.svg" alt="Develom" width={28} height={28} />
+              <span className="text-[15px] font-bold tracking-tight text-white">Develom</span>
+            </div>
             <p className="mt-2 text-[14px] text-muted">AI Automation for Regulated Industries</p>
             <a
               href={`mailto:${contactEmail}`}

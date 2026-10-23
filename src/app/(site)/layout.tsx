@@ -29,7 +29,7 @@ const organizationSchema = {
 export const metadata: Metadata = {
   metadataBase: new URL('https://develom.com'),
   icons: {
-    icon: [{ url: '/favicon.svg', type: 'image/svg+xml' }],
+    icon: [{ url: '/develom_logo.svg', type: 'image/svg+xml' }],
   },
 }
 
