@@ -65,7 +65,7 @@ export default async function BlogPage({ searchParams }: PageProps) {
     if (searchQuery) {
       // Full-text search via plugin-search collection (covers title, excerpt, tags, body)
       const searchResult = await payload.find({
-        collection: 'search',
+        collection: 'search' as any,
         where: {
           or: [
             { title: { contains: searchQuery } },
