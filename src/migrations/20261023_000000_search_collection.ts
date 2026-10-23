@@ -21,7 +21,6 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       "blog_posts_id" integer
     );
 
-    CREATE INDEX "search_title_idx" ON "search" USING btree ("title");
     CREATE INDEX "search_updated_at_idx" ON "search" USING btree ("updated_at");
     CREATE INDEX "search_created_at_idx" ON "search" USING btree ("created_at");
     CREATE INDEX "search_rels_order_idx" ON "search_rels" USING btree ("order");
