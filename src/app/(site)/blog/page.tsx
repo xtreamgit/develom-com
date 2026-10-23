@@ -62,22 +62,50 @@ export default async function BlogPage({ searchParams }: PageProps) {
 
   let posts: any[] = []
   try {
-    const where: Record<string, any> = { _status: { equals: 'published' } }
-    if (activeCategoryId) {
-      where['category'] = { equals: activeCategoryId }
-    }
     if (searchQuery) {
-      where['title'] = { contains: searchQuery }
+      // Full-text search via plugin-search collection (covers title, excerpt, tags, body)
+      const searchResult = await payload.find({
+        collection: 'search',
+        where: {
+          or: [
+            { title: { contains: searchQuery } },
+            { excerpt: { contains: searchQuery } },
+            { tagsText: { contains: searchQuery } },
+            { bodyText: { contains: searchQuery } },
+          ],
+        },
+        depth: 2,
+        limit: 100,
+        overrideAccess: true,
+      })
+      let matched = searchResult.docs
+        .map((r: any) => (typeof r.doc?.value === 'object' ? r.doc.value : null))
+        .filter(Boolean)
+
+      if (activeCategoryId) {
+        matched = matched.filter((p: any) => {
+          const cat = p.category
+          const catId = typeof cat === 'object' && cat !== null ? cat.id : cat
+          return String(catId) === String(activeCategoryId)
+        })
+      }
+      posts = matched.slice(0, 50)
+    } else {
+      const andClauses: Record<string, any>[] = [{ _status: { equals: 'published' } }]
+      if (activeCategoryId) {
+        andClauses.push({ category: { equals: activeCategoryId } })
+      }
+      const where = andClauses.length === 1 ? andClauses[0] : { and: andClauses }
+      const result = await payload.find({
+        collection: 'blog-posts',
+        where,
+        sort: '-date',
+        limit: 50,
+        depth: 2,
+        overrideAccess: true,
+      })
+      posts = result.docs
     }
-    const result = await payload.find({
-      collection: 'blog-posts',
-      where,
-      sort: '-date',
-      limit: 50,
-      depth: 2,
-      overrideAccess: true,
-    })
-    posts = result.docs
   } catch { /* DB not yet migrated */ }
 
   const navItems = [{ slug: null as null | string, name: 'All' }, ...categories]
