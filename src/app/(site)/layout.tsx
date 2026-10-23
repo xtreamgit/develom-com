@@ -2,10 +2,9 @@ import React from 'react'
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { GoogleAnalytics } from '@next/third-parties/google'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import VelomChatLoader from '@/components/VelomChatLoader'
+import CookieConsent from '@/components/shared/CookieConsent'
 import { getSiteSettings } from '@/lib/getGlobals'
 import './globals.css'
 
@@ -67,10 +66,9 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
         <Nav />
         {children}
         <Footer />
-        <VelomChatLoader />
+        <CookieConsent gaId={gaId} />
         <Analytics />
         <SpeedInsights />
-        {gaId && <GoogleAnalytics gaId={gaId} />}
         {process.env.NODE_ENV === 'production' && bodyScripts && (
           <div dangerouslySetInnerHTML={{ __html: bodyScripts }} />
         )}
