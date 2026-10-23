@@ -73,6 +73,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
+function splitTitle(title: string): { lead: string; accent: string } | null {
+  const idx = title.indexOf(': ')
+  if (idx === -1) return null
+  return { lead: title.slice(0, idx + 1), accent: title.slice(idx + 2) }
+}
+
 function getLexicalText(node: any): string {
   if (!node) return ''
   if (typeof node.text === 'string') return node.text
@@ -116,6 +122,7 @@ export default async function BlogPostPage({ params }: PageProps) {
   if (!post) notFound()
 
   const tags: Tag[] = Array.isArray(post.tags) ? post.tags.filter(Boolean) : []
+  const titleParts = splitTitle(post.title)
   const readTime = estimateReadTime(post.body)
   const authorName: string = post.createdBy?.name ?? 'Develom'
   const authorInitial = authorName.charAt(0).toUpperCase()
@@ -171,31 +178,6 @@ export default async function BlogPostPage({ params }: PageProps) {
             All posts
           </Link>
 
-          {tags.length > 0 && (
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24, maxWidth: 680 }}>
-              {tags.map((tag) => (
-                <span
-                  key={tag.id}
-                  style={{
-                    display: 'inline-block',
-                    padding: '4px 12px',
-                    borderRadius: 20,
-                    fontFamily: "'DM Mono', monospace",
-                    fontSize: 11,
-                    fontWeight: 500,
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                    background: 'rgba(24,184,199,0.12)',
-                    border: '1px solid rgba(24,184,199,0.35)',
-                    color: '#18B8C7',
-                  }}
-                >
-                  {tag.name}
-                </span>
-              ))}
-            </div>
-          )}
-
           <h1
             style={{
               fontSize: 'clamp(1.75rem, 3.5vw + 0.5rem, 2.875rem)',
@@ -207,7 +189,24 @@ export default async function BlogPostPage({ params }: PageProps) {
               marginBottom: 20,
             }}
           >
-            {post.title}
+            {titleParts ? (
+              <>
+                {titleParts.lead}{' '}
+                <span
+                  style={{
+                    background: 'linear-gradient(to right, #18B8C7, #3A90E0)',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    color: '#18B8C7',
+                  }}
+                >
+                  {titleParts.accent}
+                </span>
+              </>
+            ) : (
+              post.title
+            )}
           </h1>
 
           {post.excerpt && (
@@ -275,6 +274,32 @@ export default async function BlogPostPage({ params }: PageProps) {
               {readTime} min read
             </span>
           </div>
+
+          {/* Tags — below byline per Eero v2 */}
+          {tags.length > 0 && (
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 20, maxWidth: 680 }}>
+              {tags.map((tag) => (
+                <span
+                  key={tag.id}
+                  style={{
+                    display: 'inline-block',
+                    padding: '4px 12px',
+                    borderRadius: 20,
+                    fontFamily: "'DM Mono', monospace",
+                    fontSize: 11,
+                    fontWeight: 500,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    background: 'rgba(24,184,199,0.12)',
+                    border: '1px solid rgba(24,184,199,0.35)',
+                    color: '#18B8C7',
+                  }}
+                >
+                  {tag.name}
+                </span>
+              ))}
+            </div>
+          )}
 
           {/* Hero image — only renders when post has a featuredImage */}
           {heroImage && (

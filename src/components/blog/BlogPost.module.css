@@ -1,9 +1,11 @@
-/* Prose typography for blog post body — Eero design system 2026-10-23 */
+/* Prose typography for blog post body — Eero design system v2 2026-10-23 */
 
 .postBody {
   max-width: 680px;
   margin: 0 auto;
 }
+
+/* ── Paragraphs ── */
 
 .postBody p {
   font-size: 17px;
@@ -19,6 +21,20 @@
   color: #4A6585;
 }
 
+/* Drop cap — depends on RichText not inserting a wrapper div between article and p */
+.postBody > p:first-of-type::first-letter {
+  font-size: 4em;
+  font-weight: 800;
+  line-height: 0.82;
+  float: left;
+  margin-right: 0.07em;
+  margin-top: 0.06em;
+  color: #0D3268;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+
+/* ── Headings ── */
+
 .postBody h2 {
   font-size: 26px;
   font-weight: 800;
@@ -27,9 +43,18 @@
   color: #0D3268;
   margin-top: 2.8em;
   margin-bottom: 0.6em;
-  padding-bottom: 0.4em;
-  border-bottom: 1.5px solid #D0E6F5;
   scroll-margin-top: 72px;
+}
+
+/* Teal overline above each h2 */
+.postBody h2::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2.5px;
+  background: #18B8C7;
+  border-radius: 2px;
+  margin-bottom: 14px;
 }
 
 .postBody h3 {
@@ -53,6 +78,8 @@
   margin-bottom: 0.4em;
 }
 
+/* ── Inline elements ── */
+
 .postBody a {
   color: #1560B8;
   text-decoration: underline;
@@ -64,6 +91,17 @@
 .postBody a:hover {
   color: #18B8C7;
 }
+
+.postBody strong {
+  font-weight: 700;
+  color: #0D1B2A;
+}
+
+.postBody em {
+  font-style: italic;
+}
+
+/* ── Lists ── */
 
 .postBody ul,
 .postBody ol {
@@ -88,11 +126,15 @@
   font-weight: 700;
 }
 
+/* ── Separator ── */
+
 .postBody hr {
   border: none;
   border-top: 1px solid #BDD5EE;
   margin: 3em 0;
 }
+
+/* ── Code ── */
 
 .postBody code {
   font-family: 'DM Mono', 'Fira Code', monospace;
@@ -124,6 +166,8 @@
   line-height: 1.7;
 }
 
+/* ── Blockquote ── */
+
 .postBody blockquote {
   margin: 2em 0;
   padding: 16px 22px;
@@ -146,17 +190,208 @@
   letter-spacing: 0.04em;
 }
 
-.postBody strong {
-  font-weight: 700;
-  color: #0D1B2A;
-}
-
-.postBody em {
-  font-style: italic;
-}
+/* ── Images ── */
 
 .postBody img {
   width: 100%;
   border-radius: 8px;
   margin: 1.8em 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RICH-CONTENT BLOCKS
+   These classes are unscoped (:global) so they work when authors insert raw
+   HTML via Payload's HTML block type. Each block is optional — articles that
+   don't need them render with standard prose styles above.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Spec cards (01 / 02 / 03 numbered governance cards) ── */
+
+:global(.spec-cards) {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 1.8em;
+}
+
+:global(.spec-card) {
+  background: #0F2035;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 9px;
+  padding: 18px 22px;
+}
+
+:global(.spec-card-label) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+:global(.spec-card-num) {
+  color: #18B8C7;
+}
+
+:global(.spec-card-sep) {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 13px;
+}
+
+:global(.spec-card-name) {
+  color: rgba(240, 247, 253, 0.50);
+}
+
+:global(.spec-card-body) {
+  font-size: 15px;
+  line-height: 1.65;
+  color: rgba(240, 247, 253, 0.65);
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+/* ── Pull-quote (centered, flanking gradient lines) ── */
+
+:global(.pull-quote) {
+  margin: 2.8em 0;
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+}
+
+:global(.pull-quote)::before,
+:global(.pull-quote)::after {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #18B8C7 40%, #18B8C7 60%, transparent);
+  margin: 0 auto;
+  width: 280px;
+  opacity: 0.8;
+}
+
+:global(.pull-quote)::before {
+  margin-bottom: 28px;
+}
+
+:global(.pull-quote)::after {
+  margin-top: 28px;
+}
+
+:global(.pull-quote) blockquote {
+  all: unset;
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: #0D3268;
+  font-style: italic;
+}
+
+:global(.pull-quote) cite {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  font-style: normal;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #7A9AB5;
+}
+
+/* ── Callout block ── */
+
+:global(.callout) {
+  margin: 2.2em 0;
+  padding: 20px 24px;
+  background: #E4F4F7;
+  border-left: 3px solid #18B8C7;
+  border-radius: 0 10px 10px 0;
+}
+
+:global(.callout-label) {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0A7A8C;
+  margin-bottom: 8px;
+}
+
+:global(.callout) p {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #0D3268;
+  margin: 0;
+}
+
+/* ── Key takeaways block ── */
+
+:global(.takeaways) {
+  margin: 2.4em 0;
+  background: #071832;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+:global(.takeaways-header) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+:global(.takeaways-header) span {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #18B8C7;
+}
+
+:global(.takeaways) ol {
+  list-style: none;
+  padding: 20px 24px 24px;
+  margin: 0;
+  counter-reset: tk;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+:global(.takeaways) ol li {
+  counter-increment: tk;
+  display: flex;
+  gap: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(240, 247, 253, 0.65);
+  margin: 0;
+  padding-left: 0;
+}
+
+:global(.takeaways) ol li::before {
+  content: counter(tk, decimal-leading-zero);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: #18B8C7;
+  flex-shrink: 0;
+  padding-top: 2px;
+  min-width: 22px;
+}
+
+:global(.takeaways) ol li::marker {
+  content: none;
 }
