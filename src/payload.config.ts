@@ -31,6 +31,16 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+  cors: [
+    'https://develom.com',
+    'https://*.vercel.app',
+    'http://localhost:3000',
+  ],
+  csrf: [
+    'https://develom.com',
+    'https://*.vercel.app',
+    'http://localhost:3000',
+  ],
   admin: {
     user: Users.slug,
     importMap: {
