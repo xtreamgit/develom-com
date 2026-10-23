@@ -1,0 +1,162 @@
+/* Prose typography for blog post body — Eero design system 2026-10-23 */
+
+.postBody {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.postBody p {
+  font-size: 17px;
+  line-height: 1.78;
+  color: #0D1B2A;
+  margin-bottom: 1.4em;
+  letter-spacing: -0.01em;
+}
+
+.postBody > p:first-of-type {
+  font-size: 18px;
+  line-height: 1.72;
+  color: #4A6585;
+}
+
+.postBody h2 {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0D3268;
+  margin-top: 2.8em;
+  margin-bottom: 0.6em;
+  padding-bottom: 0.4em;
+  border-bottom: 1.5px solid #D0E6F5;
+  scroll-margin-top: 72px;
+}
+
+.postBody h3 {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: #0D3268;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  scroll-margin-top: 72px;
+}
+
+.postBody h4 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7A9AB5;
+  margin-top: 1.8em;
+  margin-bottom: 0.4em;
+}
+
+.postBody a {
+  color: #1560B8;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.12s;
+}
+
+.postBody a:hover {
+  color: #18B8C7;
+}
+
+.postBody ul,
+.postBody ol {
+  margin-bottom: 1.4em;
+  padding-left: 1.5em;
+}
+
+.postBody li {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #0D1B2A;
+  margin-bottom: 0.4em;
+  letter-spacing: -0.01em;
+}
+
+.postBody ul li::marker {
+  color: #18B8C7;
+}
+
+.postBody ol li::marker {
+  color: #1560B8;
+  font-weight: 700;
+}
+
+.postBody hr {
+  border: none;
+  border-top: 1px solid #BDD5EE;
+  margin: 3em 0;
+}
+
+.postBody code {
+  font-family: 'DM Mono', 'Fira Code', monospace;
+  font-size: 0.875em;
+  background: #D0E6F5;
+  color: #0D3268;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #BDD5EE;
+}
+
+.postBody pre {
+  background: #091828;
+  border-radius: 10px;
+  padding: 24px;
+  overflow-x: auto;
+  margin-bottom: 1.8em;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.postBody pre code {
+  font-family: 'DM Mono', 'Fira Code', monospace;
+  font-size: 13.5px;
+  background: none;
+  color: #F0F7FD;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  line-height: 1.7;
+}
+
+.postBody blockquote {
+  margin: 2em 0;
+  padding: 16px 22px;
+  background: #E4F4F7;
+  border-left: 3px solid #18B8C7;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: #0D3268;
+  font-size: 16.5px;
+  line-height: 1.7;
+}
+
+.postBody blockquote cite {
+  display: block;
+  margin-top: 10px;
+  font-style: normal;
+  font-size: 13px;
+  color: #7A9AB5;
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.04em;
+}
+
+.postBody strong {
+  font-weight: 700;
+  color: #0D1B2A;
+}
+
+.postBody em {
+  font-style: italic;
+}
+
+.postBody img {
+  width: 100%;
+  border-radius: 8px;
+  margin: 1.8em 0;
+}
