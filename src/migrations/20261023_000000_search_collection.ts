@@ -27,7 +27,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     CREATE INDEX "search_rels_order_idx" ON "search_rels" USING btree ("order");
     CREATE INDEX "search_rels_parent_idx" ON "search_rels" USING btree ("parent_id");
     CREATE INDEX "search_rels_path_idx" ON "search_rels" USING btree ("path");
-    CREATE INDEX "search_rels_blog_posts_idx" ON "search_rels" USING btree ("blog_posts_id");
+    CREATE INDEX "search_rels_blog_posts_id_idx" ON "search_rels" USING btree ("blog_posts_id");
 
     ALTER TABLE "search_rels" ADD CONSTRAINT "search_rels_parent_fk"
       FOREIGN KEY ("parent_id") REFERENCES "public"."search"("id") ON DELETE cascade ON UPDATE no action;
