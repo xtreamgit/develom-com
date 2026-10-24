@@ -33,9 +33,9 @@ export default function HomeHero() {
             </div>
           </div>
 
-          {/* Hero diagram — Eero SVG, 16:9 */}
+          {/* Hero illustration — Eero 4:5 portrait (1120×1400 @2x) */}
           <div className="flex-1 lg:max-w-[560px]">
-            <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: '56.25%' }}>
+            <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: '125%' }}>
               <img
                 src="/hero.svg"
                 alt=""
