@@ -6,13 +6,10 @@ const navigationData = {
     { label: 'Solutions', link: '/services', children: [] },
     { label: 'Use Cases', link: '/contact', children: [] },
     {
-      label: 'Industry',
-      link: '/industries/healthcare',
+      label: 'Industries',
+      link: '/industries',
       children: [
-        { label: 'Healthcare', link: '/industries/healthcare' },
-        { label: 'Financial Services', link: '/industries/financial-services' },
-        { label: 'Legal', link: '/industries/legal' },
-        { label: 'Insurance', link: '/industries/insurance' },
+        { label: 'Non-Profit', link: '/industries/non-profit' },
         { label: 'Oil & Gas', link: '/industries/oil-gas' },
       ],
     },
@@ -78,17 +75,11 @@ export async function seedNavigation() {
   const payload = await getPayload({ config: configPromise })
 
   console.log('  Seeding navigation global...')
-  await payload.updateGlobal({
-    slug: 'navigation',
-    data: navigationData,
-  })
+  await payload.updateGlobal({ slug: 'navigation', data: navigationData })
   console.log('  ✓ Navigation global seeded')
 
   console.log('  Seeding site-settings global...')
-  await payload.updateGlobal({
-    slug: 'site-settings',
-    data: siteSettingsData,
-  })
+  await payload.updateGlobal({ slug: 'site-settings', data: siteSettingsData })
   console.log('  ✓ Site settings global seeded')
 
   console.log('\nNavigation seed complete.')
@@ -98,8 +89,5 @@ const _isMain = import.meta.url === `file://${process.argv[1]}`
 if (_isMain) {
   seedNavigation()
     .then(() => process.exit(0))
-    .catch((err) => {
-      console.error(err)
-      process.exit(1)
-    })
+    .catch((err) => { console.error(err); process.exit(1) })
 }
