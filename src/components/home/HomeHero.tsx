@@ -33,11 +33,11 @@ export default function HomeHero() {
             </div>
           </div>
 
-          {/* Hero illustration — Eero 4:5 portrait (1120×1400 @2x) */}
+          {/* Hero dashboard — 16:9 (1280×720, request 2× from Eero before ship) */}
           <div className="flex-1 lg:max-w-[560px]">
-            <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: '125%' }}>
+            <div className="relative w-full rounded-xl overflow-hidden" style={{ paddingBottom: '56.25%' }}>
               <img
-                src="/hero.svg"
+                src="/hero-dashboard.jpg"
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-cover"
