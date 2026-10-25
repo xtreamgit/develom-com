@@ -8,11 +8,8 @@ const FALLBACK_NAV = [
     label: 'Industries',
     link: '/industries',
     children: [
+      { label: 'Non-Profit', link: '/industries/non-profit' },
       { label: 'Oil & Gas', link: '/industries/oil-gas' },
-      { label: 'Healthcare', link: '/industries/healthcare' },
-      { label: 'Financial Services', link: '/industries/financial-services' },
-      { label: 'Legal', link: '/industries/legal' },
-      { label: 'Insurance', link: '/industries/insurance' },
     ],
   },
   {
