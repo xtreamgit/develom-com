@@ -149,7 +149,7 @@ export default function NonProfitPage() {
         }}
         solutions={SOLUTIONS}
         trust="Develom's implementation methodology is designed for organizations where a bad deployment isn't a backlog item — it's a damaged donor relationship or a funder's confidence. GCP Pro Architect-led, 33 years of enterprise IT experience."
-        proofPoint="We put this to work for a Dallas Non-Profit Organization. We deployed an AI assistant on their existing donor system of record to support development and engagement work. Because it drafts communications that reach people outside the organization, every message it helps send carries a clear AI disclosure, and every action it takes is logged and reviewable — so the team gets leverage without asking donors to trust a black box."
+        proofPoint="We put this to work for a Dallas Non-Profit Organization. We deployed an AI assistant on their existing donor system of record to support development and engagement work. Because it drafts communications that reach people outside the organization, the communications it sends carry a clear AI disclosure, and every action it takes is logged and reviewable — so the team gets leverage without asking donors to trust a black box."
         ctaClose={{
           headline: 'Find the Right AI for Your Mission',
           body: 'Tell us about your donor systems, your reporting obligations, and where your team is stretched thin. We match you to AI built for trust-sensitive, transparency-first work — and build the implementation path to deploy it responsibly.',
