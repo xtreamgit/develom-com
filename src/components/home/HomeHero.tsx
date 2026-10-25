@@ -4,7 +4,7 @@ export default function HomeHero() {
   return (
     <section className="bg-surface-light pt-16 pb-20 px-6">
       <div className="mx-auto max-w-content">
-        <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
+        <div className="mt-10 lg:mt-16 flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
           {/* Copy */}
           <div className="flex-1 lg:max-w-[500px]">
             <h1 className="text-hero text-[#0D1B2A]">
