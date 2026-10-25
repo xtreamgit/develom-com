@@ -18,6 +18,9 @@ export interface IndustryPageProps {
   whatWeDo: { headline: string; body: string; columns: IndustryColumn[] }
   solutions: SolutionCard[]
   trust: string
+  proofPoint?: string
+  stakesText?: string
+  approachText?: string
   ctaClose: { headline: string; body: string; cta: string }
 }
 
@@ -42,12 +45,27 @@ const CARD_ICONS: Record<string, React.ReactNode> = {
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
+  'Protect & Disclose': (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 8v4M12 16h.01" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  ),
   'Innovate & Grow': (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   ),
+  'Grow & Sustain': (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 22V12M12 12C12 12 7 9 5 5c3 1 6 3 7 7zM12 12c0 0 5-3 7-7-3 1-6 3-7 7z" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
 }
+
+const DEFAULT_STAKES =
+  "Regulated industries that deploy AI without governance infrastructure don't just face audit risk — they face enforcement actions built on exactly that gap."
+const DEFAULT_APPROACH = 'Match first. Build second. Document throughout.'
 
 export default function IndustryPage({
   eyebrow,
@@ -56,6 +74,9 @@ export default function IndustryPage({
   whatWeDo,
   solutions,
   trust,
+  proofPoint,
+  stakesText = DEFAULT_STAKES,
+  approachText = DEFAULT_APPROACH,
   ctaClose,
 }: IndustryPageProps) {
   return (
@@ -106,13 +127,12 @@ export default function IndustryPage({
                 The Stakes
               </p>
               <p className="mt-4 text-[15px] leading-relaxed text-[#374151]">
-                Regulated industries that deploy AI without governance infrastructure don&apos;t just
-                face audit risk — they face enforcement actions built on exactly that gap.
+                {stakesText}
               </p>
               <div className="mt-6 border-t border-[#E2E8F0] pt-6">
                 <p className="text-[13px] font-semibold text-navy">Develom&apos;s approach</p>
                 <p className="mt-2 text-[13px] leading-relaxed text-muted">
-                  Match first. Build second. Document throughout.
+                  {approachText}
                 </p>
               </div>
             </div>
@@ -193,6 +213,11 @@ export default function IndustryPage({
             <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <p className="text-[16px] leading-[1.8] text-[#374151] md:text-[17px]">{trust}</p>
+          {proofPoint && (
+            <div className="mx-auto mt-10 max-w-[640px] rounded-2xl border border-[#E2E8F0] bg-[#F8FAFC] p-8 text-left">
+              <p className="text-[14px] leading-relaxed text-[#374151]">{proofPoint}</p>
+            </div>
+          )}
         </div>
       </section>
 
