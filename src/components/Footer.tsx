@@ -40,7 +40,6 @@ export default async function Footer() {
     },
   ]
 
-  // Build active social links from settings
   const socialLinks = Object.entries(SOCIAL_ICONS)
     .map(([key, meta]) => {
       const url = settings?.[key as keyof typeof settings] as string | null | undefined
@@ -58,7 +57,8 @@ export default async function Footer() {
           {/* Brand column */}
           <div>
             <div className="flex items-center gap-2.5">
-              <Image src="/develom_logo.svg" alt="Develom" width={28} height={28} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/develom_logo.svg" alt="Develom" width={28} height={28} />
               <span className="text-[15px] font-bold tracking-tight text-white">Develom</span>
             </div>
             <p className="mt-2 text-[14px] text-muted">AI Automation for Regulated Industries</p>
@@ -73,7 +73,6 @@ export default async function Footer() {
             </p>
           </div>
 
-          {/* Footer nav groups */}
           {footerGroups.map((group) => (
             <div key={group.groupLabel}>
               <p className="text-label uppercase text-white/60">{group.groupLabel}</p>
@@ -111,13 +110,7 @@ export default async function Footer() {
                   aria-label={social.label}
                   className="opacity-50 hover:opacity-100 transition-opacity"
                 >
-                  <Image
-                    src={social.icon}
-                    alt={social.label}
-                    width={20}
-                    height={20}
-                    className="invert"
-                  />
+                  <Image src={social.icon} alt={social.label} width={20} height={20} className="invert" />
                 </a>
               ))}
             </div>
