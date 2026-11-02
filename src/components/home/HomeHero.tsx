@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function HomeHero() {
   return (
-    <section className="bg-surface-light pt-16 pb-20 px-6">
+    <section className="bg-surface-light pt-24 pb-20 px-6">
       <div className="mx-auto max-w-content">
         <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
           {/* Copy */}
